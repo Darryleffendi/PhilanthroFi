@@ -16,7 +16,6 @@ actor class Backend() {
 
   let users = TrieMap.TrieMap<Principal, User>(Principal.equal, Principal.hash);
 
-
   public shared ({caller}) func register(first_name: Text, last_name:Text, email:Text, birth_date:Text):async Result.Result<User, Text>{
     let identity = caller;
     
@@ -47,8 +46,15 @@ actor class Backend() {
 
   
   public query func getUser(principal: Principal) : async ?User{
-    return users.get(principal);
+    let user = users.get(principal);
+    if (user == null){
+      return null;
+    };
+    return user;
   };
 
+  public query func test() : async Text{
+    return "berhasil callnya"
+  }
 
 }

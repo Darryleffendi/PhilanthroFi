@@ -1,16 +1,17 @@
-import { ActorSubclass, HttpAgent } from "@dfinity/agent";
+import {  ActorSubclass, HttpAgent } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { defaultOptions } from "@lib/auth/auth-settings";
 import { createContext, ReactNode, useState } from "react";
 import { _SERVICE as _SERVICE_BACKEND } from "src/declarations/backend/backend.did";
 import { canisterId as backendCanisterId, createActor as createBackendActor } from "src/declarations/backend";
 
+
 interface ServiceContextProviderProps {
     children: ReactNode
 }
 
 export type ServiceContextType ={
-    getBackendService: () =>Promise<ActorSubclass<_SERVICE_BACKEND>>;
+    getBackendService: () => Promise<ActorSubclass<_SERVICE_BACKEND>>;
 }
 
 export const ServiceContext = createContext<ServiceContextType>({
@@ -19,9 +20,9 @@ export const ServiceContext = createContext<ServiceContextType>({
 
 export default function ServiceContextProvider({children}:ServiceContextProviderProps){
     const [backendService, setBackendService] = useState<ActorSubclass<_SERVICE_BACKEND>>();
-    const [agent, setAgent] = useState<HttpAgent>();
+    const [agent, setAgent] = useState<HttpAgent|null>(null);
 
-    const getHTTPAgent = async () =>{
+    const createHTTPAgent = async () =>{
         const authClient = await AuthClient.create(defaultOptions.createOptions)
         const identity = authClient.getIdentity();
         if(!agent){
@@ -32,28 +33,33 @@ export default function ServiceContextProvider({children}:ServiceContextProvider
         return agent
     }
 
+    const getHTTPAgent = async () =>{
+        if(!agent){
+            const newAgent = await createHTTPAgent();
+            setAgent(newAgent)
+            return newAgent
+        }
+        return agent
+    }
+
     const getBackendService = async () =>{
         if(!backendService){
-            const agent = await getHTTPAgent()
-            if (agent){
+            const a = await getHTTPAgent()
+            if (a){
                 const newBackendService = createBackendActor(backendCanisterId,{
-                    agent,
+                    agent:a
                 })
-                if(backendService){
-                    //@ts-ignore
-                    setBackendService(newBackendService);
-                    return newBackendService
-                }
+                setBackendService(newBackendService);
+                return newBackendService
             }
         }
-        return backendService
+        return backendService!
     }
 
     return (
         <ServiceContext.Provider
             value={{
-                //@ts-ignore
-                getBackendService: getBackendService!,
+                getBackendService: getBackendService,
             }}>
             {children}
         </ServiceContext.Provider>

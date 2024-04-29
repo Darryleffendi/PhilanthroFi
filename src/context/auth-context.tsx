@@ -3,7 +3,6 @@ import { defaultOptions } from "@lib/auth/auth-settings";
 import { useService } from "@lib/hooks/useService";
 import { AuthState, User, UserBase } from "@lib/types/user-types";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import {  _SERVICE as _SERVICE_BACKEND } from "src/declarations/backend.did";
 
 
 interface AuthContextProviderProps{
@@ -35,18 +34,19 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
     const [authState, setAuthState] = useState<AuthState>(AuthState.Nope)
     const { getBackendService } = useService();
 
+    
     const fetchUserData = async ()=>{
         const authClient = await AuthClient.create(defaultOptions.createOptions);
         const identity = authClient.getIdentity();
-
-        if(await authClient.isAuthenticated){
+        if(await authClient.isAuthenticated()){
             setAuthState(AuthState.Loading)
             // refactor pake usequery
             const backend = await getBackendService()
             const userData =  await backend.getUser(identity.getPrincipal())
-
-            if (userData.length){
+            console.log(userData)
+            if (userData.length && userData!=null){
                 setUser(userData[0])
+                console.log("masuk auth")
                 setAuthState(AuthState.Authenticated)
             }
             else if(identity){
@@ -57,11 +57,12 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
             setUser(null);
             setAuthState(AuthState.Nope)
         }
+        console.log(user)
     }
 
 
     const register = async (userRegisData: UserBase) =>{
-        
+
         const backend = await getBackendService()
         const response = await backend.register(
             userRegisData.first_name, 
@@ -69,7 +70,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
             userRegisData.email,
             userRegisData.birth_date
         )
-
+        console.log(response)
         return response
     }
 
@@ -102,6 +103,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
 
     useEffect(() => {
         fetchUserData()
+
     }, [])
 
 
