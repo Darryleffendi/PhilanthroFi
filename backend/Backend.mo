@@ -1,19 +1,54 @@
+import Principal "mo:base/Principal";
+import Time "mo:base/Time";
+import TrieMap "mo:base/TrieMap";
+import Text "mo:base/Text";
+import Result "mo:base/Result";
 
 actor class Backend() {
-  stable var counter = 0;
-
-  // Get the current count
-  public query func get() : async Nat {
-    counter;
+  type User = {
+    identity: Principal;
+    first_name: Text;
+    last_name: Text;
+    email: Text;
+    birth_date: Text;
+    timestamp: Time.Time
   };
 
-  // Increment the count by one
-  public func inc() : async () {
-    counter += 1;
+  let users = TrieMap.TrieMap<Principal, User>(Principal.equal, Principal.hash);
+
+
+  public shared ({caller}) func register(first_name: Text, last_name:Text, email:Text, birth_date:Text):async Result.Result<User, Text>{
+    let identity = caller;
+    
+
+    if(users.get(identity) != null){
+      return #err("User Already Exists!");
+    };
+
+    for (user in users.vals()){
+      if(user.email == email){
+        return #err("Email Already Exists!");
+      };
+    };
+
+    let new_user = {
+      identity = identity;
+      first_name = first_name;
+      last_name = last_name;
+      email = email;
+      birth_date = birth_date;
+      timestamp = Time.now();
+    };
+
+    users.put(new_user.identity, new_user);
+
+    return #ok(new_user)
   };
 
-  // Add `n` to the current count
-  public func add(n : Nat) : async () {
-    counter += n;
+  
+  public query func getUser(principal: Principal) : async ?User{
+    return users.get(principal);
   };
-};
+
+
+}
