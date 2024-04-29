@@ -1,8 +1,9 @@
 import { AuthClient } from "@dfinity/auth-client";
 import { defaultOptions } from "@lib/auth/auth-settings";
+import { useService } from "@lib/hooks/useService";
 import { AuthState, User, UserBase } from "@lib/types/user-types";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { backend } from "src/declarations/backend";
+import {  _SERVICE as _SERVICE_BACKEND } from "src/declarations/backend.did";
 
 
 interface AuthContextProviderProps{
@@ -32,6 +33,7 @@ export const AuthContext = createContext<AuthContextType>({
 export default function AuthContextProvider({children}:AuthContextProviderProps){
     const [user, setUser] = useState<User | null>(null);
     const [authState, setAuthState] = useState<AuthState>(AuthState.Nope)
+    const { getBackendService } = useService();
 
     const fetchUserData = async ()=>{
         const authClient = await AuthClient.create(defaultOptions.createOptions);
@@ -40,6 +42,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
         if(await authClient.isAuthenticated){
             setAuthState(AuthState.Loading)
             // refactor pake usequery
+            const backend = await getBackendService()
             const userData =  await backend.getUser(identity.getPrincipal())
 
             if (userData.length){
@@ -59,6 +62,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
 
     const register = async (userRegisData: UserBase) =>{
         
+        const backend = await getBackendService()
         const response = await backend.register(
             userRegisData.first_name, 
             userRegisData.last_name,
