@@ -7,8 +7,15 @@
         "node_compatibility": true
       }
     },
+    "internet_identity": {
+      "type": "pull",
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+    },
     "frontend": {
-      "dependencies": ["backend"],
+      "dependencies": [
+        "backend",
+        "internet_identity"
+      ],
       "type": "assets",
       "source": ["dist/"]
     }
