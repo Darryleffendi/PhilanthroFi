@@ -16,3 +16,4 @@ export const defaultOptions = {
         maxTimeToLive: days * hours * nanoseconds,
     },
 };
+

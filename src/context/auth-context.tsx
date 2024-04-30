@@ -2,7 +2,7 @@ import { AuthClient } from "@dfinity/auth-client";
 import { defaultOptions } from "@lib/auth/auth-settings";
 import { useService } from "@lib/hooks/useService";
 import { AuthState, User, UserBase } from "@lib/types/user-types";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useEffect, useState } from "react";
 
 
 interface AuthContextProviderProps{
@@ -35,7 +35,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
     const { getBackendService } = useService();
 
     
-    const fetchUserData = async ()=>{
+    const fetchUserData = useCallback(async ()=>{
         const authClient = await AuthClient.create(defaultOptions.createOptions);
         const identity = authClient.getIdentity();
         if(await authClient.isAuthenticated()){
@@ -58,7 +58,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
             setAuthState(AuthState.Nope)
         }
         console.log(user)
-    }
+    },[getBackendService]);
 
 
     const register = async (userRegisData: UserBase) =>{
@@ -77,6 +77,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
     const logout = async () => {
         const authClient = await AuthClient.create(defaultOptions.createOptions);
         await authClient.logout();
+        console.log("Login Success", authClient.getIdentity().getPrincipal().toText())
         setUser(null);
         setAuthState(AuthState.Nope);
 
@@ -89,6 +90,7 @@ export default function AuthContextProvider({children}:AuthContextProviderProps)
             await authClient.login(defaultOptions.loginOptions);
 
             console.log("Login Success", authClient.getIdentity())
+            console.log("Login Success", authClient.getIdentity().getPrincipal().toText())
         }catch (error){
             console.log("Login Failed", error)
         }

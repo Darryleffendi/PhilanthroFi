@@ -30,6 +30,7 @@ export default function LandingPage() {
       <button className='text-3xl' onClick={()=>{logout()}}>logout pantek</button>
       <button onClick={()=>{register(testUser)}}>Register</button>
       <button onClick={()=>{test()}}>test</button>
+      <button className='bg-white size-72'>asdas</button>
     </div>
   );
 }
