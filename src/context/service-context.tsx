@@ -1,9 +1,10 @@
 import {  ActorSubclass, HttpAgent } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
-import { defaultOptions } from "@lib/auth/auth-settings";
+import { defaultOptions } from "@lib/settings/auth-settings";
 import { createContext, ReactNode, useState } from "react";
 import { _SERVICE as _SERVICE_BACKEND } from "src/declarations/backend/backend.did";
 import { canisterId as backendCanisterId, createActor as createBackendActor } from "src/declarations/backend";
+import { fetchOptions,host } from "@lib/settings/agent-settings";
 
 
 interface ServiceContextProviderProps {
@@ -26,7 +27,7 @@ export default function ServiceContextProvider({children}:ServiceContextProvider
         const authClient = await AuthClient.create(defaultOptions.createOptions)
         const identity = authClient.getIdentity();
         if(!agent){
-            const agent = new HttpAgent({identity})
+            const agent = new HttpAgent({identity, fetchOptions, host})
             setAgent(agent)
             return agent
         }
