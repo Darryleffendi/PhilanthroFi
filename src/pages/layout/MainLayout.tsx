@@ -1,4 +1,5 @@
 import Navbar from "@components/Navbar"
+import Footer from "@components/footer/Footer"
 import React, { ReactNode } from "react"
 
 type Props = {
@@ -11,6 +12,7 @@ const MainLayout = ({children}:Props) => {
       <Navbar />
 
       {children}
+      <Footer/>
     </div>
   )
 }
