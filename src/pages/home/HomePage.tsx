@@ -1,11 +1,13 @@
 import Navbar from "@components/Navbar";
-import { Layout } from "lucide-react";
+import MainLayout from "@pages/layout/MainLayout";
 
 const HomePage = () => {
     return (
-        <Layout>
-            
-        </Layout>
+        <MainLayout className={'bg-slate-200'}>
+            <div>
+
+            </div>
+        </MainLayout>
     )
 }
 
