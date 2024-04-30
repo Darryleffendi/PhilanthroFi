@@ -44,7 +44,6 @@ actor class Backend() {
     return #ok(new_user)
   };
 
-  
   public query func getUser(principal: Principal) : async ?User{
     let user = users.get(principal);
     if (user == null){
@@ -53,8 +52,12 @@ actor class Backend() {
     return user;
   };
 
+  public shared ({caller}) func whoami() :async Text{
+    return Principal.toText(caller)
+  };
+
   public query func test() : async Text{
-    return "berhasil callnya"
+    return "berhasil callny"
   }
 
 }
