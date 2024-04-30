@@ -1,11 +1,11 @@
 import Navbar from "@components/Navbar";
-import { Layout } from "lucide-react";
+import MainLayout from "@pages/layout/MainLayout";
 
 const HomePage = () => {
     return (
-        <Layout>
-            
-        </Layout>
+        <MainLayout>
+            <div></div>
+        </MainLayout>
     )
 }
 

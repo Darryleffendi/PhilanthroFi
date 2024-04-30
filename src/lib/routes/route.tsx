@@ -20,5 +20,9 @@ export const router = createBrowserRouter([
   }, {
     path: '/register',
     element: <AuthPage/>
+  },
+  {
+    path: '/home',
+    element: <HomePage />,
   }
 ]);

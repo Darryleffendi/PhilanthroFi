@@ -2,7 +2,7 @@ import { useService } from '@lib/hooks/useService';
 import { UserBase } from '@lib/types/user-types';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from 'src/context/auth-context';
-import Layout from './layout/Layout';
+import Layout from './layout/MainLayout';
 
 
 export default function LandingPage() {
