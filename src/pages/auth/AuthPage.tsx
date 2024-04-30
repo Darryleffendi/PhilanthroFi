@@ -7,50 +7,53 @@ import { useEffect } from "react";
 import ProtectedRoute from "src/middleware/protected-route";
 import { AuthContext } from "src/context/auth-context";
 import { AuthState } from "@lib/types/user-types";
+import { useAuth } from "@lib/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
 
-    const {authState} = useContext(AuthContext)
-
-    const [authTypeState, setAuthTypeState] = useState(authState);
-
+    const {user,login, authState, register, logout} = useAuth();
     const [opacity, setOpacity] = useState(0);
-    const [width, setWidth] = useState(authState === AuthState.Nope ? 28 : 36);
+
+    const navigate = useNavigate();
 
     const renderSubPage = () =>{
-        if (authState === AuthState.Nope) return <LoginSubpage changeAuthType={changeAuthType} />
-        else if (authState === AuthState.NotRegistered) return <RegisterSubpage changeAuthType={changeAuthType} />
+        if (authState === AuthState.Nope) return <LoginSubpage login={login} />
+        else if (authState === AuthState.NotRegistered) return <RegisterSubpage register={register} />
+        else navigate("/home")
     }
-
+   
     const changeAuthType = async () => {
-        setOpacity(0);
-        await new Promise(resolve => setTimeout(resolve, 200));
-        setWidth(authState !== AuthState.Nope ? 28 : 36)
-        await new Promise(resolve => setTimeout(resolve, 300));
-        // if (authTypeState === "login") {
-        //     setAuthTypeState("register");
-        // } else {
-        //     setAuthTypeState("login");
-        // }
+        // setOpacity(0);
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         setOpacity(100);
     }
+
+    useEffect(() => {
+        console.log(authState)
+    }, [authState, user])
 
     useEffect(() => {
         setOpacity(100);
     }, [])
 
+
     return (
-        <ProtectedRoute>
+        // <ProtectedRoute>
             <div className="w-screen h-screen bg-primary overflow-hidden flex p-6">
                 {/* Decorations */}
-                {/* <Blob color="#b9d6ff" className="fixed left-[-10vw] bottom-0 w-8/12 opacity-20"/> */}
                 <img src={logoWhite} className="right-[-20vw] top-0 h-[140vh] fixed opacity-5 brightness-200"/>
 
-            {/* Auth Form */}
-            <div className="w-[36rem] h-full bg-background z-20 shadow-xl flex flex-col text-black p-8 justify-between rounded-lg font-nunito">
-            {renderSubPage()}
+                {/* Auth Form */}
+                <div 
+                    className={`h-full bg-background z-20 shadow-xl text-black p-8 rounded-lg transition-all duration-500 ${authState === AuthState.Nope ? "w-[28rem]" : "w-[36rem]"} font-nunito`}
+                >
+                    <div className={`flex flex-col justify-between h-full transition-all duration-500 ${authState === AuthState.Loading ? 'opacity-0' : 'opacity-100'}`}>
+                    {renderSubPage()}
+                    </div>
+                </div>
             </div>
-        </div>
-        </ProtectedRoute>
+        // </ProtectedRoute>
     );
 }

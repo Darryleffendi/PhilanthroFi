@@ -49,6 +49,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     }, []);
 
     const fetchUserData = async (client: AuthClient) => {
+        console.log("run")
         const identity = client.getIdentity();
         if (identity && !identity.getPrincipal().isAnonymous()) {
             try {
@@ -87,14 +88,18 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     const login = async () => {
         try {
             if (authClient) {
-                await authClient.login(defaultOptions.loginOptions);
-                await fetchUserData(authClient);
+                // Use a new Promise to handle login
+                await new Promise((resolve, reject) => {
+                    authClient.login({...defaultOptions.loginOptions, onSuccess:resolve,})
+                });
+                await fetchUserData(authClient); // Fetch user data after successful login
             }
         } catch (error) {
             console.error("Error logging in:", error);
-            throw error;
+            throw error; // Propagate the error upwards
         }
     };
+    
 
     const logout = async () => {
         try {

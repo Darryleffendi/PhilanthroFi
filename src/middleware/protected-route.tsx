@@ -18,11 +18,11 @@ export default function ProtectedRoute({children}:ProtectedRouteProps) {
 			return
 		}
         else if (authState == AuthState.Nope) {
-			navigate('/login');
+			navigate('/auth');
 		}
-        else if (authState == AuthState.NotRegistered) {
-			navigate('/register')
-		}
+        // else if (authState == AuthState.NotRegistered) {
+		// 	navigate('/register')
+		// }
         
 	}, [user, authState]);
     

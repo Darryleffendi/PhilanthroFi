@@ -8,6 +8,7 @@ export default {
     extend: {
         fontFamily: {
             'nunito': ['Nunito', 'sans-serif'],
+            'gruppo': ['Gruppo', 'sans-serif'],
         },
         colors: {
             'primary': '#aaccf8',
