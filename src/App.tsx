@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet-async';
 function App() {
 
   return (
-    <>
+    <div className='font-restart'>
       <Helmet>
         <title>PhilantroFi</title>
         <link rel="icon" type="image/svg+xml" href="" />
@@ -20,7 +20,7 @@ function App() {
           <RouterProvider router={router} />
         </AuthContextProvider>
       </ServiceContextProvider>
-    </>
+    </div>
   );
 }
 

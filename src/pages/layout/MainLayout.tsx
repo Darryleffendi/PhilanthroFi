@@ -1,5 +1,5 @@
-import Navbar from "@components/Navbar"
-import Footer from "@components/footer/Footer"
+import Navbar from "@components/navbar"
+import Footer from "@components/footer/footer"
 import React, { ReactNode } from "react"
 
 type Props = {

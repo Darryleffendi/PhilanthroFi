@@ -1,17 +1,16 @@
-import { useAuth } from "@ic-reactor/react";
+
+import { useAuth } from "@lib/hooks/useAuth";
 import { AuthState } from "@lib/types/user-types";
 import { ReactNode, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "src/context/auth-context";
 
 interface ProtectedRouteProps{
     children: ReactNode
 }
 export default function ProtectedRoute({children}:ProtectedRouteProps) {
 
-    const {authState, user} = useContext(AuthContext)
+    const {authState, user} = useAuth();
 	const navigate = useNavigate();
-    console.log(authState)
 
     useEffect(() => {
 		if (authState == AuthState.Loading) {

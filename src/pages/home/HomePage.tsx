@@ -1,5 +1,5 @@
-import Navbar from "@components/Navbar";
 import MainLayout from "@pages/layout/MainLayout";
+import ProtectedRoute from "src/middleware/protected-route";
 
 const HomePage = () => {
     return (
