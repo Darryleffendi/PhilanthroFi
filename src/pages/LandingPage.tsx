@@ -1,3 +1,4 @@
+import { useAuth } from '@lib/hooks/useAuth';
 import { useService } from '@lib/hooks/useService';
 import { UserBase } from '@lib/types/user-types';
 import { useContext, useEffect } from 'react';
@@ -6,7 +7,7 @@ import { AuthContext } from 'src/context/auth-context';
 
 export default function LandingPage() {
 
-  const {user,login, authState, register, logout} = useContext(AuthContext)
+  const {user,login, authState, register, logout} = useAuth();
   const { getBackendService } = useService();
 
   const test = async () =>{
