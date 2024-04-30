@@ -23,7 +23,8 @@
     "paths": {
       "@components/*":["src/components/*"],
       "@lib/*":["src/lib/*"],
-      "@pages/*":["src/pages/*"]
+      "@pages/*":["src/pages/*"],
+      "@assets/*":["src/assets/*"],
     }
   },
   "include": ["src"]

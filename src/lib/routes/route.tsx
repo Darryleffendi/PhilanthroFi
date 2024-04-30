@@ -1,3 +1,4 @@
+import AuthPage from '@pages/auth/AuthPage';
 import CompleteRegistration from '@pages/CompleteRegistration';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
@@ -12,4 +13,11 @@ export const router = createBrowserRouter([
     path: '/complete-registration',
     element: <CompleteRegistration />,
   },
+  {
+    path: '/login',
+    element: <AuthPage authType='login' />
+  }, {
+    path: '/register',
+    element: <AuthPage authType='register' />
+  }
 ]);
