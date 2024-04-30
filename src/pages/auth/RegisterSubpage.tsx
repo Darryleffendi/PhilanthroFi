@@ -2,8 +2,10 @@ import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
 import { UserBase } from "@lib/types/user-types";
 import { Dispatch, SetStateAction, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterSubpage({register} : props) {
+    const navigate = useNavigate()
 
     const [errorMsg, setErrorMsg] = useState<string>("")
 
@@ -21,7 +23,7 @@ export default function RegisterSubpage({register} : props) {
         })
     }
 
-    const regisAccount = () =>{
+    const regisAccount = async () =>{
 
         if(regisData.first_name === "" || regisData.last_name === "" || regisData.birth_date === "" || regisData.email === ""){
             setErrorMsg("Please fill all fields")
@@ -32,7 +34,9 @@ export default function RegisterSubpage({register} : props) {
             return;
         }
 
-        register(regisData)
+        const res = await register(regisData)
+        if(res.ok) navigate('/home')
+        else if(res.err) setErrorMsg("Registration Invalid")
     }
     return (
         <>

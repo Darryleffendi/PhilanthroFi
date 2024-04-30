@@ -5,6 +5,7 @@ import { defaultOptions } from "@lib/settings/auth-settings";
 import { useService } from "@lib/hooks/useService";
 import { AuthState, User, UserBase } from "@lib/types/user-types";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 interface AuthContextProviderProps {
     children: ReactNode;
@@ -39,7 +40,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
             const client = await AuthClient.create(defaultOptions.createOptions);
             setAuthClient(client);
             if (await client.isAuthenticated()) {
-                fetchUserData(client);
+                fetchUserData();
             } else {
                 setAuthState(AuthState.Nope);
             }
@@ -48,25 +49,43 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
         initializeAuthClient();
     }, []);
 
-    const fetchUserData = async (client: AuthClient) => {
-        console.log("run")
-        const identity = client.getIdentity();
-        if (identity && !identity.getPrincipal().isAnonymous()) {
-            try {
-                setAuthState(AuthState.Loading);
-                const backend = await getBackendService();
-                const userData = await backend.getUser(identity.getPrincipal());
-                if (userData.length && userData != null) {
-                    setUser(userData[0]);
-                    setAuthState(AuthState.Authenticated);
-                } else {
-                    setAuthState(AuthState.NotRegistered);
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
+    const fetchUserData = async () => {
+        if(!authClient)return
+        
+        const identity = authClient.getIdentity();
+        if (!identity || identity.getPrincipal().isAnonymous()) {
+            throw new Error('User is not authenticated');
+        }
+
+        const backend = await getBackendService();
+        if (!backend) {
+            throw new Error('Backend service is not available');
+        }
+
+        const userData = await backend.getUser(identity.getPrincipal());
+        if (!userData || userData.length === 0) {
+            throw new Error('No user data found');
+        }
+
+        return userData[0]; 
+    };
+
+    const { error, isLoading, isSuccess } = useQuery(['userData', authClient?.getIdentity()], fetchUserData, {
+        retry: false,
+        onSuccess: (userData:User) => {
+            setUser(userData);
+            setAuthState(AuthState.Authenticated);
+        },
+        onError: (error:Error) => {
+            console.error("Error fetching user data:", error);
+            if (error.message === 'No user data found') {
+                setAuthState(AuthState.NotRegistered);
+            } 
+            else {
+                setAuthState(AuthState.Nope);
             }
         }
-    };
+    });
 
     const register = async (userRegisData: UserBase) => {
         try {
@@ -88,15 +107,14 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     const login = async () => {
         try {
             if (authClient) {
-                // Use a new Promise to handle login
                 await new Promise((resolve, reject) => {
                     authClient.login({...defaultOptions.loginOptions, onSuccess:resolve,})
                 });
-                await fetchUserData(authClient); // Fetch user data after successful login
+                
             }
         } catch (error) {
             console.error("Error logging in:", error);
-            throw error; // Propagate the error upwards
+            throw error; 
         }
     };
     

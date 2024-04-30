@@ -14,11 +14,11 @@ export default function LoginSubpage({login} : props) {
 
         <div className="flex flex-col gap-5">
             <Button 
-                className="font-bold bg-transparent gap-4 text-black border-black h-12 hover:bg-slate-300 border hover:border-slate-300"
+                className="font-[500] bg-transparent gap-4 text-black border-black h-12 hover:bg-slate-300 border hover:border-slate-300"
                 onClick={() => login()}
             >
                 <img src={icpLogo} className="h-[90%]"/>
-                Login with Internet Identity
+                <div className="">Login with Internet Identity</div>
             </Button>
         </div>
         </>
