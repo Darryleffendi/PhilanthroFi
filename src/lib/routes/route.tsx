@@ -1,5 +1,6 @@
 import AuthPage from '@pages/auth/AuthPage';
 import CompleteRegistration from '@pages/CompleteRegistration';
+import HomePage from '@pages/home/HomePage';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 const LandingPage = React.lazy(() => import('@pages/LandingPage'));
@@ -15,9 +16,9 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <AuthPage authType='login' />
+    element: <AuthPage/>
   }, {
     path: '/register',
-    element: <AuthPage authType='register' />
+    element: <AuthPage/>
   }
 ]);

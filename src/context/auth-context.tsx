@@ -6,7 +6,6 @@ import { useService } from "@lib/hooks/useService";
 import { AuthState, User, UserBase } from "@lib/types/user-types";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-
 interface AuthContextProviderProps {
     children: ReactNode;
 }
