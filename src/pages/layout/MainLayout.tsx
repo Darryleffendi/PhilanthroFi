@@ -3,17 +3,20 @@ import Footer from "@components/footer/Footer"
 import React, { ReactNode } from "react"
 
 type Props = {
-  children : ReactNode
+  children : ReactNode,
+  className?: String
 }
 
-const MainLayout = ({children}:Props) => {
+const MainLayout : React.FC<Props> = ({children, className}) => {
   return (
-    <div>
-      <Navbar />
+    <>
+    <div className={`${className} p-6 w-full min-h-screen`}>
+      <Navbar/>
 
       {children}
-      <Footer/>
     </div>
+    <Footer/>
+    </>
   )
 }
 
