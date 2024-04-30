@@ -1,3 +1,4 @@
+import Navbar from "@components/Navbar"
 import React, { ReactNode } from "react"
 
 type Props = {
@@ -6,7 +7,11 @@ type Props = {
 
 const Layout = ({children}:Props) => {
   return (
-    <div>asdasdas {children}</div>
+    <div>
+      <Navbar />
+
+      {children}
+    </div>
   )
 }
 

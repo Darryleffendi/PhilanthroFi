@@ -2,7 +2,7 @@ import { useService } from '@lib/hooks/useService';
 import { UserBase } from '@lib/types/user-types';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from 'src/context/auth-context';
-import Layout from 'src/Layout';
+import Layout from './layout/Layout';
 
 
 export default function LandingPage() {
@@ -25,7 +25,6 @@ export default function LandingPage() {
   }
 
   return (
-    <Layout>
       <div className=' w-[100vw] h-[100vh] bg-red-700'>
           Landing Page
           <button className='text-5xl' onClick={()=>{login()}}>Login pantek</button>
@@ -33,6 +32,5 @@ export default function LandingPage() {
           <button onClick={()=>{register(testUser)}}>Register</button>
           <button onClick={()=>{test()}}>test</button>
         </div>
-    </Layout>
   );
 }
