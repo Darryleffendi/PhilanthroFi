@@ -1,4 +1,3 @@
-import { Blob } from "@components/Blob"
 import { useState } from "react";
 import logoWhite from "@assets/logo-white.png"
 import LoginSubpage from "./LoginSubpage";
