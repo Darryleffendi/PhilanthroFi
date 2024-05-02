@@ -21,7 +21,6 @@ export default function AuthPage() {
         else if (authState === AuthState.Authenticated) navigate("/home")
     }
 
-
     return (
             <div className="w-screen h-screen bg-primary bg-opacity-50 overflow-hidden flex flex-col lg:flex-row p-6 gap-6 md:px-12 lg:px-24">
                 {/* Decorations */}
@@ -42,7 +41,7 @@ export default function AuthPage() {
                 </div>
                 <div className="w-full h-1/2 lg:h-full lg:w-[50%]  flex justify-center items-center">
                     <div 
-                        className={`h-[70%] lg:h-[50%] bg-background z-20 shadow-xl text-black p-8 rounded-lg transition-all duration-500 w-full  `}
+                        className={`h-[70%] bg-background z-20 shadow-xl text-black p-8 rounded-lg transition-all duration-500 w-full ${authState === AuthState.Nope ? 'lg:h-[50%]' : 'lg:min-h-[50%]'} `}
                     >
                         <div className={`flex flex-col justify-between h-full transition-all duration-500 ${authState === AuthState.Loading ? 'opacity-0' : 'opacity-100'}`}>
                             {renderSubPage()}

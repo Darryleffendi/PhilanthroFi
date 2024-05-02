@@ -1,18 +1,20 @@
-import Navbar from "@components/navbar"
-import Footer from "@components/footer/footer"
+import Navbar from "@components/Navbar"
+import Footer from "@components/footer/Footer"
 import React, { ReactNode } from "react"
 
 type Props = {
   children : ReactNode,
   className?: String
+  navbarClassName?: string
 }
 
-const MainLayout : React.FC<Props> = ({children, className}) => {
+const MainLayout : React.FC<Props> = ({children, className = "p-6", navbarClassName}) => {
   return (
     <>
-    <div className={`${className} p-6 w-full min-h-screen`}>
-      <Navbar/>
-
+    <div className={`p-6`}>
+      <Navbar className={navbarClassName}/>
+    </div>
+    <div className={`${className} w-full min-h-screen`}>
       {children}
     </div>
     <Footer/>
