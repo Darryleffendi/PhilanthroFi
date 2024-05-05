@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
         </div>
         <div className={style.copyRightFooter}>
-          <h4>@Copyright Tonga Tonga</h4>
+          <h4>@Copyright DuckCing</h4>
         </div>
       </div>
     </footer>

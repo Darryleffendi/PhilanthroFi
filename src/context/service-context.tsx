@@ -27,7 +27,7 @@ export default function ServiceContextProvider({children}:ServiceContextProvider
         const authClient = await AuthClient.create(defaultOptions.createOptions)
         const identity = authClient.getIdentity();
         if(!agent){
-            const agent = new HttpAgent({identity, fetchOptions, host})
+            const agent = new HttpAgent({identity})
             setAgent(agent)
             return agent
         }
