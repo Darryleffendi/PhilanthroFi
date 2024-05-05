@@ -9,7 +9,17 @@
     },
     "utility_provider": {
       "type": "motoko",
-      "main": "backend_canisters/utility_provider/main.mo",
+      "main": "backend_canisters/utility_provider/Main.mo",
+      "declarations": {
+        "node_compatibility": true
+      }
+    },
+    "charity": {
+      "dependencies": [
+        "utility_provider"
+      ],
+      "type": "motoko",
+      "main": "backend_canisters/charity/Main.mo",
       "declarations": {
         "node_compatibility": true
       }
