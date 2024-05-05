@@ -2,7 +2,14 @@
   "canisters": {
     "backend": {
       "type": "motoko",
-      "main": "backend/Backend.mo",
+      "main": "backend_canisters/backend/Backend.mo",
+      "declarations": {
+        "node_compatibility": true
+      }
+    },
+    "utility_provider": {
+      "type": "motoko",
+      "main": "backend_canisters/utility_provider/main.mo",
       "declarations": {
         "node_compatibility": true
       }
