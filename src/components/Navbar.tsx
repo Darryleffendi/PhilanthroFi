@@ -7,35 +7,39 @@ import {
   NavigationMenuList,
 } from './ui/navigation-menu';
 import logoDark from '@assets/logo/logo-dark.png';
+import Wallet2 from './wallet2';
 
 type props = {
-    className?: string;
-}
+  className?: string;
+};
 
-const Navbar = ({className = "bg-white shadow-md rounded-lg"} : props) => {
+const Navbar = ({ className = 'bg-white shadow-md rounded-lg' }: props) => {
   return (
     <div className="flex justify-between fixed">
-      <NavigationMenu className={`w-full px-6 py-6 h-20 flex items-center gap-12 transition-all duration-300 ${className}`}>
+      <NavigationMenu
+        className={`w-full px-6 py-6 h-20 flex items-center gap-12 transition-all duration-300 ${className}`}
+      >
         <div className="flex items-center gap-2">
-        <img src={logoDark} className="object-cover h-10" alt="" />
-        <div className="text-3xl font-[500]">PhilanthroFi</div>
+          <img src={logoDark} className="object-cover h-10" alt="" />
+          <div className="text-3xl font-[500]">PhilanthroFi</div>
         </div>
         <NavigationMenuList className="flex gap-2">
-        <NavigationMenuItem>
+          <NavigationMenuItem>
             <Link className="" to={'/about'}>
-            About Us
+              About Us
             </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Link className="" to={'/explores'}>
-            Explores
+              Explores
             </Link>
-        </NavigationMenuItem>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Wallet2></Wallet2>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <div className='flex gap'>
-
-      </div>
+      <div className="flex gap"></div>
     </div>
   );
 };
