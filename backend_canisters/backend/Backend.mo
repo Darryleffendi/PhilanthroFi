@@ -13,7 +13,6 @@ actor class Backend() {
     birth_date: Text;
     timestamp: Time.Time
   };
-
   let users = TrieMap.TrieMap<Principal, User>(Principal.equal, Principal.hash);
 
   public shared ({caller}) func register(first_name: Text, last_name:Text, email:Text, birth_date:Text):async Result.Result<User, Text>{

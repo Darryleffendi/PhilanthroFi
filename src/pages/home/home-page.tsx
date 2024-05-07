@@ -1,4 +1,4 @@
-import MainLayout from '@pages/layout/MainLayout';
+import MainLayout from '@pages/layout/main-layout';
 import ProtectedRoute from 'src/middleware/protected-route';
 
 const HomePage = () => {
