@@ -1,18 +1,21 @@
 import { Button } from "@components/ui/button";
 import MainLayout from "./layout/main-layout";
 import { useAuth } from "@lib/hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Wallet2 from "@components/wallet2";
 import ReactTypingEffect from 'react-typing-effect';
 import LandingNavbar from "@components/landing-navbar";
-import logoWhite from "@assets/logo/logo-white.png"
+import logoWhite from "@assets/logo/logo-pure-white.png"
 
 
 export default function LandingPage() {
 
   const {logout, user} = useAuth()
   const [navMode, setNavMode] = useState<'top' | 'default'>("top")
-  const [circleScale, setCircleScale] = useState(0)
+  const [circleScale, setCircleScale] = useState(9999999)
+  
+  const [isSticky, setIsSticky] = useState(false);
+  const observerTargetRef = useRef(null);
 
   let scrollTop = 0;
     
@@ -25,26 +28,44 @@ export default function LandingPage() {
     else {
         setNavMode("top")
     }
-    setCircleScale(scrollTop/50)
-    console.log(scrollTop)
+    
+    if(scrollTop > 200) {
+        setCircleScale(Math.pow((1000/(scrollTop - 200)), 2))
+    }
   }
 
   useEffect(() => {
     
         window.addEventListener("scroll", handleScroll);
 
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const [entry] = entries;
+                console.log("pntk")
+                setIsSticky(!entry.isIntersecting);
+            }
+        );
+
+        if (observerTargetRef.current) {
+            observer.observe(observerTargetRef.current);
+        }
+
         return () => {
             window.removeEventListener("scroll", handleScroll);
             document.body.style.cursor = '';
+            
+            if (observerTargetRef.current) {
+                observer.unobserve(observerTargetRef.current);
+            }
         }
     }, [])
 
   return (
-    <div>
+    <div className="bg-slate-100 ">
         <LandingNavbar navMode={navMode}/>
         <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] absolute opacity-[25%] object-cover"/>
 
-        <div className="bg-slate-100 w-full p-6 h-screen -z-20 flex justify-center items-center flex-col gap-10">
+        <div className="w-full p-6 h-screen -z-20 flex justify-center items-center flex-col gap-10 bg-slate-100 ">
             <div className="flex flex-col items-center gap-5 z-10">
                 <div className="flex font-nbinter font-black text-7xl">
                     <h1>Transforming&nbsp;</h1>
@@ -81,6 +102,20 @@ export default function LandingPage() {
                 <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
                 <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
             </div>
+        </div>
+
+        <div className="w-screen h-1 absolute -mt-14" ref={observerTargetRef}></div>
+        
+        <div className={`w-full h-screen p-6 z-0 ${isSticky ? "fixed top-14" : "absolute"}`}>
+            <div className="w-full h-[calc(100vh-7.5rem)] overflow-hidden rounded-3xl relative">
+                <div className="absolute w-[calc(100vw-4rem)] h-[calc(100vw-1.5rem)] bg-primary z-40" style={{"borderRadius" : circleScale + "vw"}}>
+
+                </div>
+            </div>
+        </div>
+
+        <div className="w-screen h-[300vh]">
+
         </div>
 
         <div className=' w-full h-screen flex flex-col gap-10'>

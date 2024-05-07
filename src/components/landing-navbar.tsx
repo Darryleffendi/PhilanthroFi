@@ -16,7 +16,7 @@ type props = {
 
 const LandingNavbar = ({ className, navMode }: props) => {
 
-    let defaultNavClass = 'bg-white shadow-md rounded-lg h-16 px-6 '
+    let defaultNavClass = 'h-16 px-6 '
     let topNavClass = 'h-24 px-16 mt-4'
 
     const [navClass, setNavClass] = useState(navMode === 'top' ? topNavClass : defaultNavClass);
