@@ -25,7 +25,7 @@ export default function AuthPage() {
             <div className="w-screen h-screen bg-primary bg-opacity-50 overflow-hidden flex flex-col lg:flex-row p-6 gap-6 md:px-12 lg:px-24">
                 {/* Decorations */}
                 
-                <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] fixed opacity-10 object-cover"/>
+                <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] fixed opacity-[13%] object-cover"/>
 
                 {/* Auth Form */}
                 <div className="w-full lg:w-[50%] h-1/4 lg:h-full flex items-end lg:items-start lg:relative lg:mt-[15vh] ">
