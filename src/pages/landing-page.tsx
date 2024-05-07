@@ -29,8 +29,8 @@ export default function LandingPage() {
         setNavMode("top")
     }
     
-    if(scrollTop > 200) {
-        setCircleScale(Math.pow((1000/(scrollTop - 200)), 2))
+    if(scrollTop > 100) {
+        setCircleScale(Math.pow((10000/(scrollTop - 100)), 1))
     }
   }
 
@@ -104,11 +104,11 @@ export default function LandingPage() {
             </div>
         </div>
 
-        <div className="w-screen h-1 absolute -mt-14" ref={observerTargetRef}></div>
+        <div className="w-screen absolute h-14 -mt-14" ref={observerTargetRef}></div>
         
-        <div className={`w-full h-screen p-6 z-0 ${isSticky ? "fixed top-14" : "absolute"}`}>
-            <div className="w-full h-[calc(100vh-7.5rem)] overflow-hidden rounded-3xl relative">
-                <div className="absolute w-[calc(100vw-4rem)] h-[calc(100vw-1.5rem)] bg-primary z-40" style={{"borderRadius" : circleScale + "vw"}}>
+        <div className={`w-full h-screen z-0 ${isSticky ? "fixed top-0" : "absolute"}`}>
+            <div className="w-full h-screen overflow-hidden rounded-3xl relative">
+                <div className="absolute w-screen h-[100vw] bg-primary z-40" style={{"borderRadius" : circleScale + "vw"}}>
 
                 </div>
             </div>
