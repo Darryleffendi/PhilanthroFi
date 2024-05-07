@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import logoWhite from "@assets/logo/logo-white.png"
-import LoginSubpage from "./LoginSubpage";
-import RegisterSubpage from "./RegisterSubpage";
+import LoginSubpage from "./login-subpage";
+import RegisterSubpage from "./register-subpage";
 import { useEffect } from "react";
 
 import { AuthState } from "@lib/types/user-types";

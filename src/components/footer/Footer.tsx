@@ -1,13 +1,13 @@
 // Footer.jsx
 
 import React from 'react';
-import style from './Footer.module.scss';
+import style from './footer.module.scss';
 import { Link } from 'react-router-dom';
-import FacebookImg from '@assets/Footer/facebook-app-symbol.png'
-import InstagramImg from '@assets/Footer/instagram.png'
-import LinkedInImg from '@assets/Footer/linkedin.png'
-import TwitterImg from '@assets/Footer/twitter.png'
-import YoutubeImg from '@assets/Footer/youtube.png'
+import FacebookImg from '@assets/footer/facebook-app-symbol.png'
+import InstagramImg from '@assets/footer/instagram.png'
+import LinkedInImg from '@assets/footer/linkedin.png'
+import TwitterImg from '@assets/footer/twitter.png'
+import YoutubeImg from '@assets/footer/youtube.png'
 export default function Footer() {
   return (
     <footer className={style.footer}>

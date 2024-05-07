@@ -1,10 +1,10 @@
 import { Button } from "@components/ui/button";
-import MainLayout from "./layout/MainLayout";
+import MainLayout from "./layout/main-layout";
 import { useAuth } from "@lib/hooks/useAuth";
 import { useEffect, useState } from "react";
 import Wallet2 from "@components/wallet2";
 import ReactTypingEffect from 'react-typing-effect';
-import LandingNavbar from "@components/LandingNavbar";
+import LandingNavbar from "@components/landing-navbar";
 
 
 export default function LandingPage() {
