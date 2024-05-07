@@ -26,7 +26,7 @@ const LandingNavbar = ({ className, navMode }: props) => {
     }, [navMode])
 
   return (
-    <div className={`px-6 py-4 flex justify-between fixed w-screen transition-all duration-500 ${className} ${navClass}`}>
+    <div className={`px-6 py-4 flex justify-between fixed w-screen transition-all z-50 duration-500 ${className} ${navClass}`}>
       <NavigationMenu
         className={`flex items-center gap-12 justify-between`}
       >

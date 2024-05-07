@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Wallet2 from "@components/wallet2";
 import ReactTypingEffect from 'react-typing-effect';
 import LandingNavbar from "@components/LandingNavbar";
-
+import logoWhite from "@assets/logo/logo-white.png"
 
 export default function LandingPage() {
 
@@ -41,9 +41,10 @@ export default function LandingPage() {
   return (
     <div>
         <LandingNavbar navMode={navMode}/>
+        <img src={logoWhite} className="absolute brightness-200 w-[80vw] top-[5vw] right-[50vw] opacity-30"/>
 
         <div className="bg-slate-100 w-full p-6 h-screen -z-20 flex justify-center items-center flex-col gap-10">
-            <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-5 z-10">
                 <div className="flex font-nbinter font-black text-7xl">
                     <h1>Transforming&nbsp;</h1>
                     <h1 className="bg-yellow-100">Charity</h1>
@@ -71,11 +72,11 @@ export default function LandingPage() {
                     />
                 </div>
             </div>
-            <div className="text-center font-nbinter text-lg">
+            <div className="text-center font-nbinter text-lg z-10">
                 <p>Leverage the ICP blockchain for traceable donations.</p>
                 <p>Every dollar is visible, every gift counts.</p>
             </div>
-            <div className="flex items-center gap-3 font-nbinter">
+            <div className="flex items-center gap-3 font-nbinter z-10">
                 <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
                 <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
             </div>
