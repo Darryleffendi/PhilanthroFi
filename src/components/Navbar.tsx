@@ -14,7 +14,7 @@ type props = {
 
 const Navbar = ({className = "bg-white shadow-md rounded-lg"} : props) => {
   return (
-    <div className="flex justify-between fixed">
+    <div className="flex justify-between">
       <NavigationMenu className={`w-full px-6 py-6 h-20 flex items-center gap-12 transition-all duration-300 ${className}`}>
         <div className="flex items-center gap-2">
         <img src={logoDark} className="object-cover h-10" alt="" />

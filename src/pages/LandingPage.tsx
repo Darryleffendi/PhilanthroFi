@@ -8,6 +8,7 @@ export default function LandingPage() {
 
   const {logout, user} = useAuth()
   const [navClass, setNavClass] = useState("")
+  const [circleScale, setCircleScale] = useState(0)
 
   let scrollTop = 0;
     
@@ -20,6 +21,7 @@ export default function LandingPage() {
     else {
         setNavClass("")
     }
+    setCircleScale(scrollTop/50)
     console.log(scrollTop)
   }
 
@@ -34,8 +36,8 @@ export default function LandingPage() {
     }, [])
 
   return (
-    <MainLayout navbarClassName={navClass}>
-        <div className="bg-white w-full p-6 h-screen z-20 flex justify-center"></div>
+    <MainLayout navbarClassName={navClass} className="">
+        <div className="bg-slate-100 w-full p-6 h-screen -z-20 flex justify-center"></div>
         <div className=' w-full h-screen flex flex-col gap-10'>
           Ini landing page, boleh siapa aja masuk, tapi home udah kena cockblock sama auth
           <div>
@@ -46,6 +48,14 @@ export default function LandingPage() {
             {user?.first_name}
           </div>
           <Button onClick={()=>{logout()}} className="text-8xl">EMERGENCY LOGOUT PANTEK BUTTON </Button>
+        </div>
+
+        {/* <div className="fixed h-screen w-full flex justify-center top-[100vh]">
+            <div className="bg-primary w-48 h-48 rounded-full" style={{transform: `scale(${circleScale})`}}></div>
+
+        </div> */}
+        <div className="z-20">
+            test
         </div>
     </MainLayout>
       
