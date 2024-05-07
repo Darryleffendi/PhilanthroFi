@@ -11,7 +11,7 @@ type Props = {
 const MainLayout : React.FC<Props> = ({children, className = "p-6", navbarClassName}) => {
   return (
     <>
-    <div className={`p-6`}>
+    <div className={`p-6 fixed z-40`}>
       <Navbar className={navbarClassName}/>
     </div>
     <div className={`${className} w-full min-h-screen`}>

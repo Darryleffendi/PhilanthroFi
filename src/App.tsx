@@ -11,8 +11,8 @@ function App() {
   return (
     <div className='font-restart'>
       <Helmet>
-        <title>PhilantroFi</title>
-        <link rel="icon" type="image/svg+xml" href="" />
+        <title>PhilanthroFi</title>
+        <link rel="icon" href="/assets/logo/logo-white.png" />
       </Helmet>
 
       {/* nanti ini context aja masukingnya */}
