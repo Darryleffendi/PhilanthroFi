@@ -4,6 +4,7 @@ import {  RouterProvider} from "react-router-dom";
 import AuthContextProvider from './context/auth-context';
 import ServiceContextProvider from './context/service-context';
 import { Helmet } from 'react-helmet-async';
+import SmoothScrollbar from '@components/smooth_scrollbar/smooth-scrollbar';
 
 
 function App() {

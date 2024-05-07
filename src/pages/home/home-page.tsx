@@ -5,7 +5,9 @@ const HomePage = () => {
   return (
     <ProtectedRoute>
       <MainLayout className={'bg-slate-200'}>
-        <div></div>
+        <div>
+          Home
+        </div>
       </MainLayout>
     </ProtectedRoute>
   );
