@@ -17,9 +17,7 @@ const MainLayout : React.FC<Props> = ({children, className = "p-6", navbarClassN
         <Navbar className={navbarClassName}/>
       </div>
       <div className={`${className} w-full min-h-screen`}>
-        <SmoothScrollbar>
          {children}
-        </SmoothScrollbar>
       </div>
       <Footer/>
     </>
