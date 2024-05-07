@@ -16,7 +16,7 @@ type props = {
 
 const LandingNavbar = ({ className, navMode }: props) => {
 
-    let defaultNavClass = 'bg-white shadow-md rounded-lg h-16'
+    let defaultNavClass = 'bg-white shadow-md rounded-lg h-16 px-6 '
     let topNavClass = 'h-24 px-16 mt-4'
 
     const [navClass, setNavClass] = useState(navMode === 'top' ? topNavClass : defaultNavClass);
@@ -26,7 +26,7 @@ const LandingNavbar = ({ className, navMode }: props) => {
     }, [navMode])
 
   return (
-    <div className={`px-6 py-4 flex justify-between fixed w-screen transition-all z-50 duration-500 ${className} ${navClass}`}>
+    <div className={`py-4 flex justify-between fixed w-screen transition-all z-50 duration-500 ${className} ${navClass}`}>
       <NavigationMenu
         className={`flex items-center gap-12 justify-between`}
       >
