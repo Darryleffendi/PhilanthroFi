@@ -76,7 +76,7 @@ export default function LandingPage() {
                     />
                 </div>
             </div>
-            <div className="text-center font-nbinter text-lg z-10">
+            <div className="text-center font-restart text-lg">
                 <p>Leverage the ICP blockchain for traceable donations.</p>
                 <p>Every dollar is visible, every gift counts.</p>
             </div>
