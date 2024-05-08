@@ -12,10 +12,8 @@ export default function LandingPage() {
 
   const {logout, user} = useAuth()
   const [navMode, setNavMode] = useState<'top' | 'default'>("top")
-  const [circleScale, setCircleScale] = useState(9999999)
   
-  const [isSticky, setIsSticky] = useState(false);
-  const observerTargetRef = useRef(null);
+  const [circleRadius, setCircleRadius] = useState(9999999)
 
   let scrollTop = 0;
     
@@ -30,7 +28,7 @@ export default function LandingPage() {
     }
     
     if(scrollTop > 100) {
-        setCircleScale(Math.pow((10000/(scrollTop - 100)), 1))
+        setCircleRadius(Math.pow((10000/(scrollTop - 100)), 1))
     }
   }
 
@@ -38,25 +36,9 @@ export default function LandingPage() {
     
         window.addEventListener("scroll", handleScroll);
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const [entry] = entries;
-                console.log("pntk")
-                setIsSticky(!entry.isIntersecting);
-            }
-        );
-
-        if (observerTargetRef.current) {
-            observer.observe(observerTargetRef.current);
-        }
-
         return () => {
             window.removeEventListener("scroll", handleScroll);
             document.body.style.cursor = '';
-            
-            if (observerTargetRef.current) {
-                observer.unobserve(observerTargetRef.current);
-            }
         }
     }, [])
 
@@ -103,19 +85,13 @@ export default function LandingPage() {
                 <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
             </div>
         </div>
-
-        <div className="w-screen absolute h-14 -mt-14" ref={observerTargetRef}></div>
         
-        <div className={`w-full h-screen z-0 ${isSticky ? "fixed top-0" : "absolute"}`}>
-            <div className="w-full h-screen overflow-hidden rounded-3xl relative">
-                <div className="absolute w-screen h-[100vw] bg-primary z-40" style={{"borderRadius" : circleScale + "vw"}}>
-
+        <div className={`w-full h-[100vw] z-0}`}>
+            <div className="w-full h-full overflow-hidden relative">
+                <div className="absolute w-screen h-[100vw] bg-primary z-40" style={{"borderRadius" : circleRadius + "vw"}}>
+                        
                 </div>
             </div>
-        </div>
-
-        <div className="w-screen h-[300vh]">
-
         </div>
 
         <div className=' w-full h-screen flex flex-col gap-10'>
@@ -135,7 +111,7 @@ export default function LandingPage() {
         </div>
 
         {/* <div className="fixed h-screen w-full flex justify-center top-[100vh]">
-            <div className="bg-primary w-48 h-48 rounded-full" style={{transform: `scale(${circleScale})`}}></div>
+            <div className="bg-primary w-48 h-48 rounded-full" style={{transform: `scale(${circleRadius})`}}></div>
 
         </div> */}
         <div className="z-20">
