@@ -16,6 +16,8 @@ export interface FundraiseType {
     // fund target
     target_amount : number,
     target_currency : "ICP" | "ckBTC" | "ckETH",
+    start_date : string,
+    end_date : string,
 }
 
 export interface FundraiseSubpage {   
@@ -23,4 +25,5 @@ export interface FundraiseSubpage {
     changeData : (key: string, value: any) => void,
     data : FundraiseType,
     changeStep : (step : number) => void
+    submitForm? : () => void
 }

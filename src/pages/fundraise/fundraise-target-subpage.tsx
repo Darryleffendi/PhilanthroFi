@@ -42,9 +42,10 @@ const FundraiseTargetSubpage = ({changeStep, changeTitle, changeData, data} : Fu
                         <h1 className="absolute mr-6 text-sm text-slate-400">{data.target_currency}</h1>
                         <Input placeholder="0" className="h-12" value={data.target_amount} onChange={(e) => changeData("target_amount", e.target.value)}/>
                     </div>
-                </div>  
+                </div>
+                
             </div>
-            <Button className="text-white" onClick={() => changeStep(3)}>Next</Button> 
+            <Button className="text-white" onClick={() => changeStep(4)}>Next</Button> 
             {/* Goofy ass button */}
         </>
     )

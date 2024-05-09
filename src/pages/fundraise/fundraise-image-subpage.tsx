@@ -5,7 +5,7 @@ import { FundraiseSubpage } from "@lib/types/fundraise-subpage-types"
 import { useEffect, useState } from "react"
 import imgIcon from "@assets/images/image.png"
 
-const FundraiseImageSubpage = ({changeTitle, changeData, data} : FundraiseSubpage) => {
+const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm} : FundraiseSubpage) => {
 
     const [usdValue, setUsdValue] = useState(0);
 
@@ -34,7 +34,7 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data} : FundraiseSubpag
                 <div className="text-sm mt-2 opacity-60">Click to upload Image</div>
             </div>
 
-            <Button className="text-white">Create</Button> 
+            <Button className="text-white" onClick={() => submitForm()}>Create</Button> 
             {/* Goofy ass button */}
         </>
     )

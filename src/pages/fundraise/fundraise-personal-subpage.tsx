@@ -46,7 +46,7 @@ const FundraisePersonalSubpage = ({changeStep, changeTitle, changeData, data} : 
                     </div>
                 </div>
             </div>
-            <Button className="text-white" onClick={() => changeStep(2)}>Next</Button> 
+            <Button className="text-white" onClick={() => changeStep(3)}>Next</Button> 
             {/* Goofy ass button */}
         </>
     )

@@ -51,12 +51,15 @@ const FundraiseDetailSubpage = ({changeTitle, changeData, data, changeStep} : Fu
                         </SelectContent>
                     </Select>
                 </div>
-                <div>
-                    <p className="text-sm mb-1 text-slate-600 font-light">Description</p>
-                    <Textarea 
-                        placeholder="Describe your project" className="max-h-32" 
-                        value={data.project_description} onChange={(e) => changeData("project_description", e.target.value)}
-                    />
+                <div className="flex gap-4">
+                    <div className="w-full">
+                        <p className="text-sm mb-1 text-slate-600 font-light">Start Date</p>
+                        <Input type={"date"} placeholder="0" className="h-12" value={data.start_date} onChange={(e) => changeData("start_date", e.target.value)}/>
+                    </div>
+                    <div className="w-full">
+                        <p className="text-sm mb-1 text-slate-600 font-light">End Date</p>
+                        <Input type={"date"} placeholder="0" className="h-12" value={data.end_date} onChange={(e) => changeData("end_date", e.target.value)}/>
+                    </div>
                 </div>
             </div>
             <Button className="text-white" onClick={() => changeStep(1)}>Next</Button> 

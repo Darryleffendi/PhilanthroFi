@@ -8,6 +8,7 @@ import { FundraiseType } from "@lib/types/fundraise-subpage-types";
 import { steps } from "framer-motion";
 import FundraiseTargetSubpage from "./fundraise-target-subpage";
 import FundraiseImageSubpage from "./fundraise-image-subpage";
+import FundraiseDescriptionSubpage from "./fundraise-description-subpage";
 
 
 const FundraisePage = () => {
@@ -34,6 +35,8 @@ const FundraisePage = () => {
         zip_code: "",
         target_amount: 0,
         target_currency: "ICP",
+        start_date: "",
+        end_date: ""
     })
 
     const changeData = (key : string, value : string) => {
@@ -65,11 +68,19 @@ const FundraisePage = () => {
         setSubpageOpacity(100);
     }
 
+    const submitForm = async () => {
+        // Ini buat logic submit ke backend
+        // Tinggal pake variable data
+
+        console.log(data);
+    }
+
     const pages = [
         <FundraiseDetailSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
+        <FundraiseDescriptionSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
         <FundraisePersonalSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
         <FundraiseTargetSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
-        <FundraiseImageSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
+        <FundraiseImageSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep} submitForm={submitForm}/>,
     ]
 
     useEffect(() => {
@@ -78,11 +89,11 @@ const FundraisePage = () => {
 
     return (
         <MainLayout className="">
-            <div className="bg-primary bg-opacity-50 w-full h-screen flex items-center justify-between px-24 pt-20">
+            <div className="bg-primary bg-opacity-50 w-full md:h-screen flex flex-col md:flex-row md:flex items-center md:justify-between px-24 pt-20">
 
-                <div className="w-[40%] h-[70vh] flex flex-col justify-between z-10">
+                <div className="md:w-[40%] w-[85vw] md:h-[70vh] mt-[10vh] md:mt-0 mb-[5vh] md:mb-0 flex flex-col justify-between z-10">
 
-                    <div>
+                    <div className="mb-8 md:mb-0">
                         <p className="font-nunito text-sm mb-2 font-light text-late-800">Step {currStep+1} / {pages.length}</p>
                         <div className="flex gap-1">
                         {
@@ -116,7 +127,7 @@ const FundraisePage = () => {
                     </div>
 
                 </div>
-                <div className="bg-background w-[50%] h-[60vh] rounded-xl shadow-lg p-10">
+                <div className="bg-background md:w-[50%] w-[85vw] h-[60vh] rounded-xl shadow-lg p-10 z-10 mb-16 md:mb-0">
                     <div
                         className="w-full h-full transition-all duration-500 flex flex-col font-nunito justify-between" 
                         style={{opacity: subpageOpacity}}
