@@ -37,7 +37,8 @@
     "frontend": {
       "dependencies": [
         "backend",
-        "internet_identity"
+        "internet_identity",
+        "charity"
       ],
       "type": "assets",
       "source": ["dist/"]

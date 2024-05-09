@@ -3,8 +3,9 @@ import { AuthClient } from "@dfinity/auth-client";
 import { defaultOptions } from "@lib/settings/auth-settings";
 import { createContext, ReactNode, useState } from "react";
 import { _SERVICE as _SERVICE_BACKEND } from "src/declarations/backend/backend.did";
+import { _SERVICE as _SERVICE_CHARITY } from "src/declarations/charity/charity.did";
 import { canisterId as backendCanisterId, createActor as createBackendActor } from "src/declarations/backend";
-import { fetchOptions,host } from "@lib/settings/agent-settings";
+import { canisterId as charityCanisterId, createActor as createCharityActor } from "src/declarations/charity";
 
 
 interface ServiceContextProviderProps {
@@ -13,14 +14,17 @@ interface ServiceContextProviderProps {
 
 export type ServiceContextType ={
     getBackendService: () => Promise<ActorSubclass<_SERVICE_BACKEND>>;
+    getCharityService: () => Promise<ActorSubclass<_SERVICE_CHARITY>>;
 }
 
 export const ServiceContext = createContext<ServiceContextType>({
-    getBackendService: null!
+    getBackendService: null!,
+    getCharityService: null!
 })
 
 export default function ServiceContextProvider({children}:ServiceContextProviderProps){
     const [backendService, setBackendService] = useState<ActorSubclass<_SERVICE_BACKEND>>();
+    const [charityService, setCharityService] = useState<ActorSubclass<_SERVICE_CHARITY>>();
     const [agent, setAgent] = useState<HttpAgent|null>(null);
 
     const createHTTPAgent = async () =>{
@@ -57,10 +61,25 @@ export default function ServiceContextProvider({children}:ServiceContextProvider
         return backendService!
     }
 
+    const getCharityService = async () =>{
+        if(!charityService){
+            const a = await getHTTPAgent()
+            if (a){
+                const newCharityService = createCharityActor(charityCanisterId,{
+                    agent:a
+                })
+                setCharityService(newCharityService);
+                return newCharityService
+            }
+        }
+        return charityService!
+    }
+
     return (
         <ServiceContext.Provider
             value={{
                 getBackendService: getBackendService,
+                getCharityService: getCharityService
             }}>
             {children}
         </ServiceContext.Provider>

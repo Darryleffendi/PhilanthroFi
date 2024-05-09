@@ -24,12 +24,14 @@ const HomePage = () => {
             </div>
             <div className="flex flex-col gap-10">
               <NumberColumn
+                descStyle='text-end'
                 type="money"
                 metrics="M"
                 desc="funds raised"
                 number={23}
               />
               <NumberColumn
+                descStyle='text-end'
                 type="number"
                 metrics="+"
                 desc="charities held"
