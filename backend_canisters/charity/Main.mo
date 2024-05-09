@@ -7,9 +7,12 @@ import Principal "mo:base/Principal";
 import Iter "mo:base/Iter";
 import Array "mo:base/Array";
 import Bool "mo:base/Bool";
+import Buffer "mo:base/Buffer";
 import UtilityProvider "canister:utility_provider";
 import Fuzz "mo:fuzz";
 import TextX "mo:xtended-text/TextX";
+import Backend "canister:backend";
+import Vector "mo:vector/Class";
 
 actor Charity {
   type Donation = {
@@ -182,9 +185,6 @@ actor Charity {
     let charity = charities.get(charity_id);
     
     switch(charity){
-      case(?foundedCharity){
-        return #ok(foundedCharity)
-      };
       case null{
         return #err("Charity not found");
       };
@@ -249,4 +249,33 @@ actor Charity {
     };
     return #ok("Charity seeded");
   };
+
+  public shared (msg) func getUserDonations () : async Result.Result<[Donation], Text> {
+    let user = await Backend.getUser(msg.caller);
+    let user_donations = Vector.Vector<Donation>();
+    switch(user){
+      case null{
+        return #err("User not found!");
+      };
+      case (?u){
+        for(reference in u.donation_reference.vals()){
+          let charity = await getCharity(reference.charity_id);
+          switch(charity){
+            case (#err(msg)){
+              return #err("Charity Not Found");
+            };
+            case (#ok(founded_charity)){
+              for(c in founded_charity.donations.vals()){
+                if(c.id == reference.donation_id){
+                  user_donations.add(c);
+                }
+              };
+            }
+          };
+        };
+        return #ok(Vector.toArray(user_donations));
+      };
+    };
+    
+  }
 }

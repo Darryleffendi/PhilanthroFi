@@ -16,7 +16,8 @@
     },
     "charity": {
       "dependencies": [
-        "utility_provider"
+        "utility_provider",
+        "backend"
       ],
       "type": "motoko",
       "main": "backend_canisters/charity/Main.mo",
