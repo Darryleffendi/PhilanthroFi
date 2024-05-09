@@ -93,12 +93,12 @@ actor Charity {
     let charity = charities.get(charity_id);
     
     switch(charity){
+      case(?foundedCharity){
+        return #ok(foundedCharity)
+      };
       case null{
         return #err("Charity not found");
       };
-      case(?foundedCharity){
-        return #ok(foundedCharity)
-      }
     }
   };
 
