@@ -6,13 +6,19 @@ import Result "mo:base/Result";
 import Iter "mo:base/Iter";
 
 actor class Backend() {
+  type DonationReference = {
+    charity_id: Text;
+    donation_id: Text;
+  };
+  
   type User = {
     identity: Principal;
     first_name: Text;
     last_name: Text;
     email: Text;
     birth_date: Text;
-    timestamp: Time.Time
+    timestamp: Time.Time;
+    donation_reference: [DonationReference];
   };
   let users = TrieMap.TrieMap<Principal, User>(Principal.equal, Principal.hash);
 
@@ -36,6 +42,7 @@ actor class Backend() {
       email = email;
       birth_date = birth_date;
       timestamp = Time.now();
+      donation_reference = [];
     };
 
     users.put(new_user.identity, new_user);
