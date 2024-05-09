@@ -34,6 +34,8 @@ const FundraiseDescriptionSubpage = ({changeTitle, changeData, data, changeStep}
                         value={data.project_description} onChange={(e) => changeData("project_description", e.target.value)}
                     />
                 </div>
+
+                {/* Nanti tags disini, besok gw lanjut */}
             </div>
             <Button className="text-white" onClick={() => changeStep(2)}>Next</Button> 
             {/* Goofy ass button */}
