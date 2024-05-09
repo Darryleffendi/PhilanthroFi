@@ -13,7 +13,7 @@ type props = {
   className?: string;
 };
 
-const Navbar = ({ className = 'bg-slate-200' }: props) => {
+const Navbar = ({ className = 'bg-transparent' }: props) => {
   const [isScrolled, setScrolled] = useState<boolean>(false);
 
   const scrolledStyle = 'bg-white shadow-lg rounded-lg'

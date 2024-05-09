@@ -14,6 +14,7 @@ export default function LandingPage() {
   const [navMode, setNavMode] = useState<'top' | 'default'>("top")
   
   const [circleRadius, setCircleRadius] = useState(9999999)
+  const [headerTransform, setHeaderTransform] = useState(0)
 
   let scrollTop = 0;
     
@@ -29,6 +30,9 @@ export default function LandingPage() {
     
     if(scrollTop > 100) {
         setCircleRadius(Math.pow((10000/(scrollTop - 100)), 1))
+    }
+    if(scrollTop < 1000) {
+        setHeaderTransform(scrollTop/4)
     }
   }
 
@@ -47,7 +51,10 @@ export default function LandingPage() {
         <LandingNavbar navMode={navMode}/>
         <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] absolute opacity-[25%] object-cover"/>
 
-        <div className="w-full p-6 h-screen -z-20 flex justify-center items-center flex-col gap-10 bg-slate-100 ">
+        <div
+            style={{transform: `translateY(${headerTransform}px) scale(${1 - headerTransform/1500})`}} 
+            className="w-full p-6 h-screen flex justify-center absolute top-0 items-center flex-col gap-10"
+        >
             <div className="flex flex-col items-center gap-5 z-10">
                 <div className="flex font-nbinter font-black text-7xl">
                     <h1>Transforming&nbsp;</h1>
@@ -85,6 +92,9 @@ export default function LandingPage() {
                 <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
             </div>
         </div>
+
+        
+        <div className="w-full h-screen"></div>
         
         <div className={`w-full h-[100vw] z-0}`}>
             <div className="w-full h-full overflow-hidden relative">
