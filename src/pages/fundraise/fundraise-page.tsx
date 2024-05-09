@@ -9,6 +9,7 @@ import { steps } from "framer-motion";
 import FundraiseTargetSubpage from "./fundraise-target-subpage";
 import FundraiseImageSubpage from "./fundraise-image-subpage";
 import FundraiseDescriptionSubpage from "./fundraise-description-subpage";
+import ProtectedRoute from "src/middleware/protected-route";
 
 
 const FundraisePage = () => {
@@ -88,59 +89,61 @@ const FundraisePage = () => {
     }, [])
 
     return (
-        <MainLayout className="">
-            <div className="bg-primary bg-opacity-50 w-full md:h-screen flex flex-col md:flex-row md:flex items-center md:justify-between px-24 pt-20">
+        <ProtectedRoute>
+            <MainLayout className="">
+                <div className="bg-primary bg-opacity-50 w-full md:h-screen flex flex-col md:flex-row md:flex items-center md:justify-between px-24 pt-20">
 
-                <div className="md:w-[40%] w-[85vw] md:h-[70vh] mt-[10vh] md:mt-0 mb-[5vh] md:mb-0 flex flex-col justify-between z-10">
+                    <div className="md:w-[40%] w-[85vw] md:h-[70vh] mt-[10vh] md:mt-0 mb-[5vh] md:mb-0 flex flex-col justify-between z-10">
 
-                    <div className="mb-8 md:mb-0">
-                        <p className="font-nunito text-sm mb-2 font-light text-late-800">Step {currStep+1} / {pages.length}</p>
-                        <div className="flex gap-1">
+                        <div className="mb-8 md:mb-0">
+                            <p className="font-nunito text-sm mb-2 font-light text-late-800">Step {currStep+1} / {pages.length}</p>
+                            <div className="flex gap-1">
+                            {
+                                Array.from(Array(pages.length)).map((i : number, idx : number) => {
+                                    return (
+                                        <div 
+                                            className={`w-3 h-1 cursor-pointer bg-opacity-60 hover:bg-opacity-100 transition-all duration-100
+                                                ${idx <= currStep ? "bg-blue-400" : "bg-slate-300"} `}
+                                            onClick={() => changeStep(idx)}
+                                        >
+                                        </div>
+                                    )
+                                })
+                            }
+                            </div>
+                        </div>
+
+                        <div className="w-full h-[75%] flex flex-col gap-10">
+                            <div 
+                                style={{opacity : titleOpacity, transform: `translateY(${titleOpacity > 0 ? 0 : 28}px)`}}
+                                className="font-nbinter text-3xl md:text-5xl xl:text-5xl flex flex-wrap gap-y-2 transition-all duration-500"
+                            >
+                                {title}
+                            </div>
+                            <p 
+                                style={{opacity : subtitleOpacity, transform: `translateY(${subtitleOpacity > 0 ? 0 : 28}px)`}}
+                                className="font-nunito font-light transition-all duration-500"
+                            >
+                                {subtitle}
+                            </p>
+                        </div>
+
+                    </div>
+                    <div className="bg-background md:w-[50%] w-[85vw] h-[60vh] rounded-xl shadow-lg p-10 z-10 mb-16 md:mb-0">
+                        <div
+                            className="w-full h-full transition-all duration-500 flex flex-col font-nunito justify-between" 
+                            style={{opacity: subpageOpacity}}
+                        >
                         {
-                            Array.from(Array(pages.length)).map((i : number, idx : number) => {
-                                return (
-                                    <div 
-                                        className={`w-3 h-1 cursor-pointer bg-opacity-60 hover:bg-opacity-100 transition-all duration-100
-                                            ${idx <= currStep ? "bg-blue-400" : "bg-slate-300"} `}
-                                        onClick={() => changeStep(idx)}
-                                    >
-                                    </div>
-                                )
-                            })
+                            pages[currStep]
                         }
                         </div>
                     </div>
-
-                    <div className="w-full h-[75%] flex flex-col gap-10">
-                        <div 
-                            style={{opacity : titleOpacity, transform: `translateY(${titleOpacity > 0 ? 0 : 28}px)`}}
-                            className="font-nbinter text-3xl md:text-5xl xl:text-5xl flex flex-wrap gap-y-2 transition-all duration-500"
-                        >
-                            {title}
-                        </div>
-                        <p 
-                            style={{opacity : subtitleOpacity, transform: `translateY(${subtitleOpacity > 0 ? 0 : 28}px)`}}
-                            className="font-nunito font-light transition-all duration-500"
-                        >
-                            {subtitle}
-                        </p>
-                    </div>
+                    <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] absolute opacity-[13%] object-cover"/>
 
                 </div>
-                <div className="bg-background md:w-[50%] w-[85vw] h-[60vh] rounded-xl shadow-lg p-10 z-10 mb-16 md:mb-0">
-                    <div
-                        className="w-full h-full transition-all duration-500 flex flex-col font-nunito justify-between" 
-                        style={{opacity: subpageOpacity}}
-                    >
-                    {
-                        pages[currStep]
-                    }
-                    </div>
-                </div>
-                <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] absolute opacity-[13%] object-cover"/>
-
-            </div>
-        </MainLayout>
+            </MainLayout>
+        </ProtectedRoute>
     )
 }
 
