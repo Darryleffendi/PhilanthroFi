@@ -1,133 +1,149 @@
 import { Button } from "@components/ui/button";
-import MainLayout from "./layout/main-layout";
 import { useAuth } from "@lib/hooks/useAuth";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Wallet2 from "@components/wallet2";
 import ReactTypingEffect from 'react-typing-effect';
 import LandingNavbar from "@components/landing-navbar";
 import logoWhite from "@assets/logo/logo-pure-white.png"
+import Numbers from "@components/ui/numbers";
+
+import {
+    motion,
+    useScroll,
+    useTransform,
+} from "framer-motion";
 
 
 export default function LandingPage() {
 
-  const {logout, user} = useAuth()
-  const [navMode, setNavMode] = useState<'top' | 'default'>("top")
-  
-  const [circleRadius, setCircleRadius] = useState(9999999)
-  const [headerTransform, setHeaderTransform] = useState(0)
-
-  let scrollTop = 0;
+    const {logout, user} = useAuth()
+    const [navMode, setNavMode] = useState<'top' | 'default'>("top")
     
-  const handleScroll = async () => {
-    scrollTop = window.pageYOffset;
-
-    if(scrollTop > 0) {
-        setNavMode("default")
-    }
-    else {
-        setNavMode("top")
-    }
+    const [circleRadius, setCircleRadius] = useState(15)
+    const { scrollYProgress } = useScroll();
+    const y = useTransform(scrollYProgress, [0, 1], [0, -1000]);
     
-    if(scrollTop > 100) {
-        setCircleRadius(Math.pow((10000/(scrollTop - 100)), 1))
-    }
-    if(scrollTop < 1000) {
-        setHeaderTransform(scrollTop/4)
-    }
-  }
 
-  useEffect(() => {
-    
-        window.addEventListener("scroll", handleScroll);
+    let scrollTop = 0;
 
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-            document.body.style.cursor = '';
+    const handleScroll = async () => {
+        scrollTop = window.pageYOffset;
+
+        if(scrollTop > 0) {
+            setNavMode("default")
         }
-    }, [])
-
-  return (
-    <div className="bg-slate-100 ">
-        <LandingNavbar navMode={navMode}/>
-        <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] absolute opacity-[25%] object-cover"/>
-
-        <div
-            style={{transform: `translateY(${headerTransform}px) scale(${1 - headerTransform/1500})`}} 
-            className="w-full p-6 h-screen flex justify-center absolute top-0 items-center flex-col gap-10"
-        >
-            <div className="flex flex-col items-center gap-5 z-10">
-                <div className="flex font-nbinter font-black text-7xl">
-                    <h1>Transforming&nbsp;</h1>
-                    <h1 className="bg-yellow-100">Charity</h1>
-                </div>
-                <div className="flex font-nbinter font-black text-8xl z-10">
-                    <h1 className="">With&nbsp;</h1>
-                    <ReactTypingEffect
-                        text={["Technology", "Transparency", "Blockchain", "Trust"]}
-                        displayTextRenderer={(text : string, i : number) => {
-                        let color = i % 2 == 0 ? "bg-primary" : "bg-purple-200";
-                        return (
-                            <h1>
-                            {text.split('').map((char : string, i : number) => {
-                                const key = `${i}`;
-                                return (
-                                <span
-                                    className={`${i >= 0 ? color : ""}`}
-                                    key={key}
-                                >{char}</span>
-                                );
-                            })}
-                            </h1>
-                        );
-                        }}        
-                    />
-                </div>
-            </div>
-            <div className="text-center font-nbinter text-lg z-10">
-                <p>Leverage the ICP blockchain for traceable donations.</p>
-                <p>Every dollar is visible, every gift counts.</p>
-            </div>
-            <div className="flex items-center gap-3 font-nbinter z-10">
-                <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
-                <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
-            </div>
-        </div>
-
+        else {
+            setNavMode("top")
+        }
         
-        <div className="w-full h-screen"></div>
+        if(scrollTop > 50) {
+            let calc = Math.pow((1000/(scrollTop - 5)),1)
+            setCircleRadius(calc < 15 ? calc : 15)
+        }
+    }
+
+    useEffect(() => {
         
-        <div className={`w-full h-[100vw] z-0}`}>
-            <div className="w-full h-full overflow-hidden relative">
-                <div className="absolute w-screen h-[100vw] bg-primary z-40" style={{"borderRadius" : circleRadius + "vw"}}>
-                        
+            window.addEventListener("scroll", handleScroll);
+
+            return () => {
+                window.removeEventListener("scroll", handleScroll);
+                document.body.style.cursor = '';
+            }
+        }, [])
+        
+
+    return (
+        <div className="bg-slate-100 ">
+            <LandingNavbar navMode={navMode}/>
+            <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] absolute opacity-[25%] object-cover  "/>
+
+            <div className="w-full p-6 h-[85vh] -z-20 flex justify-center items-center flex-col gap-16 bg-slate-100 ">
+                <div className="flex flex-col items-center gap-5 z-10">
+                    <div className="flex font-nbinter font-black text-7xl">
+                        <h1>Transforming&nbsp;</h1>
+                        <h1 className="bg-yellow-100">Charity</h1>
+                    </div>
+                    <div className="flex font-nbinter font-black text-8xl z-10">
+                        <h1 className="">With&nbsp;</h1>
+                        <ReactTypingEffect
+                            text={["Technology", "Transparency", "Blockchain", "Trust"]}
+                            displayTextRenderer={(text : string, i : number) => {
+                            let color = i % 2 == 0 ? "bg-primary" : "bg-purple-200";
+                            return (
+                                <h1>
+                                {text.split('').map((char : string, i : number) => {
+                                    const key = `${i}`;
+                                    return (
+                                    <span
+                                        className={`${i >= 0 ? color : ""}`}
+                                        key={key}
+                                    >{char}</span>
+                                    );
+                                })}
+                                </h1>
+                            );
+                            }}        
+                        />
+                    </div>
+                </div>
+                <div className="flex items-center gap-4 z-10">
+                    <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
+                    <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
                 </div>
             </div>
-        </div>
+            
+            <motion.div
+                className="w-full h-[100vw] z-0"
+                style={{ y }}
+            >
+                <div className={`w-full h-[100vw] z-0}`}>
+                    <div className="w-full h-full overflow-hidden relative">
+                        <div className="absolute w-screen h-[100vw] bg-primary z-40 p-24 pt-64 flex flex-col gap-48" style={{"borderRadius" : circleRadius + "vw"}}>
+                                <div className="flex flex-col gap-8">
+                                    <div className="text-xl bg-yellow-100 w-fit">
+                                        Our commitment
+                                    </div>
+                                    <div className="text-transparent text-6xl w-[75%] bg-black bg-clip-text">
+                                        At PhilantroFi, we commit to transparency and trust. Our blockchain platform ensures every donation is traceable and secure, from start to impact. 
+                                    </div> 
+                                </div>
 
-        <div className=' w-full h-screen flex flex-col gap-10'>
-          Ini landing page, boleh siapa aja masuk, tapi home udah kena cockblock sama auth
-          <div>
-            User Data:
-            <br/>
-            {user?.email}
-            <br/>
-            {user?.first_name}
-          </div>
-          <Button onClick={()=>{logout()}} className="text-8xl">LOGOUT PANTEK</Button>
-          
-          <div>
-            <Wallet2></Wallet2>
-          </div>
-        </div>
+                                <div className="flex justify-center">
+                                    <div className="flex justify-center items-center gap-40">
+                                        <Numbers title="Opportunies Created" number={421} numberStyle="text-8xl font-bold" titleStyle="text-xl font-normal"/>
+                                        <Numbers title="Funds Raised" number={23312231} numberStyle="text-8xl font-bold " titleStyle="text-xl  font-normal" prefix="$"/>
+                                        <Numbers title="Contributors" number={13201} numberStyle="text-8xl font-bold" titleStyle="text-xl font-normal"/>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
 
-        {/* <div className="fixed h-screen w-full flex justify-center top-[100vh]">
-            <div className="bg-primary w-48 h-48 rounded-full" style={{transform: `scale(${circleRadius})`}}></div>
+            <div className=' w-full h-screen flex flex-col gap-10'>
+                <div>
+                    User Data:
+                    <br/>
+                    {user?.email}
+                    <br/>
+                    {user?.first_name}
+                </div>
+            <Button onClick={()=>{logout()}} className="text-8xl">LOGOUT PANTEK</Button>
+            
+            <div>
+                <Wallet2></Wallet2>
+            </div>
+            </div>
 
-        </div> */}
-        <div className="z-20">
-            test
+            {/* <div className="fixed h-screen w-full flex justify-center top-[100vh]">
+                <div className="bg-primary w-48 h-48 rounded-full" style={{transform: `scale(${circleRadius})`}}></div>
+
+            </div> */}
+            <div className="z-20">
+                test
+            </div>
         </div>
-    </div>
-      
-  );
-}
+        
+    );
+    }

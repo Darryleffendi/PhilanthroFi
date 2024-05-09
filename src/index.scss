@@ -11,3 +11,25 @@
 
   // border: dashed 1px red;
 }
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #86cfd8;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+::-moz-selection { 
+  color: black;
+  background: rgb(254 249 195);;
+}
+
+::selection {
+  color: black;
+  background: rgb(254 249 195);;
+}
