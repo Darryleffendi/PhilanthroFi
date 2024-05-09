@@ -1,7 +1,7 @@
 // Footer.jsx
 
 import React from 'react';
-import style from './footer.module.scss';
+import style from '@lib/styles/footer.module.scss'
 import { Link } from 'react-router-dom';
 import FacebookImg from '@assets/footer/facebook-app-symbol.png'
 import InstagramImg from '@assets/footer/instagram.png'

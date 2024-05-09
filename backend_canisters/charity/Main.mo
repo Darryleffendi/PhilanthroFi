@@ -21,6 +21,17 @@ actor Charity {
     description: Text;
     timestamp: Time.Time;
   };
+  
+  // official organization gede, static seeded: Save The Children
+  // kayak partners gitu
+  // msh mikir mau tambah g
+  type Organization = {
+    id: Text;
+    title: Text;
+    description: Text;
+    profile_image: Text;
+    url: Text;
+  };
 
   type CharityRequest = {
     title: Text;
@@ -29,6 +40,8 @@ actor Charity {
     description: Text;
     timestamp: Time.Time;
   };
+
+
 
   let charities = TrieMap.TrieMap<Text, Charity>(Text.equal, Text.hash);
   
@@ -101,7 +114,7 @@ actor Charity {
       };
       case (?c) {
         if(c.charity_owner_id != Principal.toText(msg.caller)){
-           return #err("Unauthorized");
+            return #err("Unauthorized");
         };
         charities.put(charity_id, charity);
 

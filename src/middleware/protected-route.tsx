@@ -1,7 +1,7 @@
 
 import { useAuth } from "@lib/hooks/useAuth";
 import { AuthState } from "@lib/types/user-types";
-import { ReactNode, useContext, useEffect } from "react"
+import { ReactNode, Suspense, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
 interface ProtectedRouteProps{
@@ -9,22 +9,17 @@ interface ProtectedRouteProps{
 }
 export default function ProtectedRoute({children}:ProtectedRouteProps) {
 
-    const {authState, user} = useAuth();
+    const {authState} = useAuth();
 	const navigate = useNavigate();
 
-    useEffect(() => {
-		if (authState == AuthState.Loading) {
-			return
-		}
-        else if (authState == AuthState.Nope) {
-			navigate('/auth');
-		}
-        // else if (authState == AuthState.NotRegistered) {
-		// 	navigate('/register')
-		// }
-        
-	}, [user, authState]);
+	useEffect(() => {
+		if(authState == AuthState.Nope) navigate('/auth')
     
+	}, [authState])
+	
+
+
+	
     if (authState == AuthState.Loading) {
 		return (
 			<div className="w-[100vw] h-[100vh] flex justify-center items-center">

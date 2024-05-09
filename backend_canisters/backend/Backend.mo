@@ -58,8 +58,4 @@ actor class Backend() {
     return Principal.toText(caller)
   };
 
-  public query func test() : async Text{
-    return "berhasil callny"
-  }
-
 }
