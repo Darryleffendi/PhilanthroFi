@@ -26,6 +26,7 @@ const FundraisePage = () => {
         project_name: "",
         project_description: "",
         project_location: "",
+        project_image: null,
         first_name: user ? (user.first_name) : "",
         last_name: user ? (user.last_name) : "",
         phone_number: "",

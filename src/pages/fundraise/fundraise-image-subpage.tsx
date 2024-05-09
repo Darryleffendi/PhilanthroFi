@@ -29,7 +29,7 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data} : FundraiseSubpag
     return (
         <>
             <div className="w-full h-[70%] relative border rounded-lg border-dashed border-slate-400 flex flex-col justify-center items-center cursor-pointer">
-                <input type="file" className="absolute w-full h-full opacity-0 cursor-pointer"/>
+                <input type="file" className="absolute w-full h-full opacity-0 cursor-pointer" onChange={(event) => changeData("project_image", event.target.files ? event.target.files[0] : null)}/>
                 <img src={imgIcon} className="w-6 opacity-40"/>
                 <div className="text-sm mt-2 opacity-60">Click to upload Image</div>
             </div>
