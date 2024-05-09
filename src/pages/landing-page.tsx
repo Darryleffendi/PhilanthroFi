@@ -21,7 +21,8 @@ export default function LandingPage() {
     
     const [circleRadius, setCircleRadius] = useState(15)
     const { scrollYProgress } = useScroll();
-    const y = useTransform(scrollYProgress, [0, 1], [0, -1000]);
+    const y = useTransform(scrollYProgress, [0, 1], [0, -2000]);
+    const scale = useTransform(scrollYProgress, [0, 1], [1, 0]);
     
 
     let scrollTop = 0;
@@ -56,9 +57,13 @@ export default function LandingPage() {
     return (
         <div className="bg-slate-100 ">
             <LandingNavbar navMode={navMode}/>
-            <img src={logoWhite} className="left-[-20vw] bottom-[-50vh] h-[140vh] absolute opacity-[25%] object-cover  "/>
 
-            <div className="w-full p-6 h-[85vh] -z-20 flex justify-center items-center flex-col gap-16 bg-slate-100 ">
+            <motion.div 
+            className="w-full p-6 h-[85vh] -z-20 flex justify-center items-center flex-col gap-16 bg-slate-100 "
+            style={{ scale }}
+            >
+            <img src={logoWhite} className="left-[-20vw] mt-[75vh] h-[140vh] absolute opacity-[25%] object-cover "/>
+
                 <div className="flex flex-col items-center gap-5 z-10">
                     <div className="flex font-nbinter font-black text-7xl">
                         <h1>Transforming&nbsp;</h1>
@@ -91,7 +96,7 @@ export default function LandingPage() {
                     <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
                     <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
                 </div>
-            </div>
+            </motion.div>
             
             <motion.div
                 className="w-full h-[100vw] z-0"
@@ -101,7 +106,7 @@ export default function LandingPage() {
                     <div className="w-full h-full overflow-hidden relative">
                         <div className="absolute w-screen h-[100vw] bg-primary z-40 p-24 pt-64 flex flex-col gap-48" style={{"borderRadius" : circleRadius + "vw"}}>
                                 <div className="flex flex-col gap-8">
-                                    <div className="text-xl bg-yellow-100 w-fit">
+                                    <div className="text-xl bg-yellow-100 w-fit font-medium">
                                         Our commitment
                                     </div>
                                     <div className="text-transparent text-6xl w-[75%] bg-black bg-clip-text">
@@ -111,9 +116,9 @@ export default function LandingPage() {
 
                                 <div className="flex justify-center">
                                     <div className="flex justify-center items-center gap-40">
-                                        <Numbers title="Opportunies Created" number={421} numberStyle="text-8xl font-bold" titleStyle="text-xl font-normal"/>
-                                        <Numbers title="Funds Raised" number={23312231} numberStyle="text-8xl font-bold " titleStyle="text-xl  font-normal" prefix="$"/>
-                                        <Numbers title="Contributors" number={13201} numberStyle="text-8xl font-bold" titleStyle="text-xl font-normal"/>
+                                        <Numbers title="Opportunies Created" number={421} numberStyle="text-8xl font-medium " titleStyle="text-xl  font-medium"/>
+                                        <Numbers title="Funds Raised" number={23312231} numberStyle="text-8xl font-medium " titleStyle="text-xl  font-medium" prefix="$"/>
+                                        <Numbers title="Contributors" number={13201} numberStyle="text-8xl font-medium" titleStyle="text-xl font-medium"/>
                                     </div>
                                 </div>
                         </div>
@@ -127,7 +132,9 @@ export default function LandingPage() {
                     <br/>
                     {user?.email}
                     <br/>
-                    {user?.first_name}
+
+                    <>{user?.timestamp}</>
+                    <>{user?.birth_date}</>
                 </div>
             <Button onClick={()=>{logout()}} className="text-8xl">LOGOUT PANTEK</Button>
             

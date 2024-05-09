@@ -1,20 +1,28 @@
 import LineSeparator from '@components/line-separator';
+import { cn } from '@lib/utils/utils';
+import { cva } from 'class-variance-authority';
 import React from 'react';
 import AnimatedNumbers from 'react-animated-numbers';
 
 interface NumberColumnProps {
   number: number;
   desc: string;
+  descStyle?: string;
   type: 'money' | 'percentage' | 'number';
   metrics?: string;
 }
 
-const NumberColumn : React.FC<NumberColumnProps> = ({desc, number, metrics = "", type}) => {
+
+const descVariants =cva(
+  "text-3xl font-medium text-indigo-400"
+)
+
+const NumberColumn : React.FC<NumberColumnProps> = ({desc, number, metrics = "",descStyle, type}) => {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 justify-end ">
       <LineSeparator />
-      <div className="flex flex-col gap-5">
-        <div className="flex text-9xl font-medium">
+      <div className="flex flex-col gap-4">
+        <div className="flex text-8xl font-medium">
           {type === 'money' && '$'}
           <AnimatedNumbers
             includeComma
@@ -26,7 +34,7 @@ const NumberColumn : React.FC<NumberColumnProps> = ({desc, number, metrics = "",
           ></AnimatedNumbers>
           {metrics}
         </div>
-        <div className="text-3xl font-medium text-indigo-400">
+        <div className={cn(descVariants({className:descStyle}))}>
           {desc}
         </div>
       </div>

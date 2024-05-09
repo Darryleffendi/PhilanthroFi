@@ -1,18 +1,41 @@
-import { Charity } from "@lib/types/charity-types";
-import React from "react";
-
+import { CharityEvent } from '@lib/types/charity-types';
+import React from 'react';
+import ICPLogo from '@assets/logo/icp.png';
+import ProgressBar from '@components/progress_bar/progress-bar';
 
 interface CharityCardProps {
-    charity: Charity;
-    className?: string;
+  charity: CharityEvent;
 }
 
-const CharityCard : React.FC<CharityCardProps> = ({charity, className ="basis-1/4"}) => {
-    return (
-        <div className={`flex flex-col h-`}>
-            
+const CharityCard: React.FC<CharityCardProps> = ({
+  charity,
+}) => {
+  return (
+    <div className="bg-white rounded-lg h-[55vh]">
+      <div className="w-full h-[55%]">
+        <img src={charity.image_urls[0]} alt="" className="rounded-t-lg object-cover w-full h-full" />
+      </div>
+      <div className="p-4 flex flex-col gap-2">
+        <div className="text-xl w-[75%] font-medium">
+          {charity.title}
         </div>
-    )
-}
+        <div className="flex gap-2">
+           {charity.tags.map((tag) => (
+            <div className="rounded-xl text-blue-800 border border-blue-800 bg-blue-200 text-xs inline-block font-medium px-4 py-1">
+                {tag}
+            </div>
+           ))} 
+        </div>
+        <div className="w-full flex flex-col gap-2">
+          <div className="w-full items-center gap-1 flex text-gray-400">
+            {charity.current_donation}/{charity.target_donation} 
+            <img className="h-5" src={ICPLogo} alt="" />
+          </div>
+          <ProgressBar className="bg-blue-200" progress={69} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default CharityCard;

@@ -33,6 +33,7 @@ actor Charity {
     tags: [Text];
     location: Text;
     donations: [Donation];
+    target_currency: Text;
   };
 
   type CharityEventRequest = {
@@ -43,6 +44,7 @@ actor Charity {
     end_date: Time.Time;
     tags: [Text];
     location: Text;
+    target_currency: Text;
   };
   type DonationRequest = {
     charity_id: Text;
@@ -69,6 +71,7 @@ actor Charity {
       start_date = Time.now();
       end_date = new_charity.end_date;
       location = new_charity.location;
+      target_currency = new_charity.target_currency;
       donations = [];
     };
 
@@ -110,6 +113,7 @@ actor Charity {
           end_date = founded_charity.end_date;
           location = founded_charity.location;
           donations = added_donations;
+          target_currency = founded_charity.target_currency;
         };
         charities.put(updated_charity.id, updated_charity);
         return #ok();
@@ -238,6 +242,7 @@ actor Charity {
         tags = [tag_lists[fuzz.nat.randomRange(0, tag_lists.size() - 1)]];
         donations = [];
         location = "Jakarta, Indonesia";
+        target_currency = "ICP";
       };
       charities.put(charity_id, charity);
       current_idx += 1;
