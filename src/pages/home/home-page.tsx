@@ -6,8 +6,27 @@ import NumberColumn from './number-column';
 import ProgressBar from '@components/progress_bar/progress-bar';
 import CharityCard from './charity-card';
 import { dummyCharity } from '@lib/types/charity-types';
+import { useService } from '@lib/hooks/useService';
+import { useEffect } from 'react';
 
 const HomePage = () => {
+
+  const {getCharityService} = useService();
+
+  const getAllCharities = async () => {
+
+    const charitiesService = await getCharityService();
+
+    const charities = await charitiesService.getAllCharities([], []);
+
+    console.log(charities.ok);
+  }
+
+  useEffect(() => {
+    getAllCharities()
+  }, [])
+
+  
   return (
     <ProtectedRoute>
       <MainLayout className={'bg-slate-200'}>

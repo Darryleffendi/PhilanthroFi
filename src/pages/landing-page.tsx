@@ -12,6 +12,7 @@ import {
     useScroll,
     useTransform,
 } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 
 export default function LandingPage() {
@@ -23,6 +24,8 @@ export default function LandingPage() {
     const { scrollYProgress } = useScroll();
     const y = useTransform(scrollYProgress, [0, 1], [0, -2000]);
     const scale = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+    const navigate = useNavigate();
     
 
     let scrollTop = 0;
@@ -93,8 +96,8 @@ export default function LandingPage() {
                     </div>
                 </div>
                 <div className="flex items-center gap-4 z-10">
-                    <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
-                    <Button className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
+                    <Button onClick={() => navigate('home')} className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
+                    <Button onClick={() => navigate('fundraise')} className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
                 </div>
             </motion.div>
             
