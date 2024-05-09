@@ -54,7 +54,7 @@ const FundraiseDetailSubpage = ({changeTitle, changeData, data, changeStep} : Fu
                 <div>
                     <p className="text-sm mb-1 text-slate-600 font-light">Description</p>
                     <Textarea 
-                        placeholder="Describe your project" className="max-h-48" 
+                        placeholder="Describe your project" className="max-h-32" 
                         value={data.project_description} onChange={(e) => changeData("project_description", e.target.value)}
                     />
                 </div>

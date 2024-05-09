@@ -2,12 +2,14 @@ import CryptoButton from "@components/crypto-button"
 import { Button } from "@components/ui/button"
 import { Input } from "@components/ui/input"
 import { FundraiseSubpage } from "@lib/types/fundraise-subpage-types"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import btcIcon from "@assets/images/Bitcoin.png"
 import icpIcon from "@assets/images/icp.png"
 import ethIcon from "@assets/images/eth.png"
 
-const FundraiseTargetSubpage = ({changeTitle, changeData, data} : FundraiseSubpage) => {
+const FundraiseTargetSubpage = ({changeStep, changeTitle, changeData, data} : FundraiseSubpage) => {
+
+    const [usdValue, setUsdValue] = useState(0);
 
     useEffect(() => {
         changeTitle(
@@ -20,6 +22,11 @@ const FundraiseTargetSubpage = ({changeTitle, changeData, data} : FundraiseSubpa
             "Choose your token of choice and the amount needed to be raised"
         )
     }, [])
+
+    useEffect(() => {
+        (async function(){
+        })()
+    }, [data.target_currency, data.target_amount])
 
     return (
         <>
@@ -37,7 +44,7 @@ const FundraiseTargetSubpage = ({changeTitle, changeData, data} : FundraiseSubpa
                     </div>
                 </div>  
             </div>
-            <Button className="text-white">Next</Button> 
+            <Button className="text-white" onClick={() => changeStep(3)}>Next</Button> 
             {/* Goofy ass button */}
         </>
     )

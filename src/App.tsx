@@ -17,11 +17,11 @@ function App() {
       </Helmet>
 
       {/* nanti ini context aja masukingnya */}
-      <ServiceContextProvider>
-        <AuthContextProvider>
-          <RouterProvider router={router} />
-        </AuthContextProvider>
-      </ServiceContextProvider>
+        <ServiceContextProvider>
+            <AuthContextProvider>
+            <RouterProvider router={router} />
+            </AuthContextProvider>
+        </ServiceContextProvider>
     </div>
   );
 }

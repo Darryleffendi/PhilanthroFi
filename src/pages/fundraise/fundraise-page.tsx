@@ -7,6 +7,7 @@ import { useAuth } from "@lib/hooks/useAuth";
 import { FundraiseType } from "@lib/types/fundraise-subpage-types";
 import { steps } from "framer-motion";
 import FundraiseTargetSubpage from "./fundraise-target-subpage";
+import FundraiseImageSubpage from "./fundraise-image-subpage";
 
 
 const FundraisePage = () => {
@@ -67,6 +68,7 @@ const FundraisePage = () => {
         <FundraiseDetailSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
         <FundraisePersonalSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
         <FundraiseTargetSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
+        <FundraiseImageSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
     ]
 
     useEffect(() => {
@@ -113,7 +115,7 @@ const FundraisePage = () => {
                     </div>
 
                 </div>
-                <div className="bg-background w-[50%] h-[65vh] rounded-xl shadow-lg p-10">
+                <div className="bg-background w-[50%] h-[60vh] rounded-xl shadow-lg p-10">
                     <div
                         className="w-full h-full transition-all duration-500 flex flex-col font-nunito justify-between" 
                         style={{opacity: subpageOpacity}}
