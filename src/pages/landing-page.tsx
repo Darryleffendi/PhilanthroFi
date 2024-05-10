@@ -139,20 +139,10 @@ export default function LandingPage() {
                     <>{user?.timestamp}</>
                     <>{user?.birth_date}</>
                 </div>
-            <Button onClick={()=>{logout()}} className="text-8xl">LOGOUT PANTEK</Button>
+                <Button onClick={()=>{logout()}} className="text-8xl">LOGOUT PANTEK</Button>
             
-            <div>
-                <Wallet2></Wallet2>
-            </div>
             </div>
 
-            {/* <div className="fixed h-screen w-full flex justify-center top-[100vh]">
-                <div className="bg-primary w-48 h-48 rounded-full" style={{transform: `scale(${circleRadius})`}}></div>
-
-            </div> */}
-            <div className="z-20">
-                test
-            </div>
         </div>
         
     );

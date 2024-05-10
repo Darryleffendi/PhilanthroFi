@@ -5,7 +5,7 @@ import { FundraiseSubpage } from "@lib/types/fundraise-subpage-types"
 import { useEffect, useState } from "react"
 import imgIcon from "@assets/images/image.png"
 
-const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm} : FundraiseSubpage) => {
+const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>{}} : FundraiseSubpage) => {
 
     const [usdValue, setUsdValue] = useState(0);
 
@@ -22,10 +22,10 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm} : Fun
     }, [])
 
     useEffect(() => {
-        (async function(){
-        })()
+        (async function(){})()
     }, [data.target_currency, data.target_amount])
 
+    //@ts-ignore
     return (
         <>
             <div className="w-full h-[70%] relative border rounded-lg border-dashed border-slate-400 flex flex-col justify-center items-center cursor-pointer">

@@ -8,10 +8,15 @@ import CharityCard from './charity-card';
 import { dummyCharity } from '@lib/types/charity-types';
 import { useService } from '@lib/hooks/useService';
 import { useEffect } from 'react';
+import { Button } from '@components/ui/button';
+import { useAuth } from '@lib/hooks/useAuth';
+import { useWallet } from '@lib/hooks/useWallet';
 
 const HomePage = () => {
 
   const {getCharityService} = useService();
+  const {transfer,transferLoading, transferError} = useWallet();
+  const { user } = useAuth();
 
   const getAllCharities = async () => {
 
@@ -19,7 +24,8 @@ const HomePage = () => {
 
     const charities = await charitiesService.getAllCharities([], []);
 
-    console.log(charities.ok);
+    //@ts-ignore
+    // console.log(charities.ok);
   }
 
   useEffect(() => {
@@ -42,6 +48,10 @@ const HomePage = () => {
                 exactly as intended, enhancing trust through unparalleled
                 transparency and technological innovation.
               </div>
+
+              <Button disabled={transferLoading} onClick={()=>{transfer({to:"c7d6k-43szk-23spb-xle2m-shnuh-6hyw4-2o5vs-nzbjt-xtyfb-r6lfq-qqe", amount:3000})}}>
+                {transferLoading ? "Loading Cok" : `${transferError?.message || "Manta Button"}`}
+              </Button>
             </div>
             <div className="flex flex-col gap-10">
               <NumberColumn
@@ -66,7 +76,7 @@ const HomePage = () => {
             <div className="text-indigo-400 font-semibold text-xl">
               Featured Charities
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
               <CharityCard charity={dummyCharity} />
               <CharityCard charity={dummyCharity} />
               <CharityCard charity={dummyCharity} />
