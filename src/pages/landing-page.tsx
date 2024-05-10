@@ -119,9 +119,9 @@ export default function LandingPage() {
 
                                 <div className="flex justify-center">
                                     <div className="flex justify-center items-center gap-40">
-                                        <Numbers title="Opportunies Created" number={421} numberStyle="text-8xl font-medium " titleStyle="text-xl  font-medium"/>
-                                        <Numbers title="Funds Raised" number={23312231} numberStyle="text-8xl font-medium " titleStyle="text-xl  font-medium" prefix="$"/>
-                                        <Numbers title="Contributors" number={13201} numberStyle="text-8xl font-medium" titleStyle="text-xl font-medium"/>
+                                        <Numbers title="Opportunies Created" number={421} numberStyle="text-8xl font-medium " titleStyle="text-3xl   font-medium"/>
+                                        <Numbers title="Funds Raised" number={23312231} numberStyle="text-8xl font-medium " titleStyle="text-3xl  font-medium" prefix="$"/>
+                                        <Numbers title="Contributors" number={13201} numberStyle="text-8xl font-medium" titleStyle="text-3xl font-medium"/>
                                     </div>
                                 </div>
                         </div>

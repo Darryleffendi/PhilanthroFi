@@ -10,11 +10,14 @@ import FundraiseTargetSubpage from "./fundraise-target-subpage";
 import FundraiseImageSubpage from "./fundraise-image-subpage";
 import FundraiseDescriptionSubpage from "./fundraise-description-subpage";
 import ProtectedRoute from "src/middleware/protected-route";
+import { useService } from "@lib/hooks/useService";
+import { useMutation } from "react-query";
 
 
 const FundraisePage = () => {
 
     const {logout, user} = useAuth()
+    const {getCharityService} = useService()
 
     const [currStep, setCurrStep] = useState(0);
     const [subpageOpacity, setSubpageOpacity] = useState(0);
@@ -28,7 +31,7 @@ const FundraisePage = () => {
         project_name: "",
         project_description: "",
         project_location: "",
-        project_image: null,
+        project_image: [],
         first_name: user ? (user.first_name) : "",
         last_name: user ? (user.last_name) : "",
         phone_number: "",
@@ -69,12 +72,36 @@ const FundraisePage = () => {
         setSubpageOpacity(100);
     }
 
-    const submitForm = async () => {
-        // Ini buat logic submit ke backend
-        // Tinggal pake variable data
 
-        console.log(data);
-    }
+    const { mutate: submitForm, isLoading: createCharityLoading, error: createCharityError, isSuccess } = useMutation(
+        async () => {
+            // Ini buat logic submit ke backend
+            // Tinggal pake variable data
+            const charityService = await getCharityService()
+            const response = await charityService.addCharity(
+                {
+                    title:data.project_name,
+                    target_donation:BigInt(data.target_amount),
+                    image_urls:data.project_image,
+                    description:data.project_description,
+                    end_date:BigInt(new Date(data.end_date).getTime()),
+                    tags:[],
+                    location:data.address,
+                    target_currency:data.target_currency,
+                }
+            )
+
+            return response
+            // console.log(data);
+        }, {
+        onError: (error: Error) => {
+            console.error('Error during creating charity:', error.message);
+        },
+        onSuccess: (data) => {
+            console.log('Created charity successfully:', data);
+        }
+    });
+
 
     const pages = [
         <FundraiseDetailSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,

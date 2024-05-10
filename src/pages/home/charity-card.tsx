@@ -2,9 +2,10 @@ import { CharityEvent } from '@lib/types/charity-types';
 import React from 'react';
 import ICPLogo from '@assets/logo/icp.png';
 import ProgressBar from '@components/progress_bar/progress-bar';
+import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 
 interface CharityCardProps {
-  charity: CharityEvent;
+  charity: BackendCharityEvent;
 }
 
 const CharityCard: React.FC<CharityCardProps> = ({
@@ -24,14 +25,14 @@ const CharityCard: React.FC<CharityCardProps> = ({
                 </div>
               ))} 
           </div>
-          <div className="text-xl w-[75%] font-medium">
+          <div className="text-xl w-[75%] font-medium leading-6">
             {charity.title}
           </div>
         </div>
         
         <div className="w-full flex flex-col gap-2">
           <div className="w-full items-center gap-1 flex text-gray-400">
-            {charity.current_donation}/{charity.target_donation} 
+            {Number(charity.current_donation)}/{Number(charity.target_donation)} 
             <img className="h-5" src={ICPLogo} alt="" />
           </div>
           <ProgressBar className="bg-blue-200" progress={69} />

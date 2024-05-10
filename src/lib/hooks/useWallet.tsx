@@ -23,10 +23,10 @@ export const useWallet = () => {
         async ({ to, amount }: TransferTransaction) => {
             
             if (!await getConnection()) throw new Error("Not plugged in");
-            const balances = await getPlugBalance();
-            if (balances[0]?.amount < amount) {
-                throw new Error("Insufficient balance");
-            }
+            // const balances = await getPlugBalance();
+            // if (balances[0]?.amount < amount) {
+            //     throw new Error("Insufficient balance");
+            // }
             if (!to) {
                 throw new Error("Destination not defined");
             }
