@@ -8,7 +8,7 @@ export const useWallet = () => {
     // const [balance, setBalance] = useState<PlugBalance[]>([]);
     const isConnectedRef = useRef(false);
     const whitelist = iiCanisterId;
-
+    
     const getConnection = async () => {
         try {
             const status = await getConnectionStatus()

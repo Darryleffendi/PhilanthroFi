@@ -119,10 +119,12 @@ actor Charity {
           target_currency = founded_charity.target_currency;
         };
         charities.put(updated_charity.id, updated_charity);
-        return #ok();
+        let save_user_donation_response = await Backend.addDonationReference(msg.caller, updated_charity.id, donation.id);
+        return save_user_donation_response;
       };
     };
   };
+
   func isInCharitytag(wanted_tags : [Text], current_charity_tags : [Text]) : Bool {
     return (Array.find<Text>(current_charity_tags, func(tag : Text) : Bool {
                 for(g in wanted_tags.vals()){

@@ -8,19 +8,21 @@ import { AuthState } from "@lib/types/user-types";
 import { useAuth } from "@lib/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { BackgroundBeams } from "@components/ui/background-beams";
+import ProtectedRoute from "src/middleware/protected-route";
 
 export default function AuthPage() {
 
-    const {login, authState, register} = useAuth();
+    const {login, authState, register, isLoading} = useAuth();
+    const navigate = useNavigate()
 
-    const navigate = useNavigate();
 
     const renderSubPage = () =>{
         if (authState === AuthState.Nope) return <LoginSubpage login={login} />
         else if (authState === AuthState.NotRegistered) return <RegisterSubpage register={register} />
-        else if (authState === AuthState.Authenticated) navigate("/home")
+        else if(authState === AuthState.Authenticated) navigate('/home')
     }
 
+    if (isLoading)return <>loading</>
     return (
             <div className="w-screen h-screen bg-primary bg-opacity-50 overflow-hidden flex flex-col lg:flex-row p-6 gap-6 md:px-12 lg:px-24">
                 {/* Decorations */}
@@ -43,7 +45,7 @@ export default function AuthPage() {
                     <div 
                         className={`h-[70%] bg-background z-20 shadow-xl text-black p-8 rounded-lg transition-all duration-500 w-full ${authState === AuthState.Nope ? 'lg:h-[50%]' : 'lg:min-h-[50%]'} `}
                     >
-                        <div className={`flex flex-col justify-between h-full transition-all duration-500 ${authState === AuthState.Loading ? 'opacity-0' : 'opacity-100'}`}>
+                        <div className={`flex flex-col justify-between h-full transition-all duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
                             {renderSubPage()}
                         </div>
                     </div>

@@ -14,6 +14,5 @@ export interface UserBase {
 export enum AuthState {
     Authenticated = "Authenticated",
     Nope = "Not Authenticated",
-    Loading = "Loading",
     NotRegistered = "NotRegistered",
 }

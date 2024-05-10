@@ -1,7 +1,9 @@
 import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
+import { queryClient } from "@lib/settings/query-settings";
 import { UserBase } from "@lib/types/user-types";
 import { Dispatch, SetStateAction, useState } from "react";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterSubpage({register} : props) {
@@ -23,21 +25,34 @@ export default function RegisterSubpage({register} : props) {
         })
     }
 
-    const regisAccount = async () =>{
 
-        if(regisData.first_name === "" || regisData.last_name === "" || regisData.birth_date === "" || regisData.email === ""){
-            setErrorMsg("Please fill all fields")
-            return;
+    const { mutate: regisAccount, isLoading: regisAccountLoading, error: regisAccountError, isSuccess } = useMutation(
+        async () =>{
+            if(regisData.first_name === "" || regisData.last_name === "" || regisData.birth_date === "" || regisData.email === ""){
+                setErrorMsg("Please fill all fields")
+                throw new Error("Please fill all fields")
+            }
+            if(!regisData.email.includes("@")){
+                setErrorMsg("Invalid email")
+                throw new Error("Invalid email")
+            }
+    
+            const res =  await register(regisData)
+            if(res.err) throw new Error(res.err)
+            return res.ok
+        },
+        {
+        onError: (error: Error) => {
+            setErrorMsg("Registration Invalid")
+            console.error('Error during creating account:', error.message);
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['userData']);
+            console.log('Created account successfully:', data);
+            navigate('/home')
         }
-        if(!regisData.email.includes("@")){
-            setErrorMsg("Invalid email")
-            return;
-        }
+    });
 
-        const res = await register(regisData)
-        if(res.ok) navigate('/home')
-        else if(res.err) setErrorMsg("Registration Invalid")
-    }
     return (
         <>
         <div>
@@ -77,10 +92,11 @@ export default function RegisterSubpage({register} : props) {
                 />
             </div>
             <Button 
-                className="text-white font-bold"
+                disabled={regisAccountLoading}
+                className="text-white bg-blue-300 font-bold"
                 onClick={() => regisAccount()}
             >
-                Register
+                {regisAccountLoading ? "SABARRR" : "Register"}
             </Button>
 
             <p className="text-sm text-red-700">{errorMsg}</p>
