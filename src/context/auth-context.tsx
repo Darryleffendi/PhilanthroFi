@@ -67,7 +67,6 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
             throw new Error('No user data found');
         }
 
-        console.log(userData)
         return userData[0]; 
     };
 

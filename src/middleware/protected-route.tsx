@@ -15,6 +15,7 @@ export default function ProtectedRoute({children}:ProtectedRouteProps) {
 	useEffect(() => {
         console.log(authState)
 		if(authState == AuthState.Nope) navigate('/auth')
+		if(authState == AuthState.NotRegistered) navigate('/auth')
     
 	}, [authState])
 	

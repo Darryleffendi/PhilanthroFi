@@ -1,52 +1,56 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import PlugConnect from '@psychedelic/plug-connect';
+import { useWallet } from '@lib/hooks/useWallet';
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogFooter
+} from '@components/ui/alert-dialog'; 
+
 export default function Wallet2() {
-  // const verifyConnectionAndAgent = async () => {
-  //   // const connected = await window.ic.plug.isConnected();
-  //   // if (!connected) window.ic.plug.requestConnect({ whitelist, host });
-  //   // if (connected && !window.ic.plug.agent) {
-  //   //   window.ic.plug.createAgent({ whitelist, host });
-  //   // }
-  // };
+  const { isConnected, whitelist , getConnection, plugConnectOrCreateAgent} = useWallet();
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  // useEffect(() => {
-  //   verifyConnectionAndAgent();
-  // }, []);
-
-  const handleConnectWallet = async () => {
-    const whitelist = 'https://mainnet.dfinity.network';
-    const host = 'https://mainnet.dfinity.network';
-
-    console.log('Ke konek abangkuhhh');
-    console.log(window.ic.plug.agent.getPrincipal());
-    console.log(window.ic.plug.isConnected());
-    window.ic.plug.createAgent({ whitelist, host });
-    const publicKey = await window.ic.plug.requestConnect();
-    console.log(`The connected user's public key is:`, publicKey);
-    console.log(window.ic.plug.sessionManager.sessionData);
-    const result = await window.ic.plug.requestBalance();
-    console.log(result);
+  const handleConnect =  async () => {
+    plugConnectOrCreateAgent();
+    await getConnection()
+    setDialogOpen(true); 
   };
-  const verifyConnectionAndAgent = async () => {
-    const whitelist = 'https://mainnet.dfinity.network';
-    const host = 'https://mainnet.dfinity.network';
-    const connected = await window.ic.plug.isConnected();
-    if (!connected) window.ic.plug.requestConnect({ whitelist, host });
-    if (connected && !window.ic.plug.agent) {
-      window.ic.plug.createAgent({ whitelist, host });
-    }
-  };
-
-  useEffect(() => {
-    verifyConnectionAndAgent();
-  }, []);
 
   return (
-    <PlugConnect
-      dark
-      whitelist={['rdmx6-jaaaa-aaaaa-aaadq-cai']}
-      host="https://mainnet.dfinity.network"
-      onConnectCallback={handleConnectWallet}
-    />
+    <>
+      <PlugConnect
+        dark
+        whitelist={[whitelist]}
+        host="https://mainnet.dfinity.network"
+        onConnectCallback={handleConnect}
+      />
+      <></>
+
+      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <AlertDialogTrigger asChild>
+          <button style={{ display: "none" }}></button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogTitle>
+            {isConnected ? 
+            "You Are Plugged In": "Something Went Wrong"}
+            </AlertDialogTitle>
+          <AlertDialogDescription>
+            {isConnected ?
+            "Your plug wallet has been successfully connected" : "Please try connecting to Plug again"}
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => { setDialogOpen(false); }}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { router } from '@lib/routes/route';
+import { router } from '@lib/routes/routes';
 import './App.css';
 import {  RouterProvider} from "react-router-dom";
 import AuthContextProvider from './context/auth-context';

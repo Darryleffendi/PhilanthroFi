@@ -8,6 +8,8 @@ import {
 } from './ui/navigation-menu';
 import logoDark from '@assets/logo/logo-dark.png';
 import { useEffect, useState } from 'react';
+import { navbarRoutes } from '@lib/routes/navbar-routes';
+import Wallet2 from './wallet2';
 
 type props = {
   className?: string;
@@ -41,15 +43,17 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
         </div>
 
         <NavigationMenuList className="flex gap-2">
+          {navbarRoutes.map((nav)=>{
+            return(
+              <NavigationMenuItem key={nav.link}>
+                <Link className="" to={nav.link}>
+                  {nav.name}
+                </Link>
+              </NavigationMenuItem>
+            )
+          })}
           <NavigationMenuItem>
-            <Link className="" to={'/about'}>
-              About Us
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link className="" to={'/explores'}>
-              Explores
-            </Link>
+            <Wallet2/>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
