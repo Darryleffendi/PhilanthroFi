@@ -5,6 +5,7 @@ export interface FundraiseType {
     project_description : string
     project_location : string
     project_image : any
+    tags : string[]
 
     // fundraiser profile
     first_name : string,

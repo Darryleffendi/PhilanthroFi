@@ -13,6 +13,7 @@ export default function ProtectedRoute({children}:ProtectedRouteProps) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+        console.log(authState)
 		if(authState == AuthState.Nope) navigate('/auth')
     
 	}, [authState])

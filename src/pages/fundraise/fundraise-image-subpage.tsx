@@ -34,7 +34,7 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm} : Fun
                 <div className="text-sm mt-2 opacity-60">Click to upload Image</div>
             </div>
 
-            <Button className="text-white" onClick={() => submitForm()}>Create</Button> 
+            <Button className="text-white" onClick={() => {submitForm ? submitForm() : {}}}>Create</Button> 
             {/* Goofy ass button */}
         </>
     )

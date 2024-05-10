@@ -37,7 +37,8 @@ const FundraisePage = () => {
         target_amount: 0,
         target_currency: "ICP",
         start_date: "",
-        end_date: ""
+        end_date: "",
+        tags: [],
     })
 
     const changeData = (key : string, value : string) => {
@@ -89,7 +90,7 @@ const FundraisePage = () => {
     }, [])
 
     return (
-        <ProtectedRoute>
+        // <ProtectedRoute>
             <MainLayout className="">
                 <div className="bg-primary bg-opacity-50 w-full md:h-screen flex flex-col md:flex-row md:flex items-center md:justify-between px-24 pt-20">
 
@@ -143,7 +144,7 @@ const FundraisePage = () => {
 
                 </div>
             </MainLayout>
-        </ProtectedRoute>
+        // </ProtectedRoute>
     )
 }
 
