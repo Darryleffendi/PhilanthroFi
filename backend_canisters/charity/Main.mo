@@ -55,29 +55,42 @@ type TransactionRequest = {
     notes: Text;
     types: Text;
   };
+  
   let charities = TrieMap.TrieMap<Text, CharityEvent>(Text.equal, Text.hash);
   let tag_lists = ["animals", "medical", "education", "sport", "environment", "family", "funeral", "business", "emergency", "other"];
 
-  public shared (msg) func addCharity(new_charity: CharityEventRequest) : async Result.Result<(), Text> {
-    let charity_id = await UtilityProvider.getUUID();
-    
-    let charity = {
-      id = charity_id;
-      title = new_charity.title;
-      current_donation = 0;
-      target_donation = new_charity.target_donation;
-      image_urls = new_charity.image_urls;
-      charity_owner_id = Principal.toText(msg.caller);
-      description = new_charity.description;
-      tags = new_charity.tags;
-      start_date = Time.now();
-      end_date = new_charity.end_date;
-      location = new_charity.location;
-      target_currency = new_charity.target_currency;
-      transactions = [];
+  public shared ({caller}) func addCharity(new_charity: CharityEventRequest) : async Result.Result<(), Text> {
+    if (Principal.isAnonymous(caller)) {
+      return #err("Unauthorized");
     };
+    let owner = await Backend.getUser(caller);
+    switch(owner){
+      case null{
+        return #err("User not found!");
+      };
+      case(?u){
+        let charity_id = await UtilityProvider.getUUID();
+        let charity = {
+          id = charity_id;
+          title = new_charity.title;
+          current_donation = 0;
+          target_donation = new_charity.target_donation;
+          image_urls = new_charity.image_urls;
+          charity_owner_id = Principal.toText(caller);
+          description = new_charity.description;
+          tags = new_charity.tags;
+          start_date = Time.now();
+          end_date = new_charity.end_date;
+          location = new_charity.location;
+          target_currency = new_charity.target_currency;
+          transactions = [];
+        };
 
-    charities.put(charity.id, charity); 
+        charities.put(charity.id, charity); 
+        let _ = await Backend.addOwnedCharityReference(caller, charity.id); // tambahin ke reference user biar cepet
+        return #ok();
+      };
+    };
     
     return #ok();
   };
@@ -291,5 +304,31 @@ type TransactionRequest = {
       };
     };
     
-  }
+  };
+
+  public shared ({caller}) func getOwnedCharities() : async Result.Result<[CharityEvent], Text> {
+    let user = await Backend.getUser(caller);
+    let valid_charities =  Vector.Vector<CharityEvent>();
+    switch (user) {
+      case (null) {
+        return #err("User not found");
+      };
+      case (?u) {
+        
+        for (id in u.owned_charity_reference.vals()) {
+          switch (charities.get(id)) {
+            case null{
+
+            };
+            case (?charity) {
+              // if(charity.charity_owner_id == u.identity){
+              // }
+              valid_charities.add(charity)
+            };
+          }
+        };
+        return #ok(Vector.toArray(valid_charities));
+      };
+    };
+  };
 }

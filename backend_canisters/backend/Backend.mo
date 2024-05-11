@@ -20,6 +20,7 @@ actor class Backend() {
     birth_date: Text;
     timestamp: Time.Time;
     donation_reference: [DonationReference];
+    owned_charity_reference: [Text]
   };
 
 
@@ -53,6 +54,7 @@ actor class Backend() {
       birth_date = birth_date;
       timestamp = Time.now();
       donation_reference = [];
+      owned_charity_reference = []
     };
 
     users.put(new_user.identity, new_user);
@@ -77,6 +79,7 @@ actor class Backend() {
           birth_date = request.birth_date;
           timestamp = founded_user.timestamp;
           donation_reference = founded_user.donation_reference;
+          owned_charity_reference = founded_user.owned_charity_reference;
         };
         users.put(caller, updated_user);
         return #ok(updated_user);
@@ -123,10 +126,37 @@ actor class Backend() {
           birth_date = founded_user.birth_date;
           timestamp = founded_user.timestamp;
           donation_reference = updated_donation_reference;
+          owned_charity_reference = founded_user.owned_charity_reference;
         };
         users.put(principal, updated_user);
         return #ok();
       }
     };
+  };
+
+  public shared func addOwnedCharityReference(principal : Principal, owned_charity_id : Text) : async Result.Result<(), Text> {
+      let user = await getUser(principal);
+      switch(user){
+        case null {
+          return #err("No User Found");
+        };
+        case (?founded_user){
+
+          let updated_donation_reference = Array.append<Text>(founded_user.owned_charity_reference, [owned_charity_id]);
+          
+          let updated_user = {
+            identity = founded_user.identity;
+            first_name = founded_user.first_name;
+            last_name = founded_user.last_name;
+            email = founded_user.email;
+            birth_date = founded_user.birth_date;
+            timestamp = founded_user.timestamp;
+            donation_reference = founded_user.donation_reference;
+            owned_charity_reference = updated_donation_reference;
+          };
+          users.put(principal, updated_user);
+          return #ok();
+        }
+      };
   };
 }

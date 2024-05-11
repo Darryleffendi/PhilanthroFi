@@ -14,6 +14,7 @@ import { useQuery } from 'react-query';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 
 const HomePage = () => {
+  
 
   const {getCharityService} = useService();
   const {transfer,transferLoading, transferError} = useWallet();
@@ -29,7 +30,7 @@ const HomePage = () => {
   
   const { error, isLoading, isSuccess } = useQuery(['getAllCharities'], getAllCharities, {
     retry: false,
-    onSuccess: (charity:BackendCharityEvent) => {
+    onSuccess: (charity:BackendCharityEvent[]) => {
       // @ts-ignore emg asu ni motoko
       setFeaturesCharities([...charity.ok])
     },
@@ -37,6 +38,7 @@ const HomePage = () => {
       console.error("Error while fetching charity", error)
     }
 });
+
 
   if(isLoading)return null
   return (

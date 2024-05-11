@@ -12,6 +12,7 @@ import { navbarRoutes } from '@lib/routes/navbar-routes';
 import Wallet2 from './wallet2';
 import { FaUser } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
+import UserIcon from '@components/icons/user-icon'
 
 type props = {
   className?: string;
@@ -35,7 +36,7 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
     }, [isScrolled])
 
 
-  const scrolledStyle = 'bg-white shadow-lg rounded-lg'
+  const scrolledStyle = 'bg-white rounded-lg'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,14 +81,14 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
 
       <div className="flex gap-4 h-20 mr-12 items-center overflow-hidden">
         <div className={`w-9 h-9 flex items-center justify-center p-1 hover:p-0 transition-all duration-500 ${showA ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(300%)" : ""}}>
-            <div className='w-full h-full bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer'>
+            <div className='w-full h-fullrounded-full flex items-center justify-center transition-all duration-200 cursor-pointer'>
                 <IoSearch />
             </div>
         </div>
 
         <div className={`w-9 h-9 flex items-center justify-center p-1 hover:p-0 transition-all duration-500 ${showB ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(250%)" : ""}}>
-            <div className='w-full h-full bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer'>
-                <Link to='/profile'><FaUser /></Link>
+            <div className='w-full h-full  rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer'>
+                <Link to='/profile'><UserIcon /></Link>
             </div>
         </div>
 

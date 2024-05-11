@@ -15,6 +15,7 @@ import {
     AlertDialogAction,
     AlertDialogFooter
 } from '@components/ui/alert-dialog'; 
+import Clipboard from '@components/clipboard'
 
 export default function MyProfile() {
     const {user, isLoading} = useAuth()
@@ -91,7 +92,9 @@ export default function MyProfile() {
         <div className='w-full h-fit flex flex-col gap-12'>
             <div className='flex flex-col gap-2'>
                 <div className='flex items-center gap-2  text-center '>
-                    <Toggle  onClick={()=>{setHideIdentity(!hideIdentity)}} variant={'outline'}>{`${hideIdentity ? "*****-*****-*****-*****-*****-*****-*****-*****-*****-*****-***" : user!.identity}`}</Toggle>
+                    <Toggle  onClick={()=>{setHideIdentity(!hideIdentity)}} variant={'outline'}>{`${hideIdentity ? "*****-*****-*****-*****-*****-*****-*****-*****-*****-*****-***" : user!.identity}`}
+                    </Toggle>
+                    <Clipboard text={`${user?.identity}`} tip='Copy identity'/>
                 </div>
                     <h1 className='text-sm text-gray-400 w-[50%] text-wrap'>Your account identity</h1>
             </div>
@@ -124,7 +127,7 @@ export default function MyProfile() {
             </div>
 
             <div className='flex flex-col gap-1'>
-                <h1 className='text-sm text-gray-400 w-[50%] text-wrap'>Created at: 08-04-2024</h1>
+                <h1 className='text-sm text-gray-400 w-[50%] text-wrap'>This account was created at 08-04-2024</h1>
                 <h1 className='text-sm text-gray-400 w-[50%] text-wrap'>@PhilantroFi</h1>
             </div>
         </div>

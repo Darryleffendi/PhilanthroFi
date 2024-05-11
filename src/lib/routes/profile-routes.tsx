@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 
 const MyProfile = React.lazy(()=>import ('@pages/profile/my-profile'))
-const MyCharity = React.lazy(()=>import ('@pages/profile/my-charity'))
+const MyCharities = React.lazy(()=>import ('@pages/profile/my-charities'))
 const MyTransactions = React.lazy(()=>import ('@pages/profile/my-transactions'))
 
 export const ProfileRoutes:ProfileRouteTypes[] = [
@@ -11,8 +11,8 @@ export const ProfileRoutes:ProfileRouteTypes[] = [
         description:"Manage your profile and your preferences"
     },
     {
-        name:"My Charity",
-        component: <MyCharity/>,
+        name:"My Charities",
+        component: <MyCharities/>,
         description:"View and manage your personal charity events"
     },
     {
