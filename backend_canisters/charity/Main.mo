@@ -49,12 +49,10 @@ actor Charity {
     location: Text;
     target_currency: Text;
   };
-  type TransactionRequest = {
+type TransactionRequest = {
     charity_id: Text;
     amount: Nat;
-    time: Time.Time;
     notes: Text;
-    transaction_hash: Text;
     types: Text;
   };
   let charities = TrieMap.TrieMap<Text, CharityEvent>(Text.equal, Text.hash);
@@ -86,14 +84,15 @@ actor Charity {
 
   
   public shared (msg) func addTransaction(request : TransactionRequest) : async Result.Result<(), Text> {
+    let transaction_id = await UtilityProvider.getUUID();
 
     let transaction : Transaction = {
-      from = Principal.toText(msg.caller);
-      to = request.charity_id;
+      from = if(request.types == "donation") Principal.toText(msg.caller) else "PhilantroFi";
+      to = if(request.types == "donation") request.charity_id else Principal.toText(msg.caller);
       amount = request.amount;
-      time = request.time;
+      time = Time.now();
       notes = request.notes;
-      id = request.transaction_hash;
+      id = transaction_id;
       types = request.types;
     };
     
@@ -105,9 +104,11 @@ actor Charity {
       };
       case(#ok(founded_charity)){
 
-        if(Bool.logand(transaction.types == "donation",founded_charity.charity_owner_id != Principal.toText(msg.caller))){
-          return #err("Unuthorized");
+        if(transaction.types == "withdraw"){
+          if(founded_charity.charity_owner_id != Principal.toText(msg.caller)) return #err("Unuthorized");
+          if(founded_charity.current_donation < transaction.amount) return #err("Insufficient Fund");
         };
+        
         let added_transactions  = Array.append<Transaction>(founded_charity.transactions, [transaction]);
         
         let updated_charity = {
