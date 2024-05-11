@@ -31,6 +31,7 @@ export const requestTransfer = async (to, amount) => {
     amount
   };    
   const response = await window.ic?.plug?.requestTransfer(requestTransferArg);
+  console.log(response)
   return response
 }
 

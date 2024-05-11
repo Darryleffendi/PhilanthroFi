@@ -13,7 +13,7 @@ const MainLayout : React.FC<Props> = ({children, className = "p-6", navbarClassN
   return (
     <>
     
-      <div className={`p-6 fixed z-40`}>
+      <div className={`p-6 fixed z-40 w-screen`}>
         <Navbar className={navbarClassName}/>
       </div>
       <div className={`${className} w-full min-h-screen`}>

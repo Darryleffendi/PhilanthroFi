@@ -56,7 +56,7 @@ const HomePage = () => {
                 transparency and technological innovation.
               </div>
 
-              <Button disabled={transferLoading} onClick={()=>{transfer({to:"bwr6l-omwxg-ydkr4-rdp6b-c6rha-my66u-7rw5t-malml-fq62l-zxuip-2qe", amount:3000})}}>
+              <Button disabled={transferLoading} onClick={()=>{transfer({to:"byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe", amount:3000})}}>
                 {transferLoading ? "Loading Cok" : `${transferError?.message || "Manta Button"}`}
               </Button>
               {/* <Button disabled={transferLoading} onClick={()=>{transferXtcTx()}}>
