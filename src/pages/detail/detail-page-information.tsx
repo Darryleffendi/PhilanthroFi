@@ -19,8 +19,18 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         charity.target_currency === "ICP" ? 50 : charity.target_currency === "ckBTC" ? 0.01 : 0.25,
     ]
 
+    const [amount, setAmount] = useState<any>(0);
+
     const [activeTier, setActiveTier] = useState(0);
 
+    const donate = () => {
+        let donateAmount = amount;
+        if(activeTier < 3) donateAmount = tiers[activeTier];
+
+        console.log(donateAmount);
+
+        // Bikin transaction
+    }
 
     return (
         <div className={`w-[40vw] h-[65vh] z-10 bg-white rounded-xl shadow-lg p-10 flex-col gap-4 ${className}`} style={style}>
@@ -68,13 +78,13 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                     >
                         <p className="text-sm font-normal">Choose your own</p>
                         <div className="flex items-center gap-3 h-16">
-                            <Input placeholder="0" className="font-normal text-lg"/>
+                            <Input placeholder="0" className="font-normal text-lg" type={"number"} value={amount} onChange={(e) => setAmount(e.target.value)}/>
                             <p className="font-normal text-xl">{charity.target_currency}</p>
                         </div>
                     </div>
                 </div>
                 <div className="flex items-center gap-2 font-nunito">
-                    <button className="w-full bg-primary text-white rounded-lg py-2 mt-4">Donate</button>
+                    <button className="w-full bg-primary text-white rounded-lg py-2 mt-4" onClick={donate}>Donate</button>
                     <button className="w-[40%] bg-primary text-white rounded-lg py-2 mt-4">Share</button>
                 </div>
             </div>

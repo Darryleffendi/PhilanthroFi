@@ -8,8 +8,11 @@ import ethIcon from "@assets/images/eth_transparent.webp"
 import { useEffect, useRef, useState } from "react"
 import { FaUser } from "react-icons/fa"
 import { Button } from "@components/ui/button"
+import { LuCalendarRange } from "react-icons/lu";
+import { IoEarthOutline } from "react-icons/io5";
 import DetailPageTransaction from "./detail-page-transaction"
 import DetailPageInformation from "./detail-page-information"
+import { formatDate, timeLeftUntil } from "@lib/utils/date-utils"
 
 const CharityDetail = () => {
 
@@ -30,7 +33,7 @@ const CharityDetail = () => {
         current_donation: 500,
         image_urls: ["https://images.unsplash.com/photo-1645364093800-d0796f7e9776?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         description: "A down syndrome child needs help to pay for his medical bills. He is currently in the hospital and needs to pay for his medical bills. Please help him.",
-        end_date: new Date("2022-12-31"),
+        end_date: new Date("2024-12-31"),
         charity_owner_id: "1",
         start_date: new Date("2022-12-31"),
         tags: ["medical"],
@@ -142,9 +145,25 @@ const CharityDetail = () => {
                     </div>
                 </div>
 
+                
+                <div className="w-full border-slate-300 border-t py-12 flex gap-4 flex-col">
+                    <div className="flex items-center gap-6">
+                        <IoEarthOutline className="w-16 h-16 text-primary opacity-80"/>
+                        <div className="">
+                            <p className="text-sm font-nunito text-slate-400">Location</p>
+                            <p className="text-lg font-nunito text-slate-700">{charity.location}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-6 justify-end">
+                        <div className="text-right">
+                            <p className="text-lg font-nunito text-slate-700">{charity.end_date.toDateString()}</p>
+                            <p className="text-sm font-nunito text-slate-400">{timeLeftUntil(charity.end_date)}</p>
+                        </div>
+                        <LuCalendarRange className="w-16 h-16 text-purple-200"/>
+                    </div>
+                </div>
 
-                <div className="w-full font-nunito  border-slate-300 border-t py-12 flex flex-col gap-4">
-                    {/* <p className="text-lg">Transactions</p> */}
+                <div className="w-full font-nunito  border-slate-300 border-t py-12 flex flex-col">
                     <DetailPageTransaction charity={charity}/>
                 </div>
 
@@ -162,7 +181,7 @@ const CharityDetail = () => {
 
             <DetailPageInformation 
                 charity={charity} 
-                className={`fixed right-24 top-[calc(25vh-2rem)] transition-all duration-300 ${isSticky ? "flex" : "hidden"} ${isBottom ? "opacity-0" : "opacity-100"}`} 
+                className={`fixed right-24 top-[calc(25vh-2rem)] transition-all duration-300 ${isSticky ? "flex" : "hidden"} ${isBottom ? "opacity-0 pointer-events-none" : "opacity-100"}`} 
                 style={{transform: isBottom ? `translateY(${-150}px)` : ""}}
             />
             
