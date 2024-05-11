@@ -1,4 +1,4 @@
-import { CharityEvent as BackendCharityEvent } from "src/declarations/charity/charity.did";
+import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 
 export interface CharityEvent {
   id: string;
@@ -25,37 +25,49 @@ export interface Transaction {
   id: string;
 }
 
-// export const dummyCharity: BackendCharityEvent = {
-//   id: 'ce1',
-//   title: 'Tolongin DuckCing nyuri sampah di sungai',
-//   current_donation: BigInt(1200),
-//   target_donation: BigInt(5000),
-//   charity_owner_id: 'owner123',
-//   image_urls: ['https://dummyimage.com/600x400/000/fff'],
-//   description: 'A community effort to clean up the River City waterfront.',
-//   start_date: BigInt(new Date('2024-06-01').getTime()),
-//   end_date: BigInt(new Date('2024-06-15').getTime()),
-//   tags: ['environment', 'community', 'river'],
-//   location: 'River City',
-//   transactions: [
-//     {
-//       from: 'donor1',
-//       to: 'ce1',
-//       amount: BigInt(100),
-//       time: BigInt(new Date('2024-06-01T12:00:00').getTime()),
-//       notes: 'Keep up the great work!',
-//       id: 'd1',
-//       types: 'donation',
-//     },
-//     {
-//       from: 'donor2',
-//       to: 'ce1',
-//       amount: BigInt(100),
-//       time: BigInt(new Date('2024-06-01T12:00:00').getTime()),
-//       notes: 'Happy to support this cause!',
-//       id: 'd2',
-//       types: 'donation',
-//     },
-//   ],
-//   target_currency: 'USD',
-// };
+export const categories = [
+  'Animals',
+  'Medical',
+  'Education',
+  'Sport',
+  'Environment',
+  'Family',
+  'Funeral',
+  'Business',
+  'Emergency',
+];
+
+export const dummyCharity: BackendCharityEvent = {
+  id: 'ce1',
+  title: 'Tolongin DuckCing',
+  current_donation: BigInt(1200),
+  target_donation: BigInt(5000),
+  charity_owner_id: 'owner123',
+  image_urls: 'https://dummyimage.com/600x400/000/fff',
+  description: 'A community effort to clean up the River City waterfront.',
+  start_date: BigInt(new Date('2024-06-01').getTime()),
+  end_date: BigInt(new Date('2024-06-15').getTime()),
+  tags: ['Animals'],
+  location: 'River City',
+  transactions: [
+    {
+      from: 'donor1',
+      to: 'ce1',
+      amount: BigInt(100),
+      time: BigInt(new Date('2024-06-01T12:00:00').getTime()),
+      notes: 'Keep up the great work!',
+      id: 'd1',
+      types: 'donation',
+    },
+    {
+      from: 'donor2',
+      to: 'ce1',
+      amount: BigInt(100),
+      time: BigInt(new Date('2024-06-01T12:00:00').getTime()),
+      notes: 'Happy to support this cause!',
+      id: 'd2',
+      types: 'donation',
+    },
+  ],
+  target_currency: 'USD',
+};

@@ -13,7 +13,7 @@ const CharityCard: React.FC<CharityCardProps> = ({
 }) => {
   console.log(charity.id)
   return (
-    <div className="bg-white rounded-lg h-[60vh]">
+    <div className="bg-white rounded-lg max-h-[55vh]">
       <div className="w-full h-[60%]">
         <img src={charity.image_urls} alt="" className="rounded-t-lg object-cover w-full h-full" />
       </div>
