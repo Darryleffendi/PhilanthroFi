@@ -60,7 +60,7 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
       
       <div></div>
 
-      <div className="flex gap-4 mr-12 items-center">
+      <div className="flex gap-4 h-20 mr-12 items-center">
         <div className='w-10 h-10 flex items-center justify-center p-1 hover:p-0 transition-all duration-200'>
             <div className='w-full h-full bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer'>
                 <FaUser />

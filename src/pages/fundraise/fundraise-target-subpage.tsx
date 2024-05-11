@@ -3,7 +3,7 @@ import { Button } from "@components/ui/button"
 import { Input } from "@components/ui/input"
 import { FundraiseSubpage } from "@lib/types/fundraise-subpage-types"
 import { useEffect, useState } from "react"
-import btcIcon from "@assets/images/Bitcoin.png"
+import btcIcon from "@assets/images/btc.png"
 import icpIcon from "@assets/images/icp.png"
 import ethIcon from "@assets/images/eth.png"
 
