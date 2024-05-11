@@ -15,7 +15,9 @@ const CharityDetail = () => {
 
     const [rightTranslate, setRightTranslate] = useState(0);
     const [isSticky, setIsSticky] = useState(false);
+    const [isBottom, setIsBottom] = useState(false);
     const observerTargetRef = useRef(null);
+    const observerTargetRefBottom = useRef(null);
 
     // id charity nanti diambil dari url
     const {id} = useParams<{id: string}>()
@@ -55,8 +57,18 @@ const CharityDetail = () => {
             }
         );
 
+        const observer2 = new IntersectionObserver(
+            (entries) => {
+                const [entry] = entries;
+                setIsBottom(entry.isIntersecting);
+            }
+        );
+
         if (observerTargetRef.current) {
             observer.observe(observerTargetRef.current);
+        }
+        if (observerTargetRefBottom.current) {
+            observer2.observe(observerTargetRefBottom.current);
         }
 
         return () => {
@@ -65,6 +77,9 @@ const CharityDetail = () => {
             
             if (observerTargetRef.current) {
                 observer.unobserve(observerTargetRef.current);
+            }
+            if (observerTargetRefBottom.current) {
+                observer2.unobserve(observerTargetRefBottom.current);
             }
         }
     }, [])
@@ -90,9 +105,9 @@ const CharityDetail = () => {
 
                         <div className="flex flex-col w-full">
                             
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 mb-2">
                                 <img
-                                    className="w-14" 
+                                    className="h-12" 
                                     src={charity.target_currency === "ICP" ? icpIcon : charity.target_currency === "ckBTC" ? btcIcon : ethIcon}
                                 />
                                 <p className="text-3xl font-nunito font-black text-slate-700 ">{charity.current_donation} {charity.target_currency}</p>
@@ -132,6 +147,8 @@ const CharityDetail = () => {
                     {/* <p className="text-lg">Transactions</p> */}
                     <DetailPageTransaction charity={charity}/>
                 </div>
+
+                <div className="w-full h-1" ref={observerTargetRefBottom}></div>
             </div>
 
             <div className="w-[40vw] h-[200vh] mt-8" style={{transform: `translateY(${-rightTranslate}px)`}}>
@@ -140,10 +157,14 @@ const CharityDetail = () => {
                     <img src={charity.image_urls[0]} className="w-full object-cover h-[55vh] rounded-xl shadow-lg" ref={observerTargetRef}/>
                 </div>
 
-                <DetailPageInformation charity={charity} className={`${isSticky ? "hidden" : ""}`} />
+                <DetailPageInformation charity={charity} className={`${isSticky ? "hidden" : "flex"} `} />
             </div>
 
-            <DetailPageInformation charity={charity} className={`fixed right-24 top-[calc(25vh-2rem)] ${isSticky ? "flex" : "hidden"}`} />
+            <DetailPageInformation 
+                charity={charity} 
+                className={`fixed right-24 top-[calc(25vh-2rem)] transition-all duration-300 ${isSticky ? "flex" : "hidden"} ${isBottom ? "opacity-0" : "opacity-100"}`} 
+                style={{transform: isBottom ? `translateY(${-150}px)` : ""}}
+            />
             
         </MainLayout>
     )
