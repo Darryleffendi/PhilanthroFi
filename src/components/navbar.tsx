@@ -87,7 +87,7 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
 
         <div className={`w-9 h-9 flex items-center justify-center p-1 hover:p-0 transition-all duration-500 ${showB ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(250%)" : ""}}>
             <div className='w-full h-full bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer'>
-                <FaUser />
+                <Link to='/profile'><FaUser /></Link>
             </div>
         </div>
 

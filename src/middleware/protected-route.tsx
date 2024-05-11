@@ -36,8 +36,8 @@ export default function ProtectedRoute({children}:ProtectedRouteProps) {
 	}
 
     return (
-        <>
+        <Suspense fallback={<>Loading</>}>
             {children}
-        </>
+        </Suspense>
     )
 }

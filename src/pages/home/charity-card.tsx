@@ -11,6 +11,7 @@ interface CharityCardProps {
 const CharityCard: React.FC<CharityCardProps> = ({
   charity,
 }) => {
+  console.log(charity.id)
   return (
     <div className="bg-white rounded-lg h-[60vh]">
       <div className="w-full h-[60%]">

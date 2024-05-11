@@ -12,6 +12,7 @@ import { LuCalendarRange } from "react-icons/lu";
 import { IoEarthOutline } from "react-icons/io5";
 import DetailPageTransaction from "./detail-page-transaction"
 import DetailPageInformation from "./detail-page-information"
+import { Progress } from "@components/ui/progress"
 import { formatDate, timeLeftUntil } from "@lib/utils/date-utils"
 
 const CharityDetail = () => {
@@ -21,6 +22,7 @@ const CharityDetail = () => {
     const [isBottom, setIsBottom] = useState(false);
     const observerTargetRef = useRef(null);
     const observerTargetRefBottom = useRef(null);
+    const [progress, setProgress] = useState(15) // progress bar animation 
 
     // id charity nanti diambil dari url
     const {id} = useParams<{id: string}>()
@@ -48,6 +50,12 @@ const CharityDetail = () => {
         
         if(!isSticky) setRightTranslate(scrollTop * 1.1);
     }
+
+    useEffect(() => {
+        const timer = setTimeout(() => setProgress(charity.current_donation/charity.target_donation*100), 500)
+        return () => clearTimeout(timer)
+    }, [])
+    
 
     useEffect(() => {
     
@@ -119,7 +127,8 @@ const CharityDetail = () => {
                                 out of {charity.target_donation} {charity.target_currency} target funds
                             </p>
                             <div className="w-full h-2 rounded bg-slate-500 bg-opacity-20 shadow-md">
-                                <div className="h-full rounded bg-primary" style={{width: charity.current_donation / charity.target_donation * 100 + "%"}}></div>
+                                <Progress value={progress} />
+                                {/* <div className="h-full rounded bg-primary" style={{width: charity.current_donation / charity.target_donation * 100 + "%"}}></div> */}
                             </div>
                         </div>
                     </div>
