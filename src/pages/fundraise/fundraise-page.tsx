@@ -12,10 +12,20 @@ import FundraiseDescriptionSubpage from "./fundraise-description-subpage";
 import ProtectedRoute from "src/middleware/protected-route";
 import { useService } from "@lib/hooks/useService";
 import { useMutation } from "react-query";
-
+import {
+    AlertDialog,
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogTitle,
+    AlertDialogDescription,
+    AlertDialogAction,
+    AlertDialogFooter
+} from '@components/ui/alert-dialog'; 
+import { useNavigate } from "react-router-dom";
 
 const FundraisePage = () => {
 
+    const [dialogOpen, setDialogOpen] = useState(false);
     const {logout, user} = useAuth()
     const {getCharityService} = useService()
 
@@ -26,6 +36,8 @@ const FundraisePage = () => {
     const [subtitle, setSubtitle] = useState("");
     const [titleOpacity, setTitleOpacity] = useState(0);
     const [subtitleOpacity, setSubtitleOpacity] = useState(0);
+
+    const navigate = useNavigate();
 
     const [data, setData] = useState<FundraiseType>({
         project_name: "",
@@ -90,15 +102,16 @@ const FundraisePage = () => {
         async () => {
             // Ini buat logic submit ke backend
             // Tinggal pake variable data
+            console.log(data)
             const charityService = await getCharityService()
             const response = await charityService.addCharity(
                 {
                     title:data.project_name,
                     target_donation:BigInt(data.target_amount),
-                    image_urls:data.project_image,
+                    image_urls:data.project_image[0], // ini bikin 1 image aja dulu, kalo mau engga tingal ganti be [Text]
                     description:data.project_description,
                     end_date:BigInt(new Date(data.end_date).getTime()),
-                    tags:[],
+                    tags:data.tags,
                     location:data.address,
                     target_currency:data.target_currency,
                 }
@@ -107,6 +120,9 @@ const FundraisePage = () => {
             return response
             // console.log(data);
         }, {
+        onSettled:()=>{
+            setDialogOpen(true); 
+        },
         onError: (error: Error) => {
             console.error('Error during creating charity:', error.message);
         },
@@ -183,6 +199,27 @@ const FundraisePage = () => {
 
                 </div>
             </MainLayout>
+
+            <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <AlertDialogTrigger asChild>
+                <button style={{ display: "none" }}></button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                <AlertDialogTitle>
+                    {isSuccess ? 
+                    "Success": "Something Went Wrong"}
+                    </AlertDialogTitle>
+                <AlertDialogDescription>
+                    {isSuccess ?
+                    `Your charity project ${data.project_name} is now live` : `${createCharityError?.message}`}
+                </AlertDialogDescription>
+                <AlertDialogFooter>
+                    <AlertDialogAction onClick={() => { setDialogOpen(false); navigate('/home')}}>
+                    Continue
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </ProtectedRoute>
     )
 }

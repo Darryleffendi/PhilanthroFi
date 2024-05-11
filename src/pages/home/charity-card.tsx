@@ -12,9 +12,9 @@ const CharityCard: React.FC<CharityCardProps> = ({
   charity,
 }) => {
   return (
-    <div className="bg-white rounded-lg h-[50vh]">
+    <div className="bg-white rounded-lg h-[60vh]">
       <div className="w-full h-[60%]">
-        <img src={charity.image_urls[0]} alt="" className="rounded-t-lg object-cover w-full h-full" />
+        <img src={charity.image_urls} alt="" className="rounded-t-lg object-cover w-full h-full" />
       </div>
       <div className="p-4 flex flex-col gap-2 h-[40%] justify-between">
         <div className='w-full flex flex-col gap-2'>

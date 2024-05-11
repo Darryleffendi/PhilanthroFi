@@ -23,8 +23,8 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>
 
     const finalize = async () => {
         await changeData("project_image", base64List);
-        submitForm();
-        resetBase64()
+        await submitForm();
+        await resetBase64()
     }
 
     useEffect(() => {
