@@ -9,14 +9,20 @@ interface ProtectedRouteProps{
 }
 export default function ProtectedRoute({children}:ProtectedRouteProps) {
 
-    const {authState,isLoading} = useAuth();
+    const {authState,isLoading,user} = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if(authState == AuthState.Nope) navigate('/auth')
-		else if(authState == AuthState.NotRegistered) navigate('/auth')
+		if(!isLoading ){
+			if(authState!==AuthState.Authenticated && !user){
+				if(authState == AuthState.Nope) navigate('/auth')
+				else if(authState == AuthState.NotRegistered) navigate('/auth')
+			}
+			
+		}
+
     
-	}, [authState, isLoading])
+	}, [authState])
 	
 
 
@@ -24,7 +30,7 @@ export default function ProtectedRoute({children}:ProtectedRouteProps) {
     if (isLoading) {
 		return (
 			<div className="w-[100vw] h-[100vh] flex justify-center items-center">
-				<div className="font-bold text-5xl">Loading</div>
+				{/* <div className="font-bold text-5xl">Loading</div> */}
 			</div>
 		);
 	}

@@ -19,10 +19,11 @@ export default function AuthPage() {
     const renderSubPage = () =>{
         if (authState === AuthState.Nope) return <LoginSubpage login={login} />
         else if (authState === AuthState.NotRegistered) return <RegisterSubpage register={register} />
-        else if(authState === AuthState.Authenticated) navigate('/home')
+        else if(authState === AuthState.Authenticated)navigate('/home')
     }
 
-    if (isLoading)return <>loading</>
+
+    if(isLoading)return <>loading</>
     return (
             <div className="w-screen h-screen bg-primary bg-opacity-50 overflow-hidden flex flex-col lg:flex-row p-6 gap-6 md:px-12 lg:px-24">
                 {/* Decorations */}

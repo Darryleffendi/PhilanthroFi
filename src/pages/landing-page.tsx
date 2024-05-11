@@ -13,6 +13,7 @@ import {
     useTransform,
 } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { queryClient } from "@lib/settings/query-settings";
 
 
 export default function LandingPage() {
@@ -139,7 +140,8 @@ export default function LandingPage() {
                     <>{user?.timestamp}</>
                     <>{user?.birth_date}</>
                 </div>
-                <Button onClick={()=>{logout()}} className="text-8xl">LOGOUT PANTEK</Button>
+            ;
+                <Button onClick={()=>{logout(); queryClient.invalidateQueries(['userData'])}} className="text-8xl">LOGOUT PANTEK</Button>
             
             </div>
 

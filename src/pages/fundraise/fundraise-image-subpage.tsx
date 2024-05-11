@@ -53,7 +53,7 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>
         (async function(){})()
     }, [data.target_currency, data.target_amount])
 
-    //@ts-ignore
+
     return (
         <>
             <div className="w-full h-[70%] relative border rounded-lg border-dashed border-slate-400 flex flex-col justify-center items-center cursor-pointer">
