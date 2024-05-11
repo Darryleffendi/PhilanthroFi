@@ -12,11 +12,11 @@ export interface CharityEvent {
   end_date: Date;
   tags: string[];
   location: string;
-  donations?: Donation[];
+  donations?: Transaction[];
   target_currency: string;
 }
 
-export interface Donation {
+export interface Transaction {
   from: string;
   to: string;
   amount: number;
@@ -37,7 +37,7 @@ export const dummyCharity: BackendCharityEvent = {
   end_date: BigInt(new Date('2024-06-15').getTime()),
   tags: ['environment', 'community', 'river'],
   location: 'River City',
-  donations: [
+  transactions: [
     {
       from: 'donor1',
       to: 'ce1',
@@ -45,6 +45,7 @@ export const dummyCharity: BackendCharityEvent = {
       time: BigInt(new Date('2024-06-01T12:00:00').getTime()),
       notes: 'Keep up the great work!',
       id: 'd1',
+      types: 'donation',
     },
     {
       from: 'donor2',
@@ -53,6 +54,7 @@ export const dummyCharity: BackendCharityEvent = {
       time: BigInt(new Date('2024-06-01T12:00:00').getTime()),
       notes: 'Happy to support this cause!',
       id: 'd2',
+      types: 'donation',
     },
   ],
   target_currency: 'USD',
