@@ -58,12 +58,17 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>
         <>
             <div className="w-full h-[70%] relative border rounded-lg border-dashed border-slate-400 flex flex-col justify-center items-center cursor-pointer">
                 <input type="file" accept="image/*" multiple className="absolute w-full h-full opacity-0 cursor-pointer" onChange={handleFileChange}/>
-                <div className="w-full h-full flex flex-wrap">
-                    {uploadedPhotos.map((photo, i)=>{
-                        return(
-                            <img key={i} src={photo} className="w-28 opacity-40 object-cover"/>
-                        )
-                    })}
+                <div className="w-full items-center justify-center flex flex-wrap">
+                    {
+                    uploadedPhotos.length === 0 ? (
+                        <img src={imgIcon} className="h-6 object-cover opacity-40"/>
+                    ) : (
+                        uploadedPhotos.map((photo, i)=>{
+                            return(
+                                <img key={i} src={photo} className="w-28 opacity-40 object-cover"/>
+                            )
+                        })
+                    )}
                 </div>
                 <div className="text-sm mt-2 opacity-60">Click to upload Image</div>
             </div>

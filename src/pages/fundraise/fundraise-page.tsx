@@ -73,6 +73,18 @@ const FundraisePage = () => {
         setSubpageOpacity(100);
     }
 
+    useEffect(() => {
+        if(user) {
+            setData({
+                ...data,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                // phone_number: user.phone_number,
+                // address: user.address,
+                // zip_code: user.zip_code,
+            })
+        }
+    }, [user])
 
     const { mutate: submitForm, isLoading: createCharityLoading, error: createCharityError, isSuccess } = useMutation(
         async () => {

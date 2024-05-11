@@ -4,6 +4,7 @@ import AuthPage from '@pages/auth/auth-page';
 import HomePage from '@pages/home/home-page';
 import { createBrowserRouter } from 'react-router-dom';
 import FundraisePage from '@pages/fundraise/fundraise-page';
+import CharityDetail from '@pages/detail/detail-page';
 const LandingPage = React.lazy(() => import('@pages/landing-page'));
 
 export const router = createBrowserRouter([
@@ -20,7 +21,11 @@ export const router = createBrowserRouter([
     element: <HomePage/>
   },
   {
-    path: '/fundraise',
+    path: '/create/fundraise',
     element: <FundraisePage />
+  },
+  {
+    path: '/fundraise/:id',
+    element: <CharityDetail />
   }
 ]);

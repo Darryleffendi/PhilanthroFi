@@ -12,7 +12,7 @@ export interface CharityEvent {
   end_date: Date;
   tags: string[];
   location: string;
-  donations: Donation[];
+  donations?: Donation[];
   target_currency: string;
 }
 

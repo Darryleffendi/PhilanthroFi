@@ -25,7 +25,7 @@ export default function Wallet2() {
   return (
     <>
       <PlugConnect
-        dark
+        dark={false}
         whitelist={[whitelist]}
         host="https://mainnet.dfinity.network"
         onConnectCallback={handleConnect}
