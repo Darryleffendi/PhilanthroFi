@@ -7,7 +7,6 @@ import Principal "mo:base/Principal";
 import Iter "mo:base/Iter";
 import Array "mo:base/Array";
 import Bool "mo:base/Bool";
-import Buffer "mo:base/Buffer";
 import UtilityProvider "canister:utility_provider";
 import Fuzz "mo:fuzz";
 import TextX "mo:xtended-text/TextX";
@@ -15,13 +14,14 @@ import Backend "canister:backend";
 import Vector "mo:vector/Class";
 
 actor Charity {
-  type Donation = {
+  type Transaction = {
     from : Text;
     to : Text;
     amount : Nat;
     time : Time.Time;
     notes: Text;
     id: Text;
+    types: Text;
   };
   type CharityEvent = {
     id: Text;
@@ -35,7 +35,7 @@ actor Charity {
     end_date: Time.Time;
     tags: [Text];
     location: Text;
-    donations: [Donation];
+    transactions: [Transaction];
     target_currency: Text;
   };
 
@@ -49,12 +49,13 @@ actor Charity {
     location: Text;
     target_currency: Text;
   };
-  type DonationRequest = {
+  type TransactionRequest = {
     charity_id: Text;
     amount: Nat;
     time: Time.Time;
     notes: Text;
     transaction_hash: Text;
+    types: Text;
   };
   let charities = TrieMap.TrieMap<Text, CharityEvent>(Text.equal, Text.hash);
   let tag_lists = ["animals", "medical", "education", "sport", "environment", "family", "funeral", "business", "emergency", "other"];
@@ -75,7 +76,7 @@ actor Charity {
       end_date = new_charity.end_date;
       location = new_charity.location;
       target_currency = new_charity.target_currency;
-      donations = [];
+      transactions = [];
     };
 
     charities.put(charity.id, charity); 
@@ -84,14 +85,15 @@ actor Charity {
   };
 
   
-  public shared (msg) func addDonation(request : DonationRequest) : async Result.Result<(), Text> {
-    let donation : Donation = {
+  public shared (msg) func addTransaction(request : TransactionRequest) : async Result.Result<(), Text> {
+    let transaction : Transaction = {
       from = Principal.toText(msg.caller);
       to = request.charity_id;
       amount = request.amount;
       time = request.time;
       notes = request.notes;
       id = request.transaction_hash;
+      types = request.types;
     };
     
     let charity = await getCharity(request.charity_id);
@@ -101,7 +103,7 @@ actor Charity {
         return #err("Charity doesn't exists");
       };
       case(#ok(founded_charity)){
-        let added_donations  = Array.append<Donation>(founded_charity.donations, [donation]);
+        let added_transactions  = Array.append<Transaction>(founded_charity.transactions, [transaction]);
         
         let updated_charity = {
           id = founded_charity.id;
@@ -115,12 +117,16 @@ actor Charity {
           current_donation = request.amount + founded_charity.current_donation; 
           end_date = founded_charity.end_date;
           location = founded_charity.location;
-          donations = added_donations;
+          transactions = added_transactions;
           target_currency = founded_charity.target_currency;
         };
         charities.put(updated_charity.id, updated_charity);
-        let save_user_donation_response = await Backend.addDonationReference(msg.caller, updated_charity.id, donation.id);
-        return save_user_donation_response;
+        if(request.types == "donation"){
+          let save_user_transaction_response = await Backend.addDonationReference(msg.caller, updated_charity.id, transaction.id);
+          return save_user_transaction_response;
+        } else{
+          return #ok();
+        }
       };
     };
   };
@@ -242,7 +248,7 @@ actor Charity {
         end_date = 1746770723;
         current_donation = 0;
         tags = [tag_lists[fuzz.nat.randomRange(0, tag_lists.size() - 1)]];
-        donations = [];
+        transactions = [];
         location = "Jakarta, Indonesia";
         target_currency = "ICP";
       };
@@ -252,9 +258,9 @@ actor Charity {
     return #ok("Charity seeded");
   };
 
-  public shared (msg) func getUserDonations () : async Result.Result<[Donation], Text> {
+  public shared (msg) func getUserDonations () : async Result.Result<[Transaction], Text> {
     let user = await Backend.getUser(msg.caller);
-    let user_donations = Vector.Vector<Donation>();
+    let user_donations = Vector.Vector<Transaction>();
     switch(user){
       case null{
         return #err("User not found!");
@@ -267,7 +273,7 @@ actor Charity {
               return #err("Charity Not Found");
             };
             case (#ok(founded_charity)){
-              for(c in founded_charity.donations.vals()){
+              for(c in founded_charity.transactions.vals()){
                 if(c.id == reference.donation_id){
                   user_donations.add(c);
                 }
