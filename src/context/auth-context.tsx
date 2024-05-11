@@ -40,8 +40,6 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
         return client
     };
 
-    
-
     const login = async () => {
         try {
             //tolong
