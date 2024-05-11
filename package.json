@@ -22,6 +22,8 @@
     "@ic-reactor/react": "1.5.5-beta.0",
     "@psychedelic/plug-connect": "^0.2.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-collapsible": "^1.0.3",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-navigation-menu": "^1.1.4",
