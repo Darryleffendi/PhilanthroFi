@@ -24,10 +24,9 @@ export const useWallet = () => {
             
             if (!await getConnection()) throw new Error("Not plugged in");
             const balances = await getPlugBalance();
-            console.log(balances)
-            // if (balances[0]?.amount < amount) {
-            //     throw new Error("Insufficient balance");
-            // }
+            if (balances[0]?.amount < amount) {
+                throw new Error("Insufficient balance");
+            }
             if (!to) {
                 throw new Error("Destination not defined");
             }

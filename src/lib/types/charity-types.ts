@@ -31,7 +31,7 @@ export const dummyCharity: BackendCharityEvent = {
   current_donation: BigInt(1200),
   target_donation: BigInt(5000),
   charity_owner_id: 'owner123',
-  image_urls: ['https://dummyimage.com/600x400/000/fff'],
+  image_urls: 'https://dummyimage.com/600x400/000/fff',
   description: 'A community effort to clean up the River City waterfront.',
   start_date: BigInt(new Date('2024-06-01').getTime()),
   end_date: BigInt(new Date('2024-06-15').getTime()),
