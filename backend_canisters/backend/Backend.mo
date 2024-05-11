@@ -21,6 +21,15 @@ actor class Backend() {
     timestamp: Time.Time;
     donation_reference: [DonationReference];
   };
+
+
+  type UserRequest = {
+      first_name: Text;
+      last_name: Text;
+      email: Text;
+      birth_date: Text;
+  };
+
   let users = TrieMap.TrieMap<Principal, User>(Principal.equal, Principal.hash);
 
   public shared ({caller}) func register(first_name: Text, last_name:Text, email:Text, birth_date:Text):async Result.Result<User, Text>{
@@ -50,6 +59,32 @@ actor class Backend() {
 
     return #ok(new_user)
   };
+
+  public shared ({caller}) func updateUser(request:UserRequest):async Result.Result<User, Text>{
+    let user = await getUser(caller);
+
+    switch(user){
+      case null {
+        return #err("No User Found");
+      };
+      case (?founded_user){
+
+        let updated_user = {
+          identity = founded_user.identity;
+          first_name = request.first_name;
+          last_name = request.last_name;
+          email = request.email;
+          birth_date = request.birth_date;
+          timestamp = founded_user.timestamp;
+          donation_reference = founded_user.donation_reference;
+        };
+        users.put(caller, updated_user);
+        return #ok(updated_user);
+      };
+    };
+
+  };
+
   public query func getAllUser() : async Result.Result<[User], Text> {
     let allUser = Iter.toArray(users.vals()); 
     return #ok(allUser);

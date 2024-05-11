@@ -22,6 +22,7 @@ module.exports ={
         colors: {
             'primary': '#aaccf8',
             'background' : '#fefefe',
+            // 'input': '#505050'
         }
     },
   },
