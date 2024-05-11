@@ -95,7 +95,7 @@ const FundraisePage = () => {
                 {
                     title:data.project_name,
                     target_donation:BigInt(data.target_amount),
-                    image_urls:data.project_image,
+                    image_urls: [data.project_image],
                     description:data.project_description,
                     end_date:BigInt(new Date(data.end_date).getTime()),
                     tags:[],

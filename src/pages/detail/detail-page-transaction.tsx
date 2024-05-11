@@ -1,5 +1,5 @@
 import TransactionTableCell from "@components/transaction-table-cell";
-import { CharityEvent, Donation } from "@lib/types/charity-types";
+import { CharityEvent, Transaction } from "@lib/types/charity-types";
 import { useState } from "react";
 import { CgNotes } from "react-icons/cg";
 
@@ -11,7 +11,7 @@ const DetailPageTransaction = ({charity} : props) => {
 
     const [tab, setTab] = useState<'Donations' | 'Withdrawals'>('Donations');
 
-    const exampleDonation : Donation = {
+    const exampleDonation : Transaction = {
         amount : 10,
         from : "0xf13e1gf4a13fds9cs1dafdbb31fg1x0",
         notes : "Cepat sembuh ya bang",

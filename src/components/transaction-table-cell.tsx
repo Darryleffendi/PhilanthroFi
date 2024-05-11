@@ -1,9 +1,9 @@
-import { Donation } from "@lib/types/charity-types"
+import { Transaction } from "@lib/types/charity-types"
 import { timeAgo } from "@lib/utils/date-utils"
 import { CgNotes } from "react-icons/cg"
 
 type params = {
-    transaction : Donation
+    transaction : Transaction
     currency : string
 }
 
