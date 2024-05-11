@@ -42,7 +42,7 @@ const HomePage = () => {
   if(isLoading)return null
   return (
     <ProtectedRoute>
-      <MainLayout className={'bg-slate-200'}>
+      <MainLayout className={'bg-slate-100'}>
         <div className="w-full min-h-screen flex">
           <div className="p-24 mt-32 flex w-full justify-between">
             <div className="flex flex-col gap-3 basis-1/3">

@@ -28,45 +28,53 @@ const CharityDetail = () => {
     }
 
     return (
-        <MainLayout>
+        <MainLayout className="p-6 bg-slate-100">
             <div className="min-h-screen w-full flex justify-between items-center px-6 gap-4">
-                <div className="flex flex-col gap-5 w-[47%]">
-                    <div className="w-full h-[50vh] flex flex-col justify-between">
 
-                        <div className="flex flex-col gap-5">
-                            <h1 className="text-4xl font-nbinter">{charity.title}</h1>
-                            <div className="flex w-full">
-                            {
-                                charity.tags.map((tag, idx) => (
-                                    <Chip key={idx} text={tag}/>
-                                ))
-                            }
-                            </div>
-                        </div>
+                <div className="flex flex-col gap-5 w-[50%]">
+                    
+                    <div className="w-full h-screen">
+                        <div className="w-full h-[50vh] flex flex-col justify-between">
 
-                        <div className="flex flex-col w-full">
-                            
-                            <div className="flex items-center gap-3">
-                                <img
-                                    className="w-14" 
-                                    src={charity.target_currency === "ICP" ? icpIcon : charity.target_currency === "ckBTC" ? btcIcon : ethIcon}
-                                />
-                                <p className="text-3xl font-nunito font-black text-slate-700 ">{charity.current_donation} {charity.target_currency}</p>
+                            <div className="flex flex-col gap-5">
+                                <h1 className="text-4xl font-nbinter">{charity.title}</h1>
+                                <div className="flex w-full">
+                                {
+                                    charity.tags.map((tag, idx) => (
+                                        <Chip key={idx} text={tag}/>
+                                    ))
+                                }
+                                </div>
                             </div>
-                            <p className="mb-4 -mt-1 font-nbinter text-slate-500">
-                                out of {charity.target_donation} {charity.target_currency} target funds
-                            </p>
-                            <div className="w-full h-2 rounded bg-slate-500 bg-opacity-20 shadow-md">
-                                <div className="h-full rounded bg-primary" style={{width: charity.current_donation / charity.target_donation * 100 + "%"}}></div>
+
+                            <div className="flex flex-col w-full">
+                                
+                                <div className="flex items-center gap-3">
+                                    <img
+                                        className="w-14" 
+                                        src={charity.target_currency === "ICP" ? icpIcon : charity.target_currency === "ckBTC" ? btcIcon : ethIcon}
+                                    />
+                                    <p className="text-3xl font-nunito font-black text-slate-700 ">{charity.current_donation} {charity.target_currency}</p>
+                                </div>
+                                <p className="mb-4 -mt-1 font-nbinter text-slate-500">
+                                    out of {charity.target_donation} {charity.target_currency} target funds
+                                </p>
+                                <div className="w-full h-2 rounded bg-slate-500 bg-opacity-20 shadow-md">
+                                    <div className="h-full rounded bg-primary" style={{width: charity.current_donation / charity.target_donation * 100 + "%"}}></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="w-[43vw]">
-                    <img src={charity.image_urls[0]} className="w-full object-cover h-[50vh] rounded-xl shadow-lg"/>
-                    <div className="w-full h-[50vh] bg-white rounded-xl shadow-lg">
-
+                <div className="w-[40vw]">
+                    <div className="w-full h-screen flex items-center">
+                        <img src={charity.image_urls[0]} className="w-full object-cover h-[50vh] rounded-xl shadow-lg"/>
                     </div>
+
+                    <div className="w-full h-[50vh] bg-white rounded-xl shadow-lg">
+                        
+                    </div>
+
                 </div>
             </div>
         </MainLayout>

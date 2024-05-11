@@ -26,11 +26,13 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
       setScrolled(window.scrollY > 50);
     };
 
+    if(window.scrollY > 0) 
+
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-    };
+    };  
   }, []);
 
   return (
@@ -40,7 +42,9 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
       >
         <div className="flex items-center gap-2">
           <img src={logoDark} className="object-cover h-10" alt="" />
-          <div className="text-3xl font-[500]">PhilanthroFi</div>
+          <div className="text-3xl font-[500] transition-all duration-200 overflow-hidden">
+            <p className=''>PhilanthroFi</p>
+          </div>
         </div>
 
         <NavigationMenuList className="flex gap-2">
