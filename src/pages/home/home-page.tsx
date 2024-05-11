@@ -5,7 +5,6 @@ import Logo from '@assets/logo/logo-dark.png';
 import NumberColumn from './number-column';
 import ProgressBar from '@components/progress_bar/progress-bar';
 import CharityCard from './charity-card';
-import { CharityEvent, dummyCharity } from '@lib/types/charity-types';
 import { useService } from '@lib/hooks/useService';
 import { useEffect, useState } from 'react';
 import { Button } from '@components/ui/button';
@@ -24,14 +23,14 @@ const HomePage = () => {
   const { user } = useAuth();
 
   const getAllCharities = async () => {
-    const charitiesService = await getCharityService();
-    return await charitiesService.getAllCharities([], []);
+    const charityService = await getCharityService();
+    return await charityService.getAllCharities([], []);
   }
   
   const { error, isLoading, isSuccess } = useQuery(['getAllCharities'], getAllCharities, {
     retry: false,
     onSuccess: (charity:BackendCharityEvent) => {
-      //@ts-ignore emg asu ni motoko
+      // @ts-ignore emg asu ni motoko
       setFeaturesCharities([...charity.ok])
     },
     onError: (error:Error) => {

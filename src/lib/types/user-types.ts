@@ -15,4 +15,5 @@ export enum AuthState {
     Authenticated = "Authenticated",
     Nope = "Not Authenticated",
     NotRegistered = "NotRegistered",
+    Loading = "Loading",
 }

@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { AuthClient } from "@dfinity/auth-client";
 import { defaultOptions } from "@lib/settings/auth-settings";
@@ -28,90 +28,150 @@ export const AuthContext = createContext<AuthContextType>({
     isLoading: false,
 });
 
+
 export default function AuthContextProvider({ children }: AuthContextProviderProps) {
     const [user, setUser] = useState<User | null>(null);
     const [authState, setAuthState] = useState<AuthState>(AuthState.Nope);
     const { getBackendService } = useService();
-    const [authClient, setAuthClient] = useState<AuthClient | null>(null);
 
-    console.log(authState)
-    useEffect(() => {
-        const initializeAuthClient = async () => {
-            const client = await AuthClient.create(defaultOptions.createOptions);
-            setAuthClient(client);
-            setAuthState(await client.isAuthenticated() ? AuthState.Authenticated : AuthState.Nope);
-        };
-        initializeAuthClient();
-    }, []);
 
-    const fetchUserData = async () => {
-        if (!authClient) {
-            throw new Error('AuthClient is not initialized');
-        }
-        
-        const identity = authClient.getIdentity();
-        if (identity.getPrincipal().isAnonymous()) {
-            throw new Error('User is not authenticated');
-        }
-
-        const backend = await getBackendService();
-        const userData = await backend.getUser(identity.getPrincipal());
-        if (!userData || userData.length === 0) {
-            throw new Error('No user data found');
-        }
-        return userData[0];
+    const authClient = async () => {
+        const client = await AuthClient.create(defaultOptions.createOptions);
+        return client
     };
 
-    const {isLoading} = useQuery(['userData',authClient?.getIdentity()], fetchUserData, {
-        retry:false,
-        enabled: authState === AuthState.Authenticated,
-        onSuccess: (userData) => {
-            setUser(userData);
-        },
-        onError: (error:Error) => {
-            console.error("Error fetching user data:", error);
-            setUser(null);
-            (error.message === "No user data found") ? setAuthState(AuthState.NotRegistered) : setAuthState(AuthState.Nope)
-        }
-    });
+    
 
     const login = async () => {
-        if (!authClient) return;
         try {
-            await authClient.login({
-                ...defaultOptions.loginOptions,
-                onSuccess: () => {
-                    queryClient.invalidateQueries(['userData']);
-                },
-            });
+            //tolong
+            const client = await authClient()
+            if (client) {
+                await new Promise<void>((resolve, reject) => {
+                    client.login({...defaultOptions.loginOptions, onSuccess:()=>{
+                        resolve()
+                        queryClient.invalidateQueries(['userData']);
+                    },})
+                });
+                
+            }
         } catch (error) {
             console.error("Error logging in:", error);
-            setAuthState(AuthState.Nope);
+            throw error; 
         }
     };
 
-    const logout = async () => {
-        if (!authClient) return;
-        try {
-            await authClient.logout();
-            setUser(null);
-            setAuthState(AuthState.Nope);
-            queryClient.invalidateQueries(['userData']);
-        } catch (error) {
-            console.error("Error logging out:", error);
-        }
+    const logout = () => {
+        return new Promise<void>((resolve, reject) => {
+            authClient().then(client => {
+                client.logout().then(() => {
+                    setUser(null);
+                    setAuthState(AuthState.Nope);
+                    queryClient.invalidateQueries(['userData']);
+                    resolve(); 
+                    window.location.reload()
+                }).catch(logoutError => {
+                    console.error("Error logging out:", logoutError);
+                    reject(logoutError); 
+                });
+            }).catch(clientError => {
+                console.error("Error obtaining auth client:", clientError);
+                reject(clientError);
+            });
+        });
     };
+    
 
+    
     const register = async (userRegisData: UserBase) => {
+        const client = await authClient()
+        if(!await client.isAuthenticated())throw new Error("Not authenticated")
         try {
-            const backend = await getBackendService();
-            const res = await backend.register(userRegisData.first_name, userRegisData.last_name, userRegisData.email, userRegisData.birth_date); 
-            return res
+            const backend = await getBackendService()
+            const response = await backend.register(
+                userRegisData.first_name,
+                userRegisData.last_name,
+                userRegisData.email,
+                userRegisData.birth_date
+            );
+            return response;
         } catch (error) {
             console.error("Error registering user:", error);
             throw error;
         }
     };
+
+    // const fetchUserData = async () => {
+    //     if(!authClient)return
+    //     console.log("user:", user)
+    //     console.log("authclient auth state", await authClient.isAuthenticated());
+    //     console.log("actual auth state", authState)
+        
+    //     const backend = await getBackendService();
+    //     const identity = authClient.getIdentity();
+    //     if (!await authClient.isAuthenticated() || identity.getPrincipal().isAnonymous()) {
+    //         throw new Error('User is not authenticated');
+    //     }
+    //     if (!backend) {
+    //         throw new Error('Backend service is not available');
+    //     }
+    //     const userData = await backend.getUser(identity.getPrincipal());
+    //     if (!userData.length) {
+    //         throw new Error('No user data found');
+    //     }
+
+    //     return userData[0]; 
+    // };
+
+
+
+    // const { error, isLoading, isSuccess } = useQuery(['userData', authClient?.getIdentity()], fetchUserData, {
+    //     retry: false,
+    //     staleTime:0,
+    //     onSuccess: (userData:User) => {
+    //         setUser(userData);
+    //         setAuthState(AuthState.Authenticated);
+    //     },
+    //     onError: (error:Error) => {
+    //         console.error("Error fetching user data:", error.message);
+    //         if (error.message === 'No user data found') {
+    //             setAuthState(AuthState.NotRegistered);
+    //         } 
+    //         else {
+    //             setAuthState(AuthState.Nope);
+    //         }
+    //     }
+    // });
+
+    const { isLoading } = useQuery(['userData'], async () => {
+        const client =  await authClient();
+        if (!await client.isAuthenticated() || client.getIdentity().getPrincipal().isAnonymous()) {
+            throw new Error('User is not authenticated');
+        }
+
+        const backend = await getBackendService();
+        if (!backend) throw new Error('Backend service is not available');
+        try{
+            const userData = await backend.getUser(client.getIdentity().getPrincipal());
+            if (!userData.length) throw new Error('No user data found');
+            return userData[0];
+        }
+        catch(error:any){
+            throw error
+        }
+        
+    }, {
+        retry: false,
+        staleTime:0,
+        onSuccess: (userData) => {
+            setUser(userData);
+            setAuthState(AuthState.Authenticated);
+        },
+        onError: (error:Error) => {
+            console.error("Error fetching user data:", error.message);
+            setAuthState(error.message === 'No user data found' ? AuthState.NotRegistered : AuthState.Nope);
+        }
+    });
 
     return (
         <AuthContext.Provider value={{

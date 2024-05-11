@@ -31,7 +31,7 @@ const FundraisePage = () => {
         project_name: "",
         project_description: "",
         project_location: "",
-        project_image: [],
+        project_image: "",
         first_name: user ? (user.first_name) : "",
         last_name: user ? (user.last_name) : "",
         phone_number: "",
@@ -129,7 +129,7 @@ const FundraisePage = () => {
     }, [])
 
     return (
-        // <ProtectedRoute>
+        <ProtectedRoute>
             <MainLayout className="">
                 <div className="bg-primary bg-opacity-50 w-full md:h-screen flex flex-col md:flex-row md:flex items-center md:justify-between px-24 pt-20">
 
@@ -183,7 +183,7 @@ const FundraisePage = () => {
 
                 </div>
             </MainLayout>
-        // </ProtectedRoute>
+        </ProtectedRoute>
     )
 }
 
