@@ -15,32 +15,46 @@ import { Toggle } from '@components/ui/toggle';
 import CharityCard from '@pages/home/charity-card';
 import { useService } from '@lib/hooks/useService';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
-import { useQuery } from 'react-query';
-import { debounce } from "lodash";
-
 const ExplorePage = () => {
   const [search, setSearch] = useState<string>('');
   const {getCharityService} = useService();
   const [charities, setCharities] = useState<BackendCharityEvent[]>([]);
+  const [activeCategories, setActiveCategories] = useState<string[]>([]);
 
+  const toggleCategory = (category: string) => {
+    console.log(activeCategories)
+    setActiveCategories((prevCategories) => {
+      if (prevCategories.includes(category)) {
+        return prevCategories.filter((c) => c !== category);
+      } else {
+
+        return [...prevCategories, category];
+      }
+    });
+  };
+  
   const getAllCharities = async () => {
     const charityService = await getCharityService();
-    let searchParams = (search !== '' ? search : search);
-    return await charityService.getAllCharities([searchParams], []);
+    let searchParams = (search !== '' ? [search] : []);
+    let categoryParams = activeCategories.length <= 0 ? [] : [activeCategories];
+    //@ts-ignore assuuuuu
+    return await charityService.getAllCharities(searchParams, categoryParams);
   }
 
   useEffect(() => {
-    const fetchData = debounce(async () => {
+    const fetchData = async () => {
       try {
-        const charity = await getAllCharities();
+        const response = await getAllCharities();
+        console.log(response)
         //@ts-ignore assuuuuu
-        setCharities([...charity.ok]);
+        setCharities([...response.ok]);
       } catch (error) {
         console.log("Error fetching charities", error);
+        setCharities([]);
       }
-    }, 0);
+    };
     fetchData();
-  }, [search]);
+  }, [search, activeCategories]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -80,7 +94,7 @@ const ExplorePage = () => {
                   <div className="p-2 flex flex-col gap-2">
                     {categories.map((category, index) => {
                       return (
-                        <Toggle className="font-medium" key={index} >{category}</Toggle>
+                        <Toggle className={`font-medium ${activeCategories.includes(category) ? 'bg-blue-200' : ''}`} onClick={() => toggleCategory(category)} key={index} >{category}</Toggle>
                       );
                     })}
                   </div>
