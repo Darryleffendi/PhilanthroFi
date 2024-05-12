@@ -15,15 +15,17 @@ import TextX "mo:xtended-text/TextX";
 import Backend "canister:backend";
 import Vector "mo:vector/Class";
 
-actor Charity {type Transaction = {
-  from : Text;
-  to : Text;
-  amount : Nat;
-  time : Time.Time;
-  notes : Text;
-  id : Text;
-  types : Text;
-};
+actor Charity {
+  type Transaction = {
+    from : Text;
+    to : Text;
+    amount : Nat;
+    time : Time.Time;
+    notes : Text;
+    id : Text;
+    types : Text;
+    currency: Text;
+  };
 type CharityEvent = {
   id : Text;
   title : Text;
@@ -81,7 +83,7 @@ let tag_lists = ["animals", "medical", "education", "sport", "environment", "fam
           description = new_charity.description;
           tags = new_charity.tags;
           start_date = Time.now();
-          end_date = new_charity.end_date; 
+          end_date = new_charity.end_date;
           location = new_charity.location;
           target_currency = new_charity.target_currency;
           transactions = [];
@@ -98,25 +100,26 @@ let tag_lists = ["animals", "medical", "education", "sport", "environment", "fam
 
 public shared (msg) func addTransaction(request : TransactionRequest) : async Result.Result<(), Text> {
   let transaction_id = await UtilityProvider.getUUID();
-
-  let transaction : Transaction = {
-    from = if (request.types == "donation") Principal.toText(msg.caller) else "PhilantroFi";
-    to = if (request.types == "donation") request.charity_id else Principal.toText(msg.caller);
-    amount = request.amount;
-    time = Time.now();
-    notes = request.notes;
-    id = transaction_id;
-    types = request.types;
-  };
-
   let charity = await getCharity(request.charity_id);
+
+
 
   switch (charity) {
     case (#err(msg)) {
       return #err("Charity doesn't exists");
     };
     case (#ok(founded_charity)) {
-
+      let transaction : Transaction = {
+          from = if (request.types == "donation") Principal.toText(msg.caller) else "PhilantroFi";
+          to = if (request.types == "donation") request.charity_id else Principal.toText(msg.caller);
+          amount = request.amount;
+          time = Time.now();
+          notes = request.notes;
+          id = transaction_id;
+          types = request.types;
+          currency = founded_charity.target_currency;
+        };
+        
       if (transaction.types == "withdraw") {
         if (founded_charity.charity_owner_id != Principal.toText(msg.caller)) return #err("Unuthorized");
         if (founded_charity.current_donation < transaction.amount) return #err("Insufficient Fund");
@@ -377,7 +380,6 @@ public shared (msg) func deleteCharity(charity_id : Text) : async Result.Result<
         return #ok(Vector.toArray(user_donations));
       };
     };
-
   };
 
   public shared ({ caller }) func getOwnedCharities() : async Result.Result<[CharityEvent], Text> {
