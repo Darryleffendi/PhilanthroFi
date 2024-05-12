@@ -41,7 +41,6 @@ export default function Footer() {
             <form action="">
               <div className={style.footerInputContainer}>
                 <input type="email" className={style.footerInput} placeholder="email@example.com" />
-                {/* <img src="../assets/images/about-us/right-arrow.png" className={style.centerFooterInput} alt="" /> */}
               </div>
             </form>
   

@@ -25,6 +25,7 @@ const ExplorePage = () => {
   const [charities, setCharities] = useState<BackendCharityEvent[]>([]);
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
   const [locationFilters, setLocationFilters] = useState<string[]>([]);
+  const [activeLocation, setActiveLocation] = useState<string[]>([]);
   const countries = useMemo(() => countryList().getData(), [])
 
   const toggleCategory = (category: string) => {
@@ -39,8 +40,9 @@ const ExplorePage = () => {
     });
   };
 
+
   const toggleLocation = (location: string) => {
-    setLocationFilters((prevLocations) => {
+    setActiveLocation((prevLocations) => {
       if (prevLocations.includes(location)) {
         return prevLocations.filter((c) => c !== location);
       } else {
@@ -53,24 +55,37 @@ const ExplorePage = () => {
     const charityService = await getCharityService();
     let searchParams = (params.get('search') !== '' ? [params.get('search')] : []);
     let categoryParams = activeCategories.length <= 0 ? [] : [activeCategories];
+    let locationParams = activeLocation.length <= 0 ? [] : [activeLocation];
     //@ts-ignore assuuuuu
-    return await charityService.getAllCharities(searchParams, categoryParams, locationFilters);
+    return await charityService.getAllCharities(searchParams, categoryParams, locationParams);
+  }
+
+  const getAllLocations = async () => {
+    const charityService = await getCharityService();
+    return await charityService.getAllCharityLocations();
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllCharities();
-        console.log(response)
-        //@ts-ignore assuuuuu
+        const locations = await getAllLocations();
+
+        // console.log(response)
+        // console.log(locations)
+
+        //@ts-ignore
         setCharities([...response.ok]);
+        //@ts-ignore
+        setLocationFilters([...locations.ok]);
+
       } catch (error) {
         console.log("Error fetching charities", error);
         setCharities([]);
       }
     };
     fetchData();
-  }, [params, activeCategories]);
+  }, [params, activeCategories, activeLocation]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -130,12 +145,12 @@ const ExplorePage = () => {
                     })}
                   </div>
                 </CustomCollapsible>
-                <CustomCollapsible title="Location" count={countries.length}>
+                <CustomCollapsible title="Location" count={locationFilters.length}>
                   <div className="p-2 flex flex-col gap-2">
                     {/* Diisi dari charity yang available ada di Location apa aja */}
-                    {countries.map((country, index) => {
+                    {locationFilters.map((location, index) => {
                       return (
-                        <Toggle className={`font-medium ${locationFilters.includes(country.label) ? 'bg-blue-200' : ''}`} onClick={() => toggleLocation} key={index} >{country.label}</Toggle>
+                        <Toggle className={`font-medium ${activeLocation.includes(location) ? 'bg-blue-200' : ''}`} onClick={() => toggleLocation(location)} key={index} >{location}</Toggle>
                       );
                     })}
                   </div>

@@ -17,7 +17,7 @@ const CharityCard: React.FC<CharityCardProps> = ({
     const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-lg max-h-[55vh] cursor-pointer" onClick={() => navigate(`/fundraise/${charity.id}`)}>
+    <div className="bg-white rounded-lg min-h-[55vh] max-h-[60vh] cursor-pointer" onClick={() => navigate(`/fundraise/${charity.id}`)}>
       <div className="w-full h-[60%]">
         <img src={charity.image_urls} alt="" className="rounded-t-lg object-cover w-full h-full" />
       </div>
