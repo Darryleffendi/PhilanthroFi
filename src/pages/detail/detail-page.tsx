@@ -16,6 +16,8 @@ import { Progress } from "@components/ui/progress"
 import { formatDate, timeLeftUntil } from "@lib/utils/date-utils"
 import { useMutation } from "react-query"
 import { useService } from "@lib/hooks/useService"
+import { convertToDate } from "@lib/service/date-service"
+import { cleanseCharity } from "@lib/utils/charity-utils"
 
 const CharityDetail = () => {
 
@@ -36,7 +38,7 @@ const CharityDetail = () => {
         title: "Help a down syndrome child pay for his medical bills",
         target_donation: 1000,
         current_donation: 500,
-        image_urls: ["https://images.unsplash.com/photo-1645364093800-d0796f7e9776?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
+        image_urls: "https://images.unsplash.com/photo-1645364093800-d0796f7e9776?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         description: "A down syndrome child needs help to pay for his medical bills. He is currently in the hospital and needs to pay for his medical bills. Please help him.",
         end_date: new Date("2024-12-31"),
         charity_owner_id: "1",
@@ -49,7 +51,7 @@ const CharityDetail = () => {
     const [charity, setCharity] = useState<CharityEvent | null>(null);
 
     useEffect(() => {
-        setCharity(dummyCharity)
+        // setCharity(dummyCharity)
         fetchCharity()
     }, [])
 
@@ -66,11 +68,13 @@ const CharityDetail = () => {
         onError: (error: Error) => {
             console.error('Error during fetching charity:', error.message);
         },
-        onSuccess: (data) => {
+        onSuccess: (data : any) => {
             console.log('Fetched charity successfully:', data);
-            
-            // Nanti di uncomment pas udh bener
-            // setCharity(data)
+
+            data.ok = cleanseCharity(data.ok)
+
+            console.log(data.ok)
+            setCharity(data.ok)
         }
     });
 
@@ -138,7 +142,7 @@ const CharityDetail = () => {
 
                         <div className="flex flex-col gap-5 ">
                             <h1 className="text-4xl font-nbinter">{charity?.title}</h1>
-                            <div className="flex w-full">
+                            <div className="flex w-full gap-2">
                             {
                                 charity?.tags.map((tag, idx) => (
                                     <Chip key={idx} text={tag}/>
@@ -215,7 +219,7 @@ const CharityDetail = () => {
             <div className="w-[40vw] h-[200vh] mt-8" style={{transform: `translateY(${-rightTranslate}px)`}}>
                             
                 <div className="w-full h-screen flex items-center">
-                    <img src={charity?.image_urls[0]} className="w-full object-cover h-[55vh] rounded-xl shadow-lg" ref={observerTargetRef}/>
+                    <img src={charity?.image_urls} className="w-full object-cover h-[55vh] rounded-xl shadow-lg" ref={observerTargetRef}/>
                 </div>
 
                 <DetailPageInformation charity={charity} className={`${isSticky ? "hidden" : "flex"} `} />

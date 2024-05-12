@@ -6,7 +6,7 @@ export interface CharityEvent {
   current_donation: number;
   target_donation: number;
   charity_owner_id: string;
-  image_urls: string[];
+  image_urls: string;
   description: string;
   start_date: Date;
   end_date: Date;
@@ -23,7 +23,14 @@ export interface Transaction {
   time: Date;
   notes: string;
   id: string;
+  type: string;
 }
+export interface TransactionRequest {
+    charity_id: string;
+    amount: bigint;
+    notes: string;
+    types: string;
+};
 
 export const categories = [
   'Animals',

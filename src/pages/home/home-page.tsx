@@ -12,6 +12,7 @@ import { useWallet } from '@lib/hooks/useWallet';
 import { useQuery } from 'react-query';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 import CharityCard from '@components/charity/charity-card';
+import SeedCharity from '@lib/utils/seed-charity';
 
 const HomePage = () => {
   
@@ -56,7 +57,7 @@ const HomePage = () => {
                 exactly as intended, enhancing trust through unparalleled
                 transparency and technological innovation.
               </div>
-
+              
               <Button disabled={transferLoading} onClick={()=>{transfer({to:"byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe", amount:3000})}}>
                 {transferLoading ? "Loading Cok" : `${transferError?.message || "Manta Button"}`}
               </Button>

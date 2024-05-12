@@ -15,7 +15,6 @@ import useMultipleBase64 from "@lib/hooks/useMultipleBase64";
 import imgIcon from "@assets/images/image.png"
 import { Button } from "@components/ui/button";
 import { useWallet } from "@lib/hooks/useWallet";
-import Wallet2 from "@components/wallet2";
 
 const WithdrawPage = () => {   
 
