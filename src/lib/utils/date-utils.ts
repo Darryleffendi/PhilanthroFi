@@ -61,6 +61,14 @@ export function timeLeftUntil(futureDate: Date): string {
     }
 }
 
+export function isExpired(endDate: Date): boolean {
+    const now = new Date();
+    const diffInSeconds = (endDate.getTime() - now.getTime()) / 1000;
+    console.log(diffInSeconds)
+
+    return diffInSeconds < 0
+}
+
 export function formatTime(date: Date): string {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');

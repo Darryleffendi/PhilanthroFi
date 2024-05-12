@@ -4,7 +4,6 @@ import ICPLogo from '@assets/logo/icp.png';
 import Logo from '@assets/logo/logo-dark.png';
 import NumberColumn from './number-column';
 import ProgressBar from '@components/progress_bar/progress-bar';
-import CharityCard from './charity-card';
 import { useService } from '@lib/hooks/useService';
 import { useEffect, useState } from 'react';
 import { Button } from '@components/ui/button';
@@ -12,6 +11,7 @@ import { useAuth } from '@lib/hooks/useAuth';
 import { useWallet } from '@lib/hooks/useWallet';
 import { useQuery } from 'react-query';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
+import CharityCard from '@components/charity/charity-card';
 
 const HomePage = () => {
   

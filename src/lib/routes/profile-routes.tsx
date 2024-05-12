@@ -7,23 +7,27 @@ const MyTransactions = React.lazy(()=>import ('@pages/profile/my-transactions'))
 export const ProfileRoutes:ProfileRouteTypes[] = [
     {
         name:"Profile",
-        component: <MyProfile/>,
-        description:"Manage your profile and your preferences"
+        element: <MyProfile/>,
+        description:"Manage your profile and your preferences",
+        altRoute:"profile"
     },
     {
         name:"My Charities",
-        component: <MyCharities/>,
-        description:"View and manage your personal charity events"
+        element: <MyCharities/>,
+        description:"View and manage your personal charity events",
+        altRoute:"my-charities"
     },
     {
         name:"Transactions",
-        component: <MyTransactions/>,
-        description:"View a detailed log of your past transactions"
+        element: <MyTransactions/>,
+        description:"View a detailed log of your past transactions",
+        altRoute:"my-transactions"
     },
 ]
 
 export interface ProfileRouteTypes{
     name:string,
-    component:ReactNode,
+    element:ReactNode,
     description:string,
+    altRoute:string,
 }

@@ -91,8 +91,9 @@ export default function MyProfile() {
         <>
         <div className='w-full h-fit flex flex-col gap-12'>
             <div className='flex flex-col gap-2'>
+                <p className='font-medium'>Identity</p>
                 <div className='flex items-center gap-2  text-center '>
-                    <Toggle  onClick={()=>{setHideIdentity(!hideIdentity)}} variant={'outline'}>{`${hideIdentity ? "*****-*****-*****-*****-*****-*****-*****-*****-*****-*****-***" : user!.identity}`}
+                    <Toggle className='text-left '  onClick={()=>{setHideIdentity(!hideIdentity)}} variant={'outline'}>{`${hideIdentity ? "*****-*****-*****-*****-*****-*****-*****-*****-*****-*****-***" : user!.identity}`}
                     </Toggle>
                     <Clipboard text={`${user?.identity}`} tip='Copy identity'/>
                 </div>

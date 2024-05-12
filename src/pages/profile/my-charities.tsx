@@ -1,8 +1,10 @@
 import { useService } from '@lib/hooks/useService'
-import CharityCard from '@pages/home/charity-card';
+import CharityCard from '@components/charity/charity-card';
 import React, { useState } from 'react'
 import { useQuery } from 'react-query';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
+import { CharityTabs, CharityTabSkeleton } from '@components/charity/charity-tabs';import { ScrollArea } from '@components/ui/scroll-area';
+ '@components/charity/charity-tabs';
 
 export default function MyCharities() {
 
@@ -28,20 +30,35 @@ export default function MyCharities() {
     });
 
 
-    console.log(ownedCharities)
-
-    if(isLoading)return <>Loading</>
-    if(isFetching)return<>fetching from idk where</>
+   
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="flex w-full h-full min-h-full flex-col">
+            <ScrollArea className=' w-full h-max'>
+            <div className='w-full flex-col flex gap-8'>
+                {(isLoading||isFetching) ? 
+                    (
+                    <>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                    </>
 
-            {ownedCharities?.map((c,i)=>{
-                return(
-                    <div className='flex flex-col'>
-                        <CharityCard charity={c} key={i}/>
-                    </div>
-                )
-            })}
+                    )
+                :
+                    (
+                    <>
+                        {ownedCharities?.map((c,i)=>{
+                            return(
+                                <CharityTabs charity={c} key={i}/>
+                            )
+                        })}
+                    </>
+                    )
+                }
+                </div>
+
+            </ScrollArea>
         </div>
     )
 }
+

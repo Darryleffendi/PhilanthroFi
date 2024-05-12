@@ -8,7 +8,7 @@ import LineSeparator from '@components/line-separator';
 import CustomCollapsible from '@components/collapsible/custom-collapsible';
 import { categories, dummyCharity } from '@lib/types/charity-types';
 import { Toggle } from '@components/ui/toggle';
-import CharityCard from '@pages/home/charity-card';
+import CharityCard from '@components/charity/charity-card';
 import { useService } from '@lib/hooks/useService';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 import { useParams, useSearchParams } from 'react-router-dom';

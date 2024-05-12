@@ -40,6 +40,14 @@ export const router = createBrowserRouter([
     element: <Profile />
   },
   {
+    path: '/profile/my-charities',
+    element: <Profile />
+  },
+  {
+    path: '/profile/my-transactions',
+    element: <Profile />
+  },
+  {
     path: '/withdraw/:id',
     element: <WithdrawPage />
   }

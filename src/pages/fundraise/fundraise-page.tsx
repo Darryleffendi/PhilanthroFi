@@ -22,6 +22,7 @@ import {
     AlertDialogFooter
 } from '@components/ui/alert-dialog'; 
 import { useNavigate } from "react-router-dom";
+import { convertDateToBigInt } from "@lib/service/date-service";
 
 const FundraisePage = () => {
 
@@ -110,7 +111,7 @@ const FundraisePage = () => {
                     target_donation:BigInt(data.target_amount),
                     image_urls:data.project_image[0], // ini bikin 1 image aja dulu, kalo mau engga tingal ganti be [Text]
                     description:data.project_description,
-                    end_date:BigInt(new Date(data.end_date).getTime()),
+                    end_date:convertDateToBigInt(new Date(data.end_date)),
                     tags:data.tags,
                     location:data.address,
                     target_currency:data.target_currency,

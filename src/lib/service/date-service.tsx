@@ -19,8 +19,7 @@ export function convertToDate(date: number | BigInt, format: string) {
 }
 
 
-export function convertDateToBigInt(date: Date): BigInt {
+export function convertDateToBigInt(date: Date): bigint {
   const millisecondsSinceEpoch = date.getTime();
-  const bigintValue = BigInt(millisecondsSinceEpoch * 1_000_000);
-  return bigintValue;
+  return BigInt(millisecondsSinceEpoch * 1_000_000);
 }

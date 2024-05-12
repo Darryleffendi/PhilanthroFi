@@ -135,7 +135,7 @@ const WithdrawPage = () => {
 
     return (
         <div className="bg-primary w-full min-h-screen bg-opacity-50 flex justify-between">
-            <div className="p-20 flex font-nunito w-[50vw] fixed">
+            <div className="p-20 flex  w-[50vw] fixed">
                 <FaArrowLeft className="mt-1 mr-4 text-slate-800"/>
                 <div className="flex flex-col z-10 w-full relative">
                     <div className="w-full h-14 absolute -ml-10 cursor-pointer" onClick={() => navigate("/profile")}></div>
@@ -161,7 +161,7 @@ const WithdrawPage = () => {
             </div>
 
             <div></div>
-            <div className="w-[45vw] min-h-screen bg-slate-100 shadow-lg p-20 flex flex-col font-nunito gap-4">
+            <div className="w-[45vw] min-h-screen bg-slate-100 shadow-lg p-20 flex flex-col  gap-4">
                 <p className="text-lg font-bold text-slate-600 mb-2">Withdraw</p>
                 
                 <div className="flex flex-col gap-2">
