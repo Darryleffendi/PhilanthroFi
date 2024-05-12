@@ -57,7 +57,7 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>
     return (
         <>
             <div className="w-full h-[70%] relative border rounded-lg border-dashed border-slate-400 flex flex-col justify-center items-center cursor-pointer">
-                <input type="file" accept="image/*" multiple className="absolute w-full h-full opacity-0 cursor-pointer" onChange={handleFileChange}/>
+                <input type="file" accept="image/*" className="absolute w-full h-full opacity-0 cursor-pointer" onChange={handleFileChange}/>
                 <div className="w-full items-center justify-center flex flex-wrap">
                     {
                     uploadedPhotos.length === 0 ? (

@@ -40,11 +40,21 @@ export const useWallet = () => {
         }
     });
 
+    const getPublicAddress = async () => {
+        try {
+            const publicKey = await window.ic.plug.requestConnect();
+            return publicKey;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return {
         isConnected: isConnectedRef.current,
         // balance,
         whitelist,
         getConnection,
+        getPublicAddress,
         plugConnectOrCreateAgent,
         transfer,
         transferLoading,
