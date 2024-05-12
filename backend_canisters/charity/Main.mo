@@ -9,6 +9,7 @@ import Array "mo:base/Array";
 import Bool "mo:base/Bool";
 import Hash "mo:base/Hash";
 import Trie "mo:base/Trie";
+import Buffer "mo:base/Buffer";
 import UtilityProvider "canister:utility_provider";
 import Fuzz "mo:fuzz";
 import TextX "mo:xtended-text/TextX";
@@ -311,20 +312,17 @@ public shared (msg) func deleteCharity(charity_id : Text) : async Result.Result<
   return #ok(charities.remove(charity_id));
 };
 
-// public shared query func getAllCharityLocations() : async Result.Result<[Text], ()> {
-//   let all_charities = Iter.toArray(charities.vals());
-//   let locations : [Text] = [];
+public shared query func getAllCharityLocations() : async Result.Result<[Text], ()> {
+  let locations = Buffer.Buffer<Text>(300);
 
-//   for (charity in all_charities) {
-//     for (charity in all_charities) {
-//       if (Array.find<Text>(locations, func(l) : Bool { l == charity.location }) == null) {
-//         locations = Array.append<Text>(locations, [charity.location]);
-//       };
-//     };
+  for ((_, charity) in charities.entries()) {
+    if (not Buffer.contains<Text>(locations, charity.location, Text.equal) ) {
+      locations.add(charity.location);
+    };
+  };
 
-//     return #ok(locations);
-//   };
-// };
+    return #ok(Buffer.toArray(locations));
+  };
 
   public shared func seedCharity() : async Result.Result<Text, ()> {
     var total_dummy_data = 10;
