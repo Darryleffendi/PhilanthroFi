@@ -32,12 +32,29 @@ export default function MyCharities() {
 
    
     return (
-        <div className="flex w-full h-full min-h-full flex-col">
-            <ScrollArea className=' w-full h-max'>
-            <div className='w-full flex-col flex gap-8'>
-                {(isLoading||isFetching) ? 
+        <ScrollArea className=' w-full max-h-[80%]'>
+            <div className='w-full h-full flex-col flex gap-8'>
+                {(isLoading||isFetching || !ownedCharities) ? 
                     (
                     <>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
+                        <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
@@ -57,8 +74,7 @@ export default function MyCharities() {
                 }
                 </div>
 
-            </ScrollArea>
-        </div>
+                </ScrollArea>
     )
 }
 

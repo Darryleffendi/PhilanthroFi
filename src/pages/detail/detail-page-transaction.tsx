@@ -7,19 +7,21 @@ type props = {
     charity : CharityEvent | null
 }
 
+const exampleDonation : Transaction = {
+    amount : 10,
+    from : "0xf13e1gf4a13fds9cs1dafdbb31fg1x0",
+    notes : "Cepat sembuh ya bang",
+    id : "0xf13e1gf4a13fds9cs1dafdbb31fg1x0",
+    time : new Date("5/10/2024"),
+    to : "0xfe4a13fds9cs1dx0",
+    types : "donation"
+}
+
 const DetailPageTransaction = ({charity} : props) => {
 
     const [tab, setTab] = useState<'Donations' | 'Withdrawals'>('Donations');
 
-    const exampleDonation : Transaction = {
-        amount : 10,
-        from : "0xf13e1gf4a13fds9cs1dafdbb31fg1x0",
-        notes : "Cepat sembuh ya bang",
-        id : "0xf13e1gf4a13fds9cs1dafdbb31fg1x0",
-        time : new Date("5/10/2024"),
-        to : "0xfe4a13fds9cs1dx0",
-        types: "donation"
-    }
+    
 
     if(charity == null) return <></>
 

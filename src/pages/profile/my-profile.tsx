@@ -21,7 +21,6 @@ export default function MyProfile() {
     const {user, isLoading} = useAuth()
     const {getBackendService} = useService()
     const [hideIdentity, setHideIdentity] = useState(true);
-    //formnya entar aja gapenting lah? tunggu bikin backend
     const [dialogOpen, setDialogOpen] = useState(false);
 
     const [data, setData] = useState<UserRequest>({

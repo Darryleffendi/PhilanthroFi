@@ -15,6 +15,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { Button } from '@components/ui/button';
 import { FaSearch } from 'react-icons/fa';
 import countryList from 'react-select-country-list';
+import { Separator } from '@components/ui/separator';
 const ExplorePage = () => {
 
 
@@ -118,7 +119,7 @@ const ExplorePage = () => {
           <div className="w-full gap-8 flex">
             <div className="flex flex-col basis-1/3">
               <div className="text-2xl font-medium">Filters</div>
-              <div className={`h-[1px] bg-gray-200 my-5`}></div>
+              <Separator className='bg-gray-300 my-5'/>
               <div className="flex flex-col gap-4">
                 <CustomCollapsible title="Category" status={true} count={categories.length}>
                   <div className="p-2 flex flex-col gap-2">

@@ -6,7 +6,7 @@ import React, { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 
-interface CharityCardProps {
+interface CharityTabProps {
     charity: BackendCharityEvent;
 }
 
@@ -17,12 +17,11 @@ const CharityTabSkeleton = () =>{
     )
 }
 
-function CharityTabs({charity}:CharityCardProps) {
+function CharityTabs({charity}:CharityTabProps) {
 
 
     const evaluateDuration = (endDate:BigInt):string => {
         const date = new Date(convertToDate(endDate, 'date'))
-        console.log(date)
         const expired = isExpired(date);
 
         if(expired) return 'Event Finished'
