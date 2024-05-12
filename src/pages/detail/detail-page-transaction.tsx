@@ -18,6 +18,7 @@ const DetailPageTransaction = ({charity} : props) => {
         id : "0xf13e1gf4a13fds9cs1dafdbb31fg1x0",
         time : new Date("5/10/2024"),
         to : "0xfe4a13fds9cs1dx0",
+        types: "donation"
     }
 
     if(charity == null) return <></>
@@ -36,9 +37,21 @@ const DetailPageTransaction = ({charity} : props) => {
         </div>
 
         <div className="w-full flex flex-col gap-4 mb-40">
-            <TransactionTableCell transaction={exampleDonation} currency={charity.target_currency}/>
-            <TransactionTableCell transaction={exampleDonation} currency={charity.target_currency}/>
-            <TransactionTableCell transaction={exampleDonation} currency={charity.target_currency}/>
+            {
+                tab === 'Donations' ? (
+                    charity?.transactions?.map((donation, index) => (
+                        donation.types === 'donation' ? (
+                            <TransactionTableCell currency={charity.target_currency} transaction={donation} key={index} />
+                        ) : <></>
+                    ))
+                ) : (
+                    charity?.transactions?.map((donation, index) => (
+                        donation.types === 'withdraw' ? (
+                            <TransactionTableCell currency={charity.target_currency} transaction={donation} key={index} />
+                        ) : <></>
+                    ))
+                )
+            }
         </div>
         </>
     )

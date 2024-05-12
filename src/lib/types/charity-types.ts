@@ -12,7 +12,7 @@ export interface CharityEvent {
   end_date: Date;
   tags: string[];
   location: string;
-  donations?: Transaction[];
+  transactions?: Transaction[];
   target_currency: string;
 }
 
@@ -23,7 +23,7 @@ export interface Transaction {
   time: Date;
   notes: string;
   id: string;
-  type: string;
+  types: string;
 }
 export interface TransactionRequest {
     charity_id: string;

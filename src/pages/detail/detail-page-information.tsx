@@ -6,6 +6,9 @@ import { useState } from "react";
 import { Input } from "@components/ui/input";
 import { useMutation } from "react-query";
 import { useService } from "@lib/hooks/useService";
+import { PiNoteBold } from "react-icons/pi";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@components/ui/dialog";
+import { Textarea } from "@components/ui/textarea";
 
 type props = {
     charity : CharityEvent | null
@@ -22,8 +25,8 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
     ]
 
     const [amount, setAmount] = useState<any>(0);
-
     const [activeTier, setActiveTier] = useState(0);
+    const [notes, setNotes] = useState("");
     const {getCharityService} = useService()
 
     const changeAmount = (number : string) => {
@@ -38,11 +41,12 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
             setAmount(0) 
         }
     }
-                
+    
+
     let transactionRequest : TransactionRequest = {
         amount: BigInt((activeTier < 3) ? tiers[activeTier] * 100000000 : Math.floor(parseFloat(amount) * 100000000)), // Amount * 100000000
         types: "donation",
-        notes: "",
+        notes: notes,
         charity_id: charity ? charity.id : "",
     }
 
@@ -87,8 +91,8 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
     if(charity == null) return <></>
 
     return (
-        <div className={`w-[40vw] h-[65vh] z-10 bg-white rounded-xl shadow-lg p-10 flex-col gap-4 ${className}`} style={style}>
-                
+        <Dialog>
+            <div className={`w-[40vw] h-[65vh] z-10 bg-white rounded-xl shadow-lg p-10 flex-col gap-4 ${className}`} style={style}>
                 <div className="flex gap-2 font-nunito items-center font-black text-2xl text-slate-600 mb-2">
                     <img
                         className="h-6 object-cover mr-2" 
@@ -139,9 +143,23 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                 </div>
                 <div className="flex items-center gap-2 font-nunito">
                     <button className="w-full bg-primary text-white rounded-lg py-2 mt-4" onClick={donate}>Donate</button>
-                    <button className="w-[40%] bg-primary text-white rounded-lg py-2 mt-4">Share</button>
+                    <DialogTrigger className="w-[35%] bg-primary text-white rounded-lg py-2 mt-4 flex items-center gap-2 justify-center"><PiNoteBold />Note</DialogTrigger>
                 </div>
             </div>
+            <DialogContent className="font-nunito">
+                <DialogHeader>
+                    <DialogTitle>
+                        Notes
+                    </DialogTitle>
+                    <DialogDescription>
+                        Provide kind words to support the fund receiver
+                    </DialogDescription>
+                </DialogHeader>
+                <Textarea 
+                    className="w-full max-h-40 h-36" placeholder="Your message here" 
+                    value={notes} onChange={(e) => setNotes(e.target.value)}/>
+            </DialogContent>
+        </Dialog>
     )
 }
 

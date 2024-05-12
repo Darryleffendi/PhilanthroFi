@@ -13,8 +13,9 @@ export function cleanseCharity(charity : CharityEvent | any) : CharityEvent {
 }
 
 export function cleanseTransaction(transaction : any) : any {
-    transaction.amount = Number(transaction.amount) / 100000000
-    transaction.date = new Date(convertToDate(transaction.date, "datetime"))
+    transaction.amount = Number(transaction.amount) // Dibagi  100000000.0 dulu
+    transaction.date = new Date(convertToDate(transaction.date, "date"))
+    transaction.time = new Date(convertToDate(transaction.time, "date"))
 
     return transaction
 }

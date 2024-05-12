@@ -216,20 +216,23 @@ const CharityDetail = () => {
                 <div className="w-full h-1" ref={observerTargetRefBottom}></div>
             </div>
 
-            <div className="w-[40vw] h-[200vh] mt-8" style={{transform: `translateY(${-rightTranslate}px)`}}>
+            <div className="w-[40vw] h-[200vh] mt-8">
                             
-                <div className="w-full h-screen flex items-center">
+                <div className="w-full h-screen flex items-center" style={{transform: `translateY(${-rightTranslate}px)`}}>
                     <img src={charity?.image_urls} className="w-full object-cover h-[55vh] rounded-xl shadow-lg" ref={observerTargetRef}/>
                 </div>
-
-                <DetailPageInformation charity={charity} className={`${isSticky ? "hidden" : "flex"} `} />
+                
+                <div 
+                    className={`${isSticky ? "flex fixed right-24 top-[calc(25vh-2rem)]" : "flex"} `} 
+                    style={!isSticky ? {transform: `translateY(${-rightTranslate}px)`} : {}} 
+                >
+                    <DetailPageInformation 
+                        charity={charity} 
+                        className={`flex transition-all duration-300 ${isBottom ? "opacity-0 pointer-events-none" : "opacity-100"} `} 
+                        style={{transform: isBottom ? `translateY(${-150}px)` : ""}}
+                    />
+                </div>
             </div>
-
-            <DetailPageInformation 
-                charity={charity} 
-                className={`fixed right-24 top-[calc(25vh-2rem)] transition-all duration-300 ${isSticky ? "flex" : "hidden"} ${isBottom ? "opacity-0 pointer-events-none" : "opacity-100"}`} 
-                style={{transform: isBottom ? `translateY(${-150}px)` : ""}}
-            />
             
         </MainLayout>
     )
