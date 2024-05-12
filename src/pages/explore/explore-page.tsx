@@ -5,7 +5,7 @@ import {
 } from '@components/ui/collapsible';
 import { Input } from '@components/ui/input';
 import MainLayout from '@pages/layout/main-layout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProtectedRoute from 'src/middleware/protected-route';
 import FilterList from './filter-list';
 import LineSeparator from '@components/line-separator';
@@ -13,9 +13,34 @@ import CustomCollapsible from '@components/collapsible/custom-collapsible';
 import { categories, dummyCharity } from '@lib/types/charity-types';
 import { Toggle } from '@components/ui/toggle';
 import CharityCard from '@pages/home/charity-card';
+import { useService } from '@lib/hooks/useService';
+import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
+import { useQuery } from 'react-query';
+import { debounce } from "lodash";
 
 const ExplorePage = () => {
   const [search, setSearch] = useState<string>('');
+  const {getCharityService} = useService();
+  const [charities, setCharities] = useState<BackendCharityEvent[]>([]);
+
+  const getAllCharities = async () => {
+    const charityService = await getCharityService();
+    let searchParams = (search !== '' ? search : search);
+    return await charityService.getAllCharities([searchParams], []);
+  }
+
+  useEffect(() => {
+    const fetchData = debounce(async () => {
+      try {
+        const charity = await getAllCharities();
+        //@ts-ignore assuuuuu
+        setCharities([...charity.ok]);
+      } catch (error) {
+        console.log("Error fetching charities", error);
+      }
+    }, 0);
+    fetchData();
+  }, [search]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -53,9 +78,9 @@ const ExplorePage = () => {
               <div className="flex flex-col gap-4">
                 <CustomCollapsible title="Category" status={true} count={categories.length}>
                   <div className="p-2 flex flex-col gap-2">
-                    {categories.map((category) => {
+                    {categories.map((category, index) => {
                       return (
-                        <Toggle className="font-medium">{category}</Toggle>
+                        <Toggle className="font-medium" key={index} >{category}</Toggle>
                       );
                     })}
                   </div>
@@ -70,10 +95,15 @@ const ExplorePage = () => {
             </div>
             <div className="flex flex-col basis-2/3">
               <div className="w-full grid gap-3 grid-cols-3">
+                {/* <CharityCard charity={dummyCharity}/>
                 <CharityCard charity={dummyCharity}/>
                 <CharityCard charity={dummyCharity}/>
-                <CharityCard charity={dummyCharity}/>
-                <CharityCard charity={dummyCharity}/>
+                <CharityCard charity={dummyCharity}/> */}
+                {
+                  charities.map((charity,index) => (
+                    <CharityCard charity={charity} key={index}/>
+                  ))
+                }
               </div>
             </div>
           </div>

@@ -35,7 +35,10 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "debounce": "^2.0.0",
     "framer-motion": "^11.1.7",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.376.0",
     "path": "^0.12.7",
     "react": "^18.2.0",
@@ -56,6 +59,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@types/lodash": "^4.17.1",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
