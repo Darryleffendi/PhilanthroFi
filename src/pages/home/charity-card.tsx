@@ -4,6 +4,7 @@ import ICPLogo from '@assets/logo/icp.png';
 import ProgressBar from '@components/progress_bar/progress-bar';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 import { useNavigate } from 'react-router-dom';
+import { capitalizeFirstLetter } from '@lib/utils/utils';
 
 interface CharityCardProps {
   charity: BackendCharityEvent;
@@ -16,8 +17,8 @@ const CharityCard: React.FC<CharityCardProps> = ({
     const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-lg max-h-[55vh] cursor-pointer" onClick={() => navigate(`/fundraise/${charity.id}`)}>
-      <div className="w-full h-[60%]">
+    <div className="bg-white rounded-lg min-h-[55vh] max-h-[65vh] cursor-pointer" onClick={() => navigate(`/fundraise/${charity.id}`)}>
+      <div className="w-full h-[55%]">
         <img src={charity.image_urls} alt="" className="rounded-t-lg object-cover w-full h-full" />
       </div>
       <div className="p-4 flex flex-col gap-2 h-[40%] justify-between">
@@ -25,7 +26,7 @@ const CharityCard: React.FC<CharityCardProps> = ({
           <div className="flex gap-2">
               {charity.tags.map((tag) => (
                 <div className="rounded-xl text-blue-800 border border-blue-800 bg-blue-200 text-xs inline-block font-medium px-4 py-1">
-                    {tag}
+                    {capitalizeFirstLetter(tag)}
                 </div>
               ))} 
           </div>
