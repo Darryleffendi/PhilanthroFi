@@ -5,8 +5,11 @@ import Text "mo:base/Text";
 import Result "mo:base/Result";
 import Iter "mo:base/Iter";
 import Array "mo:base/Array";
+import Fuzz "mo:fuzz";
 
 actor class Backend() {
+
+
   type DonationReference = {
     charity_id: Text;
     donation_id: Text;
@@ -20,7 +23,8 @@ actor class Backend() {
     birth_date: Text;
     timestamp: Time.Time;
     donation_reference: [DonationReference];
-    owned_charity_reference: [Text]
+    owned_charity_reference: [Text];
+    role: Text;
   };
 
 
@@ -54,7 +58,8 @@ actor class Backend() {
       birth_date = birth_date;
       timestamp = Time.now();
       donation_reference = [];
-      owned_charity_reference = []
+      owned_charity_reference = [];
+      role = "user";
     };
 
     users.put(new_user.identity, new_user);
@@ -80,6 +85,7 @@ actor class Backend() {
           timestamp = founded_user.timestamp;
           donation_reference = founded_user.donation_reference;
           owned_charity_reference = founded_user.owned_charity_reference;
+          role = founded_user.role;
         };
         users.put(caller, updated_user);
         return #ok(updated_user);
@@ -127,6 +133,7 @@ actor class Backend() {
           timestamp = founded_user.timestamp;
           donation_reference = updated_donation_reference;
           owned_charity_reference = founded_user.owned_charity_reference;
+          role = founded_user.role
         };
         users.put(principal, updated_user);
         return #ok();
@@ -153,6 +160,7 @@ actor class Backend() {
             timestamp = founded_user.timestamp;
             donation_reference = founded_user.donation_reference;
             owned_charity_reference = updated_donation_reference;
+            role = founded_user.role;
           };
           users.put(principal, updated_user);
           return #ok();
@@ -160,4 +168,37 @@ actor class Backend() {
       };
   };
 
+
+  public shared ({caller}) func isAdmin(): async Result.Result<Bool, Text>{
+    let user = await getUser(caller);
+
+    switch(user){
+      case null{
+        return #err("No User Found");
+      };
+      case(?founded_user){
+        return #ok(founded_user.role == "admin");
+      }
+    };
+  };
+
+
+  public shared func seedAdmin():async Result.Result<Text, ()>{
+    let fuzz = Fuzz.Fuzz();
+    let id = fuzz.principal.randomPrincipal(10);
+    let new_user = {
+      identity = id;
+      first_name = "PhilantroFi";
+      last_name = "Admin";
+      email = "philantrofi@gmail.com";
+      birth_date = "01/01/1990";
+      timestamp = Time.now();
+      donation_reference = [];
+      owned_charity_reference = [];
+      role = "admin";
+    };
+    users.put(new_user.identity, new_user);
+
+    return #ok("Admin seeded")
+  }
 }
