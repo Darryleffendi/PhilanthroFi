@@ -15,27 +15,30 @@ import useMultipleBase64 from "@lib/hooks/useMultipleBase64";
 import imgIcon from "@assets/images/image.png"
 import { Button } from "@components/ui/button";
 import { useWallet } from "@lib/hooks/useWallet";
+import { cleanseCharity } from "@lib/utils/charity-utils";
+import { useAuth } from "@lib/hooks/useAuth";
+import Spinner from "@components/spinner";
+
+    // Ini dummy data, nanti fetch dari backend
+    // const dummyCharity : CharityEvent = {
+    //     id: "1",
+    //     title: "Help a down syndrome child pay for his medical bills",
+    //     target_donation: 1000,
+    //     current_donation: 500,
+    //     image_urls: "https://images.unsplash.com/photo-1645364093800-d0796f7e9776?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    //     description: "A down syndrome child needs help to pay for his medical bills. He is currently in the hospital and needs to pay for his medical bills. Please help him.",
+    //     end_date: new Date("2024-12-31"),
+    //     charity_owner_id: "1",
+    //     start_date: new Date("2022-12-31"),
+    //     tags: ["medical"],
+    //     location: "Jakarta, Indonesia",
+    //     target_currency: "ICP"
+    // }
 
 const WithdrawPage = () => {   
 
     // id charity nanti diambil dari url
     const {id} = useParams<{id: string}>()
-
-    // Ini dummy data, nanti fetch dari backend
-    const dummyCharity : CharityEvent = {
-        id: "1",
-        title: "Help a down syndrome child pay for his medical bills",
-        target_donation: 1000,
-        current_donation: 500,
-        image_urls: ["https://images.unsplash.com/photo-1645364093800-d0796f7e9776?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
-        description: "A down syndrome child needs help to pay for his medical bills. He is currently in the hospital and needs to pay for his medical bills. Please help him.",
-        end_date: new Date("2024-12-31"),
-        charity_owner_id: "1",
-        start_date: new Date("2022-12-31"),
-        tags: ["medical"],
-        location: "Jakarta, Indonesia",
-        target_currency: "ICP"
-    }
 
     const [data, setData] = useState<Transaction>({
         amount: 0,
@@ -43,7 +46,8 @@ const WithdrawPage = () => {
         to: "",
         id: "",
         notes: "",
-        time: new Date()
+        time: new Date(),
+        types: "withdraw"
     });
 
     const changeData = (key : string, value : any) => {
@@ -62,6 +66,8 @@ const WithdrawPage = () => {
     const { base64List, processImagesToBase64, errors: base64Errors, reset:resetBase64 } = useMultipleBase64();
     const navigate = useNavigate();
     const {getPublicAddress} = useWallet();
+
+    const { user, authState, isLoading } = useAuth();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = event.target.files;
@@ -93,20 +99,33 @@ const WithdrawPage = () => {
         onError: (error: Error) => {
             console.error('Error during fetching charity:', error.message);
         },
-        onSuccess: (data) => {
-            console.log('Fetched charity successfully:', data);
-            
-            // Nanti di uncomment pas udh bener
-            // setCharity(data)
+        onSuccess: (data : any) => {
 
+            // Nanti di uncomment pas udh bener
+            setCharity(cleanseCharity(data.ok))
+
+            console.log(data.ok)
+            console.log(user?.identity.toString())
             // Nanti dicheck juga owner dari charity ini sama kek principle ato ga
+            if(data.ok.charity_owner_id !== user?.identity.toString()){
+                navigate("/home")
+            }
         }
     });
 
     useEffect(() => {
-        setCharity(dummyCharity)
+        
+        if(isLoading) {
+            return
+        }
+
+        if(user == null) {
+            navigate("/auth")
+            return
+        }        
         fetchCharity()
-    }, [])
+
+    }, [user])
 
     useEffect(() => {
         if(charity == null) return;
@@ -133,6 +152,12 @@ const WithdrawPage = () => {
     }
 
     return (
+        <>
+        {
+            isLoading ? (
+                <div className="w-screen fixed h-screen bg-slate-700 z-50 bg-opacity-70 flex justify-center items-center"><Spinner className="fill-primary"/></div>
+            ) : <></>
+        }
         <div className="bg-primary w-full min-h-screen bg-opacity-50 flex justify-between">
             <div className="p-20 flex  w-[50vw] fixed">
                 <FaArrowLeft className="mt-1 mr-4 text-slate-800"/>
@@ -219,6 +244,7 @@ const WithdrawPage = () => {
                 <Button className="text-white mt-2" onClick={submitForm}>Submit</Button> 
             </div>
         </div>
+        </>
     )
 }
 

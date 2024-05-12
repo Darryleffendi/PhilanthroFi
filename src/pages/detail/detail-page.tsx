@@ -69,11 +69,8 @@ const CharityDetail = () => {
             console.error('Error during fetching charity:', error.message);
         },
         onSuccess: (data : any) => {
-            console.log('Fetched charity successfully:', data);
-
             data.ok = cleanseCharity(data.ok)
 
-            console.log(data.ok)
             setCharity(data.ok)
         }
     });

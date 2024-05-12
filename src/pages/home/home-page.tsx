@@ -23,7 +23,7 @@ const HomePage = () => {
 
 
   const { user } = useAuth();
-
+  
   const getAllCharities = async () => {
     const charityService = await getCharityService();
     return await charityService.getAllCharities([], [], []);

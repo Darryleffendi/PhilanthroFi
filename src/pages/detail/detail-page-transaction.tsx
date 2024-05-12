@@ -21,8 +21,6 @@ const DetailPageTransaction = ({charity} : props) => {
 
     const [tab, setTab] = useState<'Donations' | 'Withdrawals'>('Donations');
 
-    
-
     if(charity == null) return <></>
 
     return (
