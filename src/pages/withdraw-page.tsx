@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import logoWhite from "@assets/logo/logo-white.png"
 import { FaArrowLeft } from "react-icons/fa";
-import { CharityEvent, Transaction } from "@lib/types/charity-types";
+import { CharityEvent, Transaction, TransactionRequest } from "@lib/types/charity-types";
 import { useEffect, useState } from "react";
 import { useService } from "@lib/hooks/useService";
 import { useMutation } from "react-query";
@@ -18,22 +18,6 @@ import { useWallet } from "@lib/hooks/useWallet";
 import { cleanseCharity } from "@lib/utils/charity-utils";
 import { useAuth } from "@lib/hooks/useAuth";
 import Spinner from "@components/spinner";
-
-    // Ini dummy data, nanti fetch dari backend
-    // const dummyCharity : CharityEvent = {
-    //     id: "1",
-    //     title: "Help a down syndrome child pay for his medical bills",
-    //     target_donation: 1000,
-    //     current_donation: 500,
-    //     image_urls: "https://images.unsplash.com/photo-1645364093800-d0796f7e9776?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    //     description: "A down syndrome child needs help to pay for his medical bills. He is currently in the hospital and needs to pay for his medical bills. Please help him.",
-    //     end_date: new Date("2024-12-31"),
-    //     charity_owner_id: "1",
-    //     start_date: new Date("2022-12-31"),
-    //     tags: ["medical"],
-    //     location: "Jakarta, Indonesia",
-    //     target_currency: "ICP"
-    // }
 
 const WithdrawPage = () => {   
 
@@ -68,6 +52,13 @@ const WithdrawPage = () => {
     const {getPublicAddress} = useWallet();
 
     const { user, authState, isLoading } = useAuth();
+    
+    let transactionRequest : TransactionRequest = {
+        amount: data.amount,
+        types: "withdraw",
+        notes: data.notes,
+        charity_id: charity ? charity.id : "",
+    }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = event.target.files;
@@ -86,6 +77,7 @@ const WithdrawPage = () => {
         return () => photos.forEach(photos => URL.revokeObjectURL(photos));
     }, [files]);
 
+    /* ======= FUNCTION UNTUK FETCH CHARITY DATA SESUAI ID ====== */
     const { mutate: fetchCharity, isLoading: createCharityLoading, error: createCharityError, isSuccess } = useMutation(
         async () => {
             const charityService = await getCharityService();
@@ -110,6 +102,27 @@ const WithdrawPage = () => {
             if(data.ok.charity_owner_id !== user?.identity.toString()){
                 navigate("/home")
             }
+        }
+    });
+
+    /* ======= FUNCTION UNTUK RECORD WITHDRAW DATA ====== */
+    const { mutate: recordTransaction, isLoading: recordLoading, error: recordError, isSuccess: recordSuccess } = useMutation(
+        async () => {
+            const charityService = await getCharityService();
+
+            transactionRequest.amount = BigInt(Number(transactionRequest.amount) * 100000000)
+            const response = await charityService.addTransaction(transactionRequest)
+
+            return response
+        }, {
+        onSettled:()=>{
+            console.log("recording charity settled")
+        },
+        onError: (error: Error) => {
+            console.error('Error during recording charity:', error.message);
+        },
+        onSuccess: (data : any) => {
+            console.log('recording charity successfully:', data);
         }
     });
 
@@ -142,8 +155,7 @@ const WithdrawPage = () => {
     }
 
     const submitToBackend = async () => {
-        // Simpen request ke backend disini
-        console.log(data);
+        await recordTransaction()
     }
 
     const fetchPublicAddress = async () => {
@@ -192,8 +204,11 @@ const WithdrawPage = () => {
                     <p className="text-sm text-slate-600 font-light">Amount</p>
                     <div className="w-full flex justify-end items-center">
                         <Input 
-                            className="border-slate-300 border rounded-lg" placeholder="0"
-                            value={data?.amount} onChange={(e) => changeData("amount", e.target.value)}
+                            className="border-slate-300 border rounded-lg" placeholder="0" type={"number"}
+                            value={data?.amount} onChange={(e) => {
+                                if(isNaN(parseFloat(e.target.value))) changeData("amount", 0)
+                                else changeData("amount", e.target.value)
+                            }}
                         />
                         <p className="absolute font-bold text-slate-400 mr-4">{charity?.target_currency}</p>
                     </div>

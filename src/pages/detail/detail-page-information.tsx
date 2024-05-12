@@ -50,6 +50,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         charity_id: charity ? charity.id : "",
     }
 
+    /* ======= FUNCTION UNTUK RECORD DONATION DATA ====== */
     const { mutate: recordTransaction, isLoading: recordLoading, error: recordError, isSuccess } = useMutation(
         async () => {
             const charityService = await getCharityService();

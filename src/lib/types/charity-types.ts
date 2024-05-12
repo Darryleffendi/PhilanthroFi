@@ -27,7 +27,7 @@ export interface Transaction {
 }
 export interface TransactionRequest {
     charity_id: string;
-    amount: bigint;
+    amount: bigint | number;
     notes: string;
     types: string;
 };
@@ -65,6 +65,7 @@ export const dummyCharity: BackendCharityEvent = {
       notes: 'Keep up the great work!',
       id: 'd1',
       types: 'donation',
+      currency: 'ICP'
     },
     {
       from: 'donor2',
@@ -74,6 +75,7 @@ export const dummyCharity: BackendCharityEvent = {
       notes: 'Happy to support this cause!',
       id: 'd2',
       types: 'donation',
+      currency: 'ICP'
     },
   ],
   target_currency: 'USD',
