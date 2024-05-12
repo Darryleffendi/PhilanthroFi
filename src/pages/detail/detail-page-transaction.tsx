@@ -14,7 +14,8 @@ const exampleDonation : Transaction = {
     id : "0xf13e1gf4a13fds9cs1dafdbb31fg1x0",
     time : new Date("5/10/2024"),
     to : "0xfe4a13fds9cs1dx0",
-    types : "donation"
+    types : "donation",
+    request_status : ""
 }
 
 const DetailPageTransaction = ({charity} : props) => {

@@ -48,12 +48,14 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         types: "donation",
         notes: notes,
         charity_id: charity ? charity.id : "",
+        charity_wallet_id: charity ? charity.charity_owner_id : ""
     }
 
     /* ======= FUNCTION UNTUK RECORD DONATION DATA ====== */
     const { mutate: recordTransaction, isLoading: recordLoading, error: recordError, isSuccess } = useMutation(
         async () => {
             const charityService = await getCharityService();
+            //@ts-ignore
             const response = await charityService.addTransaction(transactionRequest)
 
             return response
@@ -73,6 +75,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         let donateAmount = (activeTier < 3) ? tiers[activeTier] * 100000000 : Math.floor(parseFloat(amount) * 100000000);
         
         try {
+            // @ts-ignore
             const response = await window.ic?.plug?.requestTransfer({
                 to: "byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe",
                 amount: donateAmount,

@@ -27,7 +27,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -38,7 +39,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -49,7 +51,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -60,7 +63,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -71,7 +75,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -82,7 +87,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -93,7 +99,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -104,7 +111,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -115,7 +123,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -126,7 +135,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -137,7 +147,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -148,7 +159,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -159,7 +171,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -170,7 +183,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -181,7 +195,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -192,7 +207,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -203,7 +219,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -214,7 +231,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -225,7 +243,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
     {
@@ -236,7 +255,8 @@ export const dummyBackendDonations : Transaction[] = [
         time : convertDateToBigInt(new Date("5/10/2024")),
         to : "0xfe4a13fds9cs1dx0",
         currency:'ICP',
-        types:'donation'
+        types:'donation',
+        request_status:''
         
     },
 ]

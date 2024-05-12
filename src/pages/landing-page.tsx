@@ -98,7 +98,7 @@ export default function LandingPage() {
                 </div>
                 <div className="flex items-center gap-4 z-10">
                     <Button onClick={() => navigate('home')} className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Start Donating</Button>
-                    <Button onClick={() => navigate('fundraise')} className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
+                    <Button onClick={() => navigate('/create/fundraise')} className="text-lg px-8 py-6 rounded-xl bg-transparent border border-slate-500">Become a Fund Raiser</Button>
                 </div>
             </motion.div>
             

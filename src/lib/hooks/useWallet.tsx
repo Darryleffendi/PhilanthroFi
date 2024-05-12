@@ -42,6 +42,7 @@ export const useWallet = () => {
 
     const getPublicAddress = async () => {
         try {
+            // @ts-ignore
             const publicKey = await window.ic.plug.requestConnect();
             return publicKey;
         } catch (e) {

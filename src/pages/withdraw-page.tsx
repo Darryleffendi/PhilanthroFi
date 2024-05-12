@@ -31,7 +31,8 @@ const WithdrawPage = () => {
         id: "",
         notes: "",
         time: new Date(),
-        types: "withdraw"
+        types: "withdraw",
+        request_status: "",
     });
 
     const changeData = (key : string, value : any) => {
@@ -54,10 +55,11 @@ const WithdrawPage = () => {
     const { user, authState, isLoading } = useAuth();
     
     let transactionRequest : TransactionRequest = {
-        amount: data.amount,
+        amount: BigInt(data.amount),
         types: "withdraw",
         notes: data.notes,
         charity_id: charity ? charity.id : "",
+        charity_wallet_id: charity ? charity.charity_owner_id : ""
     }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,6 +113,7 @@ const WithdrawPage = () => {
             const charityService = await getCharityService();
 
             transactionRequest.amount = BigInt(Number(transactionRequest.amount) * 100000000)
+            // @ts-ignore
             const response = await charityService.addTransaction(transactionRequest)
 
             return response
@@ -160,6 +163,7 @@ const WithdrawPage = () => {
 
     const fetchPublicAddress = async () => {
         const address = await getPublicAddress();
+        // @ts-ignore
         changeData("to", window.ic.plug.principalId)
     }
 
