@@ -2,8 +2,9 @@ import { Button } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
 import { ProfileRoutes, ProfileRouteTypes } from '@lib/routes/profile-routes';
 import MainLayout from '@pages/layout/main-layout';
-import React, { Fragment, Suspense, useState } from 'react';
+import { Suspense, useState } from 'react';
 import ProtectedRoute from 'src/middleware/protected-route';
+
 
 export default function Profile() {
 

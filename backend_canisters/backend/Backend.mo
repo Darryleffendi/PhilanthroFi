@@ -5,7 +5,9 @@ import Text "mo:base/Text";
 import Result "mo:base/Result";
 import Iter "mo:base/Iter";
 import Array "mo:base/Array";
+import Bool "mo:base/Bool";
 import Fuzz "mo:fuzz";
+import TextX "mo:xtended-text/TextX";
 
 actor class Backend() {
 
@@ -200,5 +202,42 @@ actor class Backend() {
     users.put(new_user.identity, new_user);
 
     return #ok("Admin seeded")
-  }
+  };
+
+  public query func getUserByEmail(user_email : Text) : async Result.Result<User, Text> {
+      for (user in users.vals()) {
+        let lcaseEmail = TextX.toLower(user.email);
+        if (lcaseEmail == TextX.toLower(user_email)) {
+            return #ok(user);
+        };
+      };
+
+      return #err("User not found");
+  };
+
+  public shared func adminLogin(email:Text, password:Text):async Result.Result<Bool,Text>{
+      let user = await getUserByEmail(email);
+
+      switch(user){
+        case (#err(msg)){
+          return #err(msg);
+        };
+        case(#ok(founded_user)){
+          let role_email_validation = Bool.logand(founded_user.role =="admin", founded_user.email == "philantrofi@gmail.com");
+          let password_validation = Bool.logand(role_email_validation, password == "DuckCing");
+
+          switch(password_validation){
+            case true{
+              return #ok(password_validation)
+            };
+            case false{
+              return #err("Not Admin");
+            };
+          }
+        }
+      }
+  
+  };
+
+  
 }

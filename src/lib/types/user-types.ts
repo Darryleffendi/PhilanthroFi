@@ -1,6 +1,7 @@
 export interface User extends UserBase{
     identity: any; 
     timestamp: bigint; 
+    role:string;
 }
 
 export interface UserBase {
@@ -17,3 +18,5 @@ export enum AuthState {
     NotRegistered = "NotRegistered",
     Loading = "Loading",
 }
+
+export const ADMIN:string = "admin" //biar di codenya terlihat LEGIT

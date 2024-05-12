@@ -8,6 +8,7 @@ import CharityDetail from '@pages/detail/detail-page';
 import ExplorePage from '@pages/explore/explore-page';
 import Profile from '@pages/profile/profile';
 import WithdrawPage from '@pages/withdraw-page';
+import AdminAuth from '@pages/admin/admin-auth';
 const LandingPage = React.lazy(() => import('@pages/landing-page'));
 
 export const router = createBrowserRouter([
@@ -50,5 +51,9 @@ export const router = createBrowserRouter([
   {
     path: '/withdraw/:id',
     element: <WithdrawPage />
+  },
+  {
+    path: '/ph1l4ntr0F1/admin/auth',
+    element: <AdminAuth />
   }
 ]);

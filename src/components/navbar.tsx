@@ -55,13 +55,14 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
       <NavigationMenu
         className={`px-6 py-6 h-20 absolute flex items-center gap-8 transition-all duration-300 justify-between ${isScrolled ? scrolledStyle : className}`}
       >
-        <div className="flex items-center gap-2">
-          <img src={logoDark} className="object-cover h-10" alt="" />
-          <div className={`text-3xl font-[500] overflow-hidden duration-500 ${isScrolled ? "w-0" : "w-40 "}`}>
-            PhilanthroFi
+        <Link to={'/home'}>
+          <div className="flex items-center gap-2">
+            <img src={logoDark} className="object-cover h-10" alt="" />
+            <div className={`text-3xl font-[500] overflow-hidden duration-500 ${isScrolled ? "w-0" : "w-40 "}`}>
+              PhilanthroFi
+            </div>
           </div>
-        </div>
-
+        </Link>
         <NavigationMenuList className="flex gap-2">
           {navbarRoutes.map((nav)=>{
             return(

@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { useQuery } from 'react-query';
 import { convertDateToBigInt, convertToDate } from '@lib/service/date-service';
 import { ScrollArea } from '@components/ui/scroll-area';
-import { TransactionTab, TransactionTabSkeleton } from '@components/transaction-tab';
 import {
     Table,
     TableBody,
@@ -292,44 +291,40 @@ export default function MyTransactions() {
                 {(isLoading||isFetching || !transactions) ? 
                     (
                     <>
-                        <TransactionTabSkeleton/>
-                        <TransactionTabSkeleton/>
-                        <TransactionTabSkeleton/>
+                        
                     </>
 
                     )
                 :
                     (
-                    <>
-                        <Table>
-                            <TableHeader >
-                                <TableRow>
-                                    <TableHead>Transaction Hash</TableHead>
-                                    <TableHead>To</TableHead>
-                                    <TableHead>Time</TableHead>
-                                    <TableHead>Type</TableHead>
-                                    <TableHead>Amount</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody  >
-                                {dummyBackendDonations.map(transaction=>{
-                                    return(
-                                        <TableRow>
-                                            <TableCell>{transaction.id}</TableCell>
-                                            <TableCell>{transaction.to}</TableCell>
-                                            <TableCell>{`${convertToDate(transaction.time, 'date')}`}</TableCell>
-                                            <TableCell>{transaction.types}</TableCell>
-                                            <TableCell>{Number(transaction.amount)} {transaction.currency}</TableCell>
-                                        </TableRow>
-                                    )
-                                })}
-                            </TableBody>
-                            <TableFooter>
-                                <TableCell colSpan={4}>Donations</TableCell>
-                                <TableCell>{dummyBackendDonations.length}</TableCell>
-                            </TableFooter>
-                        </Table>
-                    </>
+                    <Table>
+                        <TableHeader >
+                            <TableRow>
+                                <TableHead>Transaction Hash</TableHead>
+                                <TableHead>To</TableHead>
+                                <TableHead>Time</TableHead>
+                                <TableHead>Type</TableHead>
+                                <TableHead>Amount</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody  >
+                            {transactions.map(transaction=>{
+                                return(
+                                    <TableRow>
+                                        <TableCell>{transaction.id}</TableCell>
+                                        <TableCell>{transaction.to}</TableCell>
+                                        <TableCell>{`${convertToDate(transaction.time, 'date')}`}</TableCell>
+                                        <TableCell>{transaction.types}</TableCell>
+                                        <TableCell>{Number(transaction.amount)} {transaction.currency}</TableCell>
+                                    </TableRow>
+                                )
+                            })}
+                        </TableBody>
+                        <TableFooter>
+                            <TableCell colSpan={4}>Donations</TableCell>
+                            <TableCell>{transactions.length}</TableCell>
+                        </TableFooter>
+                    </Table>
                     )
                 }
                 </div>

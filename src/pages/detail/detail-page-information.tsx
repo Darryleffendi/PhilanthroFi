@@ -60,9 +60,6 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
 
             return response
         }, {
-        onSettled:()=>{
-            console.log("recording charity settled")
-        },
         onError: (error: Error) => {
             console.error('Error during recording charity:', error.message);
         },
@@ -77,7 +74,8 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         try {
             // @ts-ignore
             const response = await window.ic?.plug?.requestTransfer({
-                to: "byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe",
+                // to: "byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe",// alden
+                to:"ucjau-tkzza-uey4m-qepzh-hhp2m-sjlcv-mlsqm-kuvxz-tz3mz-ivs6r-uqe",//darryl
                 amount: donateAmount,
             })
             

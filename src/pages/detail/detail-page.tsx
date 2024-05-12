@@ -35,7 +35,6 @@ const CharityDetail = () => {
     const [charity, setCharity] = useState<CharityEvent | null>(null);
 
     useEffect(() => {
-        // setCharity(dummyCharity)
         fetchCharity()
     }, [])
 

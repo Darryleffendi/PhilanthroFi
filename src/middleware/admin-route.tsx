@@ -1,24 +1,26 @@
 
 import { useAuth } from "@lib/hooks/useAuth";
-import { AuthState } from "@lib/types/user-types";
+import { ADMIN, AuthState } from "@lib/types/user-types";
 import { ReactNode, Suspense, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
-interface ProtectedRouteProps{
+interface AdminRouteProps{
     children: ReactNode
 }
-export default function ProtectedRoute({children}:ProtectedRouteProps) {
+export default function AdminRoute({children}:AdminRouteProps) {
 
     const {authState,isLoading,user} = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if(!isLoading ){
-			if(authState!==AuthState.Authenticated && !user){
+			if(authState!==AuthState.Authenticated || !user){
 				if(authState == AuthState.Nope) navigate('/auth')
 				else if(authState == AuthState.NotRegistered) navigate('/auth')
 			}
-			
+            else{
+                if(user.role!==ADMIN)navigate('/')
+            }
 		}
 
     

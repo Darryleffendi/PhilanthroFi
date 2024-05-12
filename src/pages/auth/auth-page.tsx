@@ -8,7 +8,6 @@ import { AuthState } from "@lib/types/user-types";
 import { useAuth } from "@lib/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { BackgroundBeams } from "@components/ui/background-beams";
-import ProtectedRoute from "src/middleware/protected-route";
 
 export default function AuthPage() {
 

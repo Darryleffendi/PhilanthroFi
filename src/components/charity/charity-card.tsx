@@ -1,4 +1,3 @@
-import { CharityEvent } from '@lib/types/charity-types';
 import React from 'react';
 import ICPLogo from '@assets/logo/icp.png';
 import ProgressBar from '@components/progress_bar/progress-bar';
