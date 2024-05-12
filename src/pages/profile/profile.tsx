@@ -13,7 +13,7 @@ export default function Profile() {
     return (
         <ProtectedRoute>
             <MainLayout className={"px-24 bg-slate-100 min-h-screen w-full flex justify-between items-start gap-4"}>
-                <div className='w-screen h-screen  min-h-screen pt-28 flex flex-col'>
+                <div className='w-screen h-screen  pt-28 pb-8 flex flex-col'>
                     <div className='mb-8'></div>
                     <div className='w-full h-28 py-4 flex flex-col gap-2'>
                         <h1 className='text-2xl font-medium '>{profileMenu.name}</h1>
@@ -32,7 +32,7 @@ export default function Profile() {
                                 })}
                             </div>
                         </div>
-                        <div className='w-full h-full '>
+                        <div className='w-full h-full max-h-full'>
                                 <Suspense fallback={<></>}>
                                     {profileMenu.element}
                                 </Suspense>

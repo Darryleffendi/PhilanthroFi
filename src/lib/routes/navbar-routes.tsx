@@ -6,6 +6,6 @@ export const navbarRoutes = [
     },
     {
         name:"Explore",
-        link:"/explore"
+        link:"/explore?search="
     }
 ]
