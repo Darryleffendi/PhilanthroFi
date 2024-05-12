@@ -1,7 +1,7 @@
 
 import { Input } from '@components/ui/input';
 import MainLayout from '@pages/layout/main-layout';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ProtectedRoute from 'src/middleware/protected-route';
 import FilterList from './filter-list';
 import LineSeparator from '@components/line-separator';
@@ -14,6 +14,7 @@ import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/ch
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Button } from '@components/ui/button';
 import { FaSearch } from 'react-icons/fa';
+import countryList from 'react-select-country-list';
 const ExplorePage = () => {
 
 
@@ -22,6 +23,8 @@ const ExplorePage = () => {
   const {getCharityService} = useService();
   const [charities, setCharities] = useState<BackendCharityEvent[]>([]);
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
+  const [locationFilters, setLocationFilters] = useState<string[]>([]);
+  const countries = useMemo(() => countryList().getData(), [])
 
   const toggleCategory = (category: string) => {
     console.log(activeCategories)
@@ -34,13 +37,23 @@ const ExplorePage = () => {
       }
     });
   };
+
+  const toggleLocation = (location: string) => {
+    setLocationFilters((prevLocations) => {
+      if (prevLocations.includes(location)) {
+        return prevLocations.filter((c) => c !== location);
+      } else {
+        return [...prevLocations, location];
+      }
+    });
+  }
   
   const getAllCharities = async () => {
     const charityService = await getCharityService();
     let searchParams = (params.get('search') !== '' ? [params.get('search')] : []);
     let categoryParams = activeCategories.length <= 0 ? [] : [activeCategories];
     //@ts-ignore assuuuuu
-    return await charityService.getAllCharities(searchParams, categoryParams);
+    return await charityService.getAllCharities(searchParams, categoryParams, locationFilters);
   }
 
   useEffect(() => {
@@ -116,10 +129,14 @@ const ExplorePage = () => {
                     })}
                   </div>
                 </CustomCollapsible>
-                <CustomCollapsible title="Location" count={1}>
+                <CustomCollapsible title="Location" count={countries.length}>
                   <div className="p-2 flex flex-col gap-2">
                     {/* Diisi dari charity yang available ada di Location apa aja */}
-                    <Toggle className='text-sm'>Indonesia</Toggle>
+                    {countries.map((country, index) => {
+                      return (
+                        <Toggle className={`font-medium ${locationFilters.includes(country.label) ? 'bg-blue-200' : ''}`} onClick={() => toggleLocation} key={index} >{country.label}</Toggle>
+                      );
+                    })}
                   </div>
                 </CustomCollapsible>
               </div>

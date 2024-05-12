@@ -25,7 +25,7 @@ const HomePage = () => {
 
   const getAllCharities = async () => {
     const charityService = await getCharityService();
-    return await charityService.getAllCharities([], []);
+    return await charityService.getAllCharities([], [], []);
   }
   
   const { error, isLoading, isSuccess } = useQuery(['getAllCharities'], getAllCharities, {

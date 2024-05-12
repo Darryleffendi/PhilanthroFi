@@ -4,6 +4,7 @@ import ICPLogo from '@assets/logo/icp.png';
 import ProgressBar from '@components/progress_bar/progress-bar';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 import { useNavigate } from 'react-router-dom';
+import { capitalizeFirstLetter } from '@lib/utils/utils';
 
 interface CharityCardProps {
   charity: BackendCharityEvent;
@@ -25,7 +26,7 @@ const CharityCard: React.FC<CharityCardProps> = ({
           <div className="flex gap-2">
               {charity.tags.map((tag) => (
                 <div className="rounded-xl text-blue-800 border border-blue-800 bg-blue-200 text-xs inline-block font-medium px-4 py-1">
-                    {tag}
+                    {capitalizeFirstLetter(tag)}
                 </div>
               ))} 
           </div>
