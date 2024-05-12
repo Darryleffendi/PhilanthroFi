@@ -7,6 +7,7 @@ import FundraisePage from '@pages/fundraise/fundraise-page';
 import CharityDetail from '@pages/detail/detail-page';
 import ExplorePage from '@pages/explore/explore-page';
 import Profile from '@pages/profile/profile';
+import WithdrawPage from '@pages/withdraw-page';
 const LandingPage = React.lazy(() => import('@pages/landing-page'));
 
 export const router = createBrowserRouter([
@@ -37,5 +38,9 @@ export const router = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />
+  },
+  {
+    path: '/withdraw/:id',
+    element: <WithdrawPage />
   }
 ]);

@@ -14,6 +14,8 @@ import DetailPageTransaction from "./detail-page-transaction"
 import DetailPageInformation from "./detail-page-information"
 import { Progress } from "@components/ui/progress"
 import { formatDate, timeLeftUntil } from "@lib/utils/date-utils"
+import { useMutation } from "react-query"
+import { useService } from "@lib/hooks/useService"
 
 const CharityDetail = () => {
 
@@ -23,12 +25,13 @@ const CharityDetail = () => {
     const observerTargetRef = useRef(null);
     const observerTargetRefBottom = useRef(null);
     const [progress, setProgress] = useState(15) // progress bar animation 
+    const {getCharityService} = useService()
 
     // id charity nanti diambil dari url
     const {id} = useParams<{id: string}>()
 
     // Ini dummy data, nanti fetch dari backend
-    const charity : CharityEvent = {
+    const dummyCharity : CharityEvent = {
         id: "1",
         title: "Help a down syndrome child pay for his medical bills",
         target_donation: 1000,
@@ -43,6 +46,34 @@ const CharityDetail = () => {
         target_currency: "ICP"
     }
 
+    const [charity, setCharity] = useState<CharityEvent | null>(null);
+
+    useEffect(() => {
+        setCharity(dummyCharity)
+        fetchCharity()
+    }, [])
+
+    const { mutate: fetchCharity, isLoading: createCharityLoading, error: createCharityError, isSuccess } = useMutation(
+        async () => {
+            const charityService = await getCharityService();
+            const response = await charityService.getCharity(id ? id : "")
+
+            return response
+        }, {
+        onSettled:()=>{
+            console.log("fetch charity settled")
+        },
+        onError: (error: Error) => {
+            console.error('Error during fetching charity:', error.message);
+        },
+        onSuccess: (data) => {
+            console.log('Fetched charity successfully:', data);
+            
+            // Nanti di uncomment pas udh bener
+            // setCharity(data)
+        }
+    });
+
     let scrollTop = 0;
 
     const handleScroll = async () => {
@@ -52,9 +83,11 @@ const CharityDetail = () => {
     }
 
     useEffect(() => {
+        if(charity == null) return;
+        
         const timer = setTimeout(() => setProgress(charity.current_donation/charity.target_donation*100), 500)
         return () => clearTimeout(timer)
-    }, [])
+    }, [charity])
     
 
     useEffect(() => {
@@ -104,10 +137,10 @@ const CharityDetail = () => {
                     <div className="w-full h-[55vh] flex flex-col justify-between">
 
                         <div className="flex flex-col gap-5 ">
-                            <h1 className="text-4xl font-nbinter">{charity.title}</h1>
+                            <h1 className="text-4xl font-nbinter">{charity?.title}</h1>
                             <div className="flex w-full">
                             {
-                                charity.tags.map((tag, idx) => (
+                                charity?.tags.map((tag, idx) => (
                                     <Chip key={idx} text={tag}/>
                                 ))
                             }
@@ -119,15 +152,15 @@ const CharityDetail = () => {
                             <div className="flex items-center gap-3 mb-2">
                                 <img
                                     className="h-12" 
-                                    src={charity.target_currency === "ICP" ? icpIcon : charity.target_currency === "ckBTC" ? btcIcon : ethIcon}
+                                    src={charity?.target_currency === "ICP" ? icpIcon : charity?.target_currency === "ckBTC" ? btcIcon : ethIcon}
                                 />
-                                <p className="text-3xl font-nunito font-black text-slate-700 ">{charity.current_donation} {charity.target_currency}</p>
+                                <p className="text-3xl font-nunito font-black text-slate-700 ">{charity?.current_donation} {charity?.target_currency}</p>
                             </div>
                             <p className="mb-4 -mt-1 font-nbinter text-slate-500">
-                                out of {charity.target_donation} {charity.target_currency} target funds
+                                out of {charity?.target_donation} {charity?.target_currency} target funds
                             </p>
                             <div className="w-full h-2 rounded bg-slate-500 bg-opacity-20 shadow-md">
-                                <Progress value={progress} />
+                                <Progress value={progress} className="h-2" />
                                 {/* <div className="h-full rounded bg-primary" style={{width: charity.current_donation / charity.target_donation * 100 + "%"}}></div> */}
                             </div>
                         </div>
@@ -146,7 +179,7 @@ const CharityDetail = () => {
                         </div>
                     </div>
 
-                    <p className="text-lg font-nunito text-slate-500">{charity.description}</p>
+                    <p className="text-lg font-nunito text-slate-500">{charity?.description}</p>
 
                     <div className="flex w-full gap-4 font-nunito">
                         <Button className="rounded-lg bg-slate-300 text-slate-600 px-10">Contact</Button>
@@ -160,13 +193,13 @@ const CharityDetail = () => {
                         <IoEarthOutline className="w-16 h-16 text-primary opacity-80"/>
                         <div className="">
                             <p className="text-sm font-nunito text-slate-400">Location</p>
-                            <p className="text-lg font-nunito text-slate-700">{charity.location}</p>
+                            <p className="text-lg font-nunito text-slate-700">{charity?.location}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-6 justify-end">
                         <div className="text-right">
-                            <p className="text-lg font-nunito text-slate-700">{charity.end_date.toDateString()}</p>
-                            <p className="text-sm font-nunito text-slate-400">{timeLeftUntil(charity.end_date)}</p>
+                            <p className="text-lg font-nunito text-slate-700">{charity?.end_date.toDateString()}</p>
+                            <p className="text-sm font-nunito text-slate-400">{charity ? timeLeftUntil(charity?.end_date) : ""}</p>
                         </div>
                         <LuCalendarRange className="w-16 h-16 text-purple-200"/>
                     </div>
@@ -182,7 +215,7 @@ const CharityDetail = () => {
             <div className="w-[40vw] h-[200vh] mt-8" style={{transform: `translateY(${-rightTranslate}px)`}}>
                             
                 <div className="w-full h-screen flex items-center">
-                    <img src={charity.image_urls[0]} className="w-full object-cover h-[55vh] rounded-xl shadow-lg" ref={observerTargetRef}/>
+                    <img src={charity?.image_urls[0]} className="w-full object-cover h-[55vh] rounded-xl shadow-lg" ref={observerTargetRef}/>
                 </div>
 
                 <DetailPageInformation charity={charity} className={`${isSticky ? "hidden" : "flex"} `} />

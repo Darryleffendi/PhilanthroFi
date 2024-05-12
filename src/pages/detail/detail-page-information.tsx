@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Input } from "@components/ui/input";
 
 type props = {
-    charity : CharityEvent
+    charity : CharityEvent | null
     className : string
     style? : {}
 }
@@ -14,9 +14,9 @@ type props = {
 const DetailPageInformation = ({charity, className, style = {}} : props) => {
 
     const tiers = [
-        charity.target_currency === "ICP" ? 10 : charity.target_currency === "ckBTC" ? 0.002 : 0.05,
-        charity.target_currency === "ICP" ? 20 : charity.target_currency === "ckBTC" ? 0.005 : 0.1,
-        charity.target_currency === "ICP" ? 50 : charity.target_currency === "ckBTC" ? 0.01 : 0.25,
+        charity?.target_currency === "ICP" ? 10 : charity?.target_currency === "ckBTC" ? 0.002 : 0.05,
+        charity?.target_currency === "ICP" ? 20 : charity?.target_currency === "ckBTC" ? 0.005 : 0.1,
+        charity?.target_currency === "ICP" ? 50 : charity?.target_currency === "ckBTC" ? 0.01 : 0.25,
     ]
 
     const [amount, setAmount] = useState<any>(0);
@@ -32,22 +32,24 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         // Bikin transaction
     }
 
+    if(charity == null) return <></>
+
     return (
         <div className={`w-[40vw] h-[65vh] z-10 bg-white rounded-xl shadow-lg p-10 flex-col gap-4 ${className}`} style={style}>
                 
                 <div className="flex gap-2 font-nunito items-center font-black text-2xl text-slate-600 mb-2">
                     <img
                         className="h-6 object-cover mr-2" 
-                        src={charity.target_currency === "ICP" ? icpIcon : charity.target_currency === "ckBTC" ? btcIcon : ethIcon}
+                        src={charity?.target_currency === "ICP" ? icpIcon : charity?.target_currency === "ckBTC" ? btcIcon : ethIcon}
                     />
                     <div className="flex items-end gap-2">
-                        <p>{charity.current_donation}</p>
-                        <p className="text-sm mb-[0.25rem] font-normal">{charity.target_currency} raised of {charity.target_donation} {charity.target_currency} goal</p>
+                        <p>{charity?.current_donation}</p>
+                        <p className="text-sm mb-[0.25rem] font-normal">{charity?.target_currency} raised of {charity?.target_donation} {charity?.target_currency} goal</p>
                     </div>
                 </div>
 
                 <div className="w-full h-1 rounded bg-slate-500 bg-opacity-20 shadow-md">
-                    <div className="h-full rounded bg-primary" style={{width: charity.current_donation / charity.target_donation * 100 + "%"}}></div>
+                    <div className="h-full rounded bg-primary" style={{width: charity?.current_donation / charity?.target_donation * 100 + "%"}}></div>
                 </div>
                 <p className="text-sm text-slate-400">3.1k donations</p>
                 

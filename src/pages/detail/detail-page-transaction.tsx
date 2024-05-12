@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CgNotes } from "react-icons/cg";
 
 type props = {
-    charity : CharityEvent
+    charity : CharityEvent | null
 }
 
 const DetailPageTransaction = ({charity} : props) => {
@@ -19,6 +19,8 @@ const DetailPageTransaction = ({charity} : props) => {
         time : new Date("5/10/2024"),
         to : "0xfe4a13fds9cs1dx0",
     }
+
+    if(charity == null) return <></>
 
     return (
         <>

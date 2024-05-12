@@ -3,6 +3,7 @@ import React from 'react';
 import ICPLogo from '@assets/logo/icp.png';
 import ProgressBar from '@components/progress_bar/progress-bar';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
+import { useNavigate } from 'react-router-dom';
 
 interface CharityCardProps {
   charity: BackendCharityEvent;
@@ -11,9 +12,11 @@ interface CharityCardProps {
 const CharityCard: React.FC<CharityCardProps> = ({
   charity,
 }) => {
-  console.log(charity.id)
+
+    const navigate = useNavigate();
+
   return (
-    <div className="bg-white rounded-lg max-h-[55vh]">
+    <div className="bg-white rounded-lg max-h-[55vh] cursor-pointer" onClick={() => navigate(`/fundraise/${charity.id}`)}>
       <div className="w-full h-[60%]">
         <img src={charity.image_urls} alt="" className="rounded-t-lg object-cover w-full h-full" />
       </div>
