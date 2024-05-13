@@ -40,24 +40,6 @@ export default function MyCharities() {
                         <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
                     </>
 
                     )

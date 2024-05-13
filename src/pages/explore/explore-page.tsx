@@ -78,7 +78,7 @@ const ExplorePage = () => {
         //@ts-ignore
         setCharities([...response.ok]);
         //@ts-ignore
-        setLocationFilters([...locations.ok]);
+        setLocationFilters([...locations.ok ]);
 
       } catch (error) {
         console.log("Error fetching charities", error);
@@ -102,6 +102,10 @@ const ExplorePage = () => {
 
   const removeAllCategories = () => {
     setActiveCategories([]);
+  }
+
+  const removeAllLocations = () => {
+    setActiveLocation([]);
   }
 
   return (
@@ -128,9 +132,9 @@ const ExplorePage = () => {
                   tags={activeCategories}
                 />
                 <FilterList
-                  handleClearFilter={() => {}}
+                  handleClearFilter={removeAllLocations}
                   filterName="Location"
-                  tags={['Indonesia']}
+                  tags={activeLocation}
                 />
               </div>
             </div>

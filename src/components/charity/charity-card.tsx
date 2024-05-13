@@ -20,7 +20,7 @@ const CharityCard: React.FC<CharityCardProps> = ({ charity }) => {
 
   return (
     <div
-      className="bg-white rounded-lg min-h-[55vh] max-h-[60vh] cursor-pointer shadow-sm"
+      className="bg-white hover:translate-y-[-0.5rem] transition-all duration-200 rounded-lg min-h-[55vh] max-h-[60vh] cursor-pointer shadow-sm"
       onClick={() => navigate(`/fundraise/${charity.id}`)}
     >
       <div className="w-full h-[60%]">
