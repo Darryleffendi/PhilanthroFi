@@ -215,7 +215,7 @@ actor class Backend() {
       return #err("User not found");
   };
 
-  public shared func adminLogin(email:Text, password:Text):async Result.Result<Bool,Text>{
+  public shared func adminLogin(email:Text, password:Text):async Result.Result<User,Text>{
       let user = await getUserByEmail(email);
 
       switch(user){
@@ -228,7 +228,7 @@ actor class Backend() {
 
           switch(password_validation){
             case true{
-              return #ok(password_validation)
+              return #ok(founded_user)
             };
             case false{
               return #err("Not Admin");

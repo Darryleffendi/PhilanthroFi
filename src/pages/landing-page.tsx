@@ -129,22 +129,6 @@ export default function LandingPage() {
                     </div>
                 </div>
             </motion.div>
-
-            <div className=' w-full h-screen flex flex-col gap-10'>
-                <div>
-                    User Data:
-                    <br/>
-                    {user?.email}
-                    <br/>
-
-                    <>{user?.timestamp}</>
-                    <>{user?.birth_date}</>
-                </div>
-            ;
-                <Button onClick={()=>{logout(); queryClient.invalidateQueries(['userData'])}} className="text-8xl">LOGOUT PANTEK</Button>
-            
-            </div>
-
         </div>
         
     );

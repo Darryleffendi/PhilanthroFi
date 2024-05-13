@@ -4,11 +4,15 @@ import { ProfileRoutes, ProfileRouteTypes } from '@lib/routes/profile-routes';
 import MainLayout from '@pages/layout/main-layout';
 import { Suspense, useState } from 'react';
 import ProtectedRoute from 'src/middleware/protected-route';
+import { queryClient } from "@lib/settings/query-settings";
+import { useAuth } from '@ic-reactor/react';
+
 
 
 export default function Profile() {
 
     const [profileMenu, setProfileMenu] = useState<ProfileRouteTypes>(ProfileRoutes[0])
+    const {logout} = useAuth()
 
 
     return (
@@ -22,7 +26,7 @@ export default function Profile() {
                         <Separator className='bg-gray-300'/>
                     </div>
                     <div className='w-full h-full flex gap-32 mt-4'>
-                        <div className=' w-[25%] h-full flex flex-col gap-2'>
+                        <div className=' w-[25%] h-full flex flex-col gap-2 justify-between'>
                             <div className='w-full h-fit flex flex-col gap-2 rounded-lg'>
                                 {ProfileRoutes.map((menu, i)=>{
                                     return (
@@ -32,7 +36,11 @@ export default function Profile() {
                                     )
                                 })}
                             </div>
+                            <div className='w-full'>
+                                <Button onClick={()=>{logout();window.location.reload()}} className='bg-transaparent w-full justify-start text-base hover:bg-red-200' variant={'ghost'}>Logout</Button>
+                            </div>
                         </div>
+
                         <div className='w-full h-full max-h-full'>
                                 <Suspense fallback={<></>}>
                                     {profileMenu.element}
