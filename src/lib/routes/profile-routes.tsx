@@ -4,7 +4,7 @@ const MyProfile = React.lazy(()=>import ('@pages/profile/my-profile'))
 const MyCharities = React.lazy(()=>import ('@pages/profile/my-charities'))
 const MyTransactions = React.lazy(()=>import ('@pages/profile/my-transactions'))
 
-export const ProfileRoutes:ProfileRouteTypes[] = [
+export const ProfileRoutes:RouteTypes[] = [
     {
         name:"Profile",
         element: <MyProfile/>,
@@ -25,7 +25,7 @@ export const ProfileRoutes:ProfileRouteTypes[] = [
     },
 ]
 
-export interface ProfileRouteTypes{
+export interface RouteTypes{
     name:string,
     element:ReactNode,
     description:string,

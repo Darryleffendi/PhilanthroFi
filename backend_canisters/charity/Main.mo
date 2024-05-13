@@ -425,20 +425,20 @@ actor Charity {
       };
     };
   };
-  public shared composite query ({ caller }) func getAllWithdrawal() : async Result.Result<[Transaction], Text> {
-    let user = await Backend.getUser(caller);
-    switch (user) {
-      case null {
+  public shared composite query func getAllWithdrawal(adminEmail:Text) : async Result.Result<[Transaction], Text> {
+    let admin = await Backend.getUserByEmail(adminEmail);
+    switch (admin) {
+      case (#err(msg)) {
         return #err("User not found");
       };
-      case (?u) {
-        if (Bool.logor(Principal.isAnonymous(caller), u.role != "admin")) {
+      case (#ok(u)) {
+        if (u.role != "admin") {
           return #err("Unauthorized");
         };
         let withdrawal_transaction = Vector.Vector<Transaction>();
         for ((_, charity) in charities.entries()) {
           for (transaction in charity.transactions.vals()) {
-            if (transaction.types == "withdrawal") {
+            if (transaction.types == "withdraw") {
               withdrawal_transaction.add(transaction);
             };
           };
@@ -454,11 +454,12 @@ actor Charity {
       };
     };
   };
-  public shared composite query ({ caller }) func getWithdrawal(transaction_id : Text) : async Result.Result<Transaction, Text> {
+  public shared composite query ({ caller }) func getWithdrawal(adminEmail:Text, transaction_id : Text) : async Result.Result<Transaction, Text> {
+    //deprecated
     if (Principal.isAnonymous(caller)) {
       return #err("Unauthorized");
     };
-    let all_withdrawal = await getAllWithdrawal();
+    let all_withdrawal = await getAllWithdrawal(adminEmail);
     switch (all_withdrawal) {
       case (#err(msg)) {
         return #err(msg);
@@ -475,14 +476,14 @@ actor Charity {
 
   };
 
-  public shared ({ caller }) func updateWithdrawalStatus(charity_id : Text, transaction_id : Text) : async Result.Result<(), Text> {
-    let user = await Backend.getUser(caller);
+  public shared func updateWithdrawalStatus(adminEmail: Text, charity_id : Text, transaction_id : Text) : async Result.Result<(), Text> {
+    let user = await Backend.getUserByEmail(adminEmail);
     switch (user) {
-      case null {
+      case (#err(msg)) {
         return #err("User not found");
       };
-      case (?u) {
-        if (Bool.logor(Principal.isAnonymous(caller), u.role != "admin")) {
+      case (#ok(u)) {
+        if (u.role != "admin") {
           return #err("Unauthorized");
         };
         let charity = await getCharity(charity_id);

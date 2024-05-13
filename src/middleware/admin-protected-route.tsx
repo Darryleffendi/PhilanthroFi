@@ -4,10 +4,10 @@ import { ADMIN } from "@lib/types/user-types";
 import { ReactNode, Suspense, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
-interface AdminRouteProps{
+interface AdminProtectedRouteProps{
     children: ReactNode
 }
-export default function AdminRoute({children}:AdminRouteProps) {
+export default function AdminProtectedRoute({children}:AdminProtectedRouteProps) {
 
     const {getAdmin} = useAuth()
     const navigate = useNavigate();

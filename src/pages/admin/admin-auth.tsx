@@ -8,7 +8,7 @@ import { Button } from "@components/ui/button";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { isValidAdmin } from "src/middleware/admin-route";
+import { isValidAdmin } from "src/middleware/admin-protected-route";
 
 export default function AdminAuth() {
 

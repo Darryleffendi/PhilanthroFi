@@ -1,6 +1,6 @@
 import { Button } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
-import { ProfileRoutes, ProfileRouteTypes } from '@lib/routes/profile-routes';
+import { ProfileRoutes, RouteTypes } from '@lib/routes/profile-routes';
 import MainLayout from '@pages/layout/main-layout';
 import { Suspense, useState } from 'react';
 import ProtectedRoute from 'src/middleware/protected-route';
@@ -11,7 +11,7 @@ import { useAuth } from '@ic-reactor/react';
 
 export default function Profile() {
 
-    const [profileMenu, setProfileMenu] = useState<ProfileRouteTypes>(ProfileRoutes[0])
+    const [profileMenu, setProfileMenu] = useState<RouteTypes>(ProfileRoutes[0])
     const {logout} = useAuth()
 
 

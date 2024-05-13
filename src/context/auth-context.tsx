@@ -20,7 +20,7 @@ export type AuthContextType = {
     register: (userRegisData: UserBase) => Promise<any>;
     adminLogin: (email:string, password:string)=> Promise<boolean>;
     adminLogout: () => Promise<any>;
-    getAdmin: ()=>any;
+    getAdmin: ()=>User|null;
     isLoading: boolean;
 };
 
@@ -32,7 +32,7 @@ export const AuthContext = createContext<AuthContextType>({
     register: async () => {},
     adminLogin: async () => false,
     adminLogout: async ()=>{},
-    getAdmin: ()=>{},
+    getAdmin: ()=>null,
     isLoading: false,
 });
 
@@ -169,7 +169,6 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
 
     const adminLogout = async () =>{
         removeCookie('ph1l4ntr0F1',{path:'/ph1l4ntr0F1'})
-        window.location.reload();
     }
 
     const getAdmin = () =>{
