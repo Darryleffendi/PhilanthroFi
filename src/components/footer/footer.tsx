@@ -59,7 +59,7 @@ export default function Footer({className = "bg-slate-100"} : props) {
                             <p>PhilanthroFi</p> <p>PhilanthroFi</p> <p>PhilanthroFi</p>
                         </div>
                     </div>
-                    <div className='flex gap-1'>
+                    <div className='flex gap-1 text-xl'>
                         <p>Transforming</p>
                         <p className='bg-purple-200'>Charity</p>
                         <p>With</p>
