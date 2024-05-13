@@ -11,7 +11,7 @@ import { useAuth } from '@lib/hooks/useAuth';
 import { useWallet } from '@lib/hooks/useWallet';
 import { useQuery } from 'react-query';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
-import CharityCard from '@components/charity/charity-card';
+import {CharityCard} from '@components/charity/charity-card';
 import SeedCharity from '@lib/utils/seed-charity';
 
 const HomePage = () => {

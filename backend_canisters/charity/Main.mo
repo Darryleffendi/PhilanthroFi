@@ -108,7 +108,7 @@ actor Charity {
       };
       case (#ok(founded_charity)) {
         let transaction : Transaction = {
-          from = if (request.types == "donation") Principal.toText(msg.caller) else "PhilantroFi";
+          from = if (request.types == "donation") Principal.toText(msg.caller) else request.charity_id;
           to = if (request.types == "donation") request.charity_id else request.charity_wallet_id;
           amount = request.amount;
           time = Time.now();
@@ -355,7 +355,7 @@ actor Charity {
         id = charity_id;
         title = fuzz.text.randomText(fuzz.nat.randomRange(10, 30));
         target_donation = fuzz.nat.randomRange(1000, 10000);
-        image_urls = "https://scontent-cgk2-1.cdninstagram.com/v/t51.29350-15/434228032_387590770791800_8682384244587217201_n.webp?stp=dst-jpg_e35_s1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDk1OC5zZHIuZjI5MzUwIn0&_nc_ht=scontent-cgk2-1.cdninstagram.com&_nc_cat=108&_nc_ohc=PBXbYXUj8q4Q7kNvgF8Olgt&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=MzMyOTM3NjMyMjAzNzYzOTk1Ng%3D%3D.2-ccb7-5&oh=00_AYBa5wJC7-Qx5AzhxnXJXJRYMnb4ouU9L_y-Fwf5gLFwtw&oe=6647AB34&_nc_sid=fc8dfb";
+        image_urls = "https://firebasestorage.googleapis.com/v0/b/dg-travelohi.appspot.com/o/434228032_387590770791800_8682384244587217201_n.jpeg?alt=media&token=ec92f6c2-8871-4965-b1d3-346bd34fbf33";
         charity_owner_id = "5zbvf-7tsxx-b25u4-kkjec-przul-f623a-tqjc6-ac6er-2pnpd-yoxfi-zae";
         description = fuzz.text.randomText(fuzz.nat.randomRange(100, 300));
         start_date = Time.now();

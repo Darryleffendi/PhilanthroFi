@@ -4,11 +4,17 @@ import ProgressBar from '@components/progress_bar/progress-bar';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 import { useNavigate } from 'react-router-dom';
 import { capitalizeFirstLetter } from '@lib/utils/utils';
+import { Skeleton } from '@components/ui/skeleton';
 
 interface CharityCardProps {
   charity: BackendCharityEvent;
 }
-
+const CharityCardSkeleton = () =>{
+  return(
+      <Skeleton className='w-full min-h-[55vh] bg-gray-200'>
+      </Skeleton>
+  )
+}
 const CharityCard: React.FC<CharityCardProps> = ({ charity }) => {
   const navigate = useNavigate();
 
@@ -61,4 +67,4 @@ const CharityCard: React.FC<CharityCardProps> = ({ charity }) => {
   );
 };
 
-export default CharityCard;
+export {CharityCard, CharityCardSkeleton};

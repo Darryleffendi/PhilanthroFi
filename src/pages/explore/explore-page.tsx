@@ -8,7 +8,7 @@ import LineSeparator from '@components/line-separator';
 import CustomCollapsible from '@components/collapsible/custom-collapsible';
 import { categories, dummyCharity } from '@lib/types/charity-types';
 import { Toggle } from '@components/ui/toggle';
-import CharityCard from '@components/charity/charity-card';
+import {CharityCard, CharityCardSkeleton} from '@components/charity/charity-card';
 import { useService } from '@lib/hooks/useService';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -26,6 +26,7 @@ const ExplorePage = () => {
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
   const [locationFilters, setLocationFilters] = useState<string[]>([]);
   const [activeLocation, setActiveLocation] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
   const countries = useMemo(() => countryList().getData(), [])
 
   const toggleCategory = (category: string) => {
@@ -70,10 +71,10 @@ const ExplorePage = () => {
       try {
         const response = await getAllCharities();
         const locations = await getAllLocations();
-
+        setLoading(true);
         // console.log(response)
         // console.log(locations)
-
+        console.log("loading")
         //@ts-ignore
         setCharities([...response.ok]);
         //@ts-ignore
@@ -82,7 +83,10 @@ const ExplorePage = () => {
       } catch (error) {
         console.log("Error fetching charities", error);
         setCharities([]);
-      }
+      } finally{
+        console.log("dah loading")
+        setLoading(false);
+      };
     };
     fetchData();
   }, [params, activeCategories, activeLocation]);
@@ -162,7 +166,17 @@ const ExplorePage = () => {
                 <CharityCard charity={dummyCharity}/>
                 <CharityCard charity={dummyCharity}/> */}
                 {
-                  charities.map((charity,index) => (
+                  (loading || !charities) && (
+                    <>
+                      <CharityCardSkeleton/>
+                      <CharityCardSkeleton/>
+                      <CharityCardSkeleton/>
+                    </>
+                  )
+                }
+
+                {
+                 charities.length > 0 && charities.map((charity,index) => (
                     <CharityCard charity={charity} key={index}/>
                   ))
                 }
