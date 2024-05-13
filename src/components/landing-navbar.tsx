@@ -42,10 +42,10 @@ const LandingNavbar = ({ className, navMode }: props) => {
           </div>
         </div>
 
-        <NavigationMenuList className="flex gap-2">
+        <NavigationMenuList className="flex gap-4">
           <NavigationMenuItem>
-            <Link className="" to={'/about'}>
-              About Us
+            <Link className="" to={'/home'}>
+              Start Donating
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>

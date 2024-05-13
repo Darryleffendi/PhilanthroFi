@@ -9,10 +9,8 @@ import {
 import logoDark from '@assets/logo/logo-dark.png';
 import { useEffect, useState } from 'react';
 import { navbarRoutes } from '@lib/routes/navbar-routes';
-import Wallet2 from './wallet2';
-import { FaUser } from "react-icons/fa";
-import { IoSearch } from "react-icons/io5";
 import UserIcon from '@components/icons/user-icon'
+import WalletButton from './wallet-button';
 
 type props = {
   className?: string;
@@ -20,7 +18,7 @@ type props = {
 
 const Navbar = ({ className = 'bg-transparent' }: props) => {
 
-  const [isScrolled, setScrolled] = useState<boolean>(false);
+    const [isScrolled, setScrolled] = useState<boolean>(false);
     const [showA, setShowA] = useState<boolean>(false);
     const [showB, setShowB] = useState<boolean>(false);
     const [showC, setShowC] = useState<boolean>(false);
@@ -80,21 +78,14 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
       
       <div></div>
 
-      <div className="flex gap-4 h-20 mr-12 items-center overflow-hidden">
-        <div className={`w-9 h-9 flex items-center justify-center p-1 hover:p-0 transition-all duration-500 ${showA ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(300%)" : ""}}>
-            <div className='w-full h-fullrounded-full flex items-center justify-center transition-all duration-200 cursor-pointer'>
-                <IoSearch />
-            </div>
+      <div className="flex gap-4 h-20 mr-12 items-center">
+
+        <div className={`w-9 h-9 bg-white hover:bg-slate-200 rounded-full flex items-center justify-center transition-all duration-500 cursor-pointer ${showB ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(250%)" : ""}}>
+            <Link to='/profile'><UserIcon /></Link>
         </div>
 
-        <div className={`w-9 h-9 flex items-center justify-center p-1 hover:p-0 transition-all duration-500 ${showB ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(250%)" : ""}}>
-            <div className='w-full h-full  rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer'>
-                <Link to='/profile'><UserIcon /></Link>
-            </div>
-        </div>
-
-          <div className={`transition-all duration-500 ${showC ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(50%)" : ""}}>
-            <Wallet2/>
+          <div className={`transition-all duration-500 h-9 ${showC ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(50%)" : ""}}>
+            <WalletButton />
           </div>
         </div>
     </div>

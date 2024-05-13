@@ -122,6 +122,28 @@ actor Charity {
         if (transaction.types == "withdraw") {
           if (founded_charity.charity_owner_id != Principal.toText(msg.caller)) return #err("Unauthorized");
           if (founded_charity.current_donation < transaction.amount) return #err("Insufficient Fund");
+
+          let added_transactions = Array.append<Transaction>(founded_charity.transactions, [transaction]);
+
+          let updated_charity = {
+            id = founded_charity.id;
+            title = founded_charity.title;
+            target_donation = founded_charity.target_donation;
+            image_urls = founded_charity.image_urls;
+            charity_owner_id = founded_charity.charity_owner_id;
+            description = founded_charity.description;
+            tags = founded_charity.tags;
+            start_date = founded_charity.start_date;
+            current_donation = founded_charity.current_donation;
+            end_date = founded_charity.end_date;
+            location = founded_charity.location;
+            transactions = added_transactions;
+            target_currency = founded_charity.target_currency;
+          };
+
+          charities.put(updated_charity.id, updated_charity);
+
+          return #ok();
         };
 
         let added_transactions = Array.append<Transaction>(founded_charity.transactions, [transaction]);
@@ -135,7 +157,7 @@ actor Charity {
           description = founded_charity.description;
           tags = founded_charity.tags;
           start_date = founded_charity.start_date;
-          current_donation = request.amount;
+          current_donation = founded_charity.current_donation + request.amount;
           end_date = founded_charity.end_date;
           location = founded_charity.location;
           transactions = added_transactions;
