@@ -18,6 +18,15 @@ import { useWallet } from "@lib/hooks/useWallet";
 import { cleanseCharity } from "@lib/utils/charity-utils";
 import { useAuth } from "@lib/hooks/useAuth";
 import Spinner from "@components/spinner";
+import {
+    AlertDialog,
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogTitle,
+    AlertDialogDescription,
+    AlertDialogAction,
+    AlertDialogFooter
+  } from '@components/ui/alert-dialog'; 
 
 const WithdrawPage = () => {   
 
@@ -51,6 +60,7 @@ const WithdrawPage = () => {
     const { base64List, processImagesToBase64, errors: base64Errors, reset:resetBase64 } = useMultipleBase64();
     const navigate = useNavigate();
     const {getPublicAddress} = useWallet();
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const { user, authState, isLoading } = useAuth();
     
@@ -80,7 +90,7 @@ const WithdrawPage = () => {
     }, [files]);
 
     /* ======= FUNCTION UNTUK FETCH CHARITY DATA SESUAI ID ====== */
-    const { mutate: fetchCharity, isLoading: createCharityLoading, error: createCharityError, isSuccess } = useMutation(
+    const { mutate: fetchCharity, isLoading: fetchCharityLoading, error: fetchCharityError, isSuccess } = useMutation(
         async () => {
             const charityService = await getCharityService();
             const response = await charityService.getCharity(id ? id : "")
@@ -122,6 +132,7 @@ const WithdrawPage = () => {
         }, {
         onSettled:()=>{
             console.log("recording charity settled")
+            setDialogOpen(true);
         },
         onError: (error: Error) => {
             console.error('Error during recording charity:', error.message);
@@ -261,9 +272,29 @@ const WithdrawPage = () => {
                     </div>
                 </div>
 
-                <Button className="text-white mt-2" onClick={submitForm}>Submit</Button> 
+                <Button disabled={recordLoading} className="text-white mt-2" onClick={submitForm}>{recordLoading? "Loading" : "Submit"} </Button> 
             </div>
         </div>
+        <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <AlertDialogTrigger asChild>
+            <button style={{ display: "none" }}></button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+            <AlertDialogTitle>
+                {recordSuccess ? 
+                "Success": "Something Went Wrong"}
+                </AlertDialogTitle>
+            <AlertDialogDescription>
+                {recordSuccess ?
+                "Your withdrawal request was submmited" : "Please try connecting to Plug again"}
+            </AlertDialogDescription>
+            <AlertDialogFooter>
+                <AlertDialogAction onClick={() => { setDialogOpen(false);navigate('/profile') }}>
+                Continue
+                </AlertDialogAction>
+            </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
         </>
     )
 }
