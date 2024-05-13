@@ -112,7 +112,7 @@ const WithdrawPage = () => {
         async () => {
             const charityService = await getCharityService();
 
-            transactionRequest.amount = BigInt(Number(transactionRequest.amount) * 100000000)
+            transactionRequest.amount = BigInt(Math.floor(Number(transactionRequest.amount) * 100000000))
 
             // @ts-ignore
             const response = await charityService.addTransaction(transactionRequest)
@@ -168,7 +168,7 @@ const WithdrawPage = () => {
         // @ts-ignore
         changeData("to", window.ic.plug.principalId)
     }
-    
+
     return (
         <>
         {

@@ -10,7 +10,7 @@ interface NumberProps{
 
 export default function Numbers({title,number, numberStyle='font-8xl', titleStyle='font-xl', prefix}:NumberProps) {
   return (
-    <div className={`w-full flex flex-col items-center ${numberStyle} gap-4`}>
+    <div className={`w-fit flex flex-col items-center ${numberStyle} gap-4`}>
         <div className={`${titleStyle} text-nowrap `}>
             {title}
         </div>

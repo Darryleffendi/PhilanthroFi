@@ -85,7 +85,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="w-full min-h-screen">
-          <div className="p-16 flex flex-col gap-8">
+          <div className="px-24 py-8 flex flex-col gap-8">
             <div className="text-indigo-400 font-semibold text-xl">
               Featured Charities
             </div>
