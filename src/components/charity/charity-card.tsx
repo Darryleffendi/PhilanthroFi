@@ -30,14 +30,14 @@ const CharityCard: React.FC<CharityCardProps> = ({ charity }) => {
             {charity.tags.map((tag, index) => {
               if (index == 2) {
                 return (
-                  <div className="rounded-xl text-blue-800 border border-blue-800 bg-white text-xs inline-block font-medium px-4 py-1">
+                  <div className="rounded-xl text-blue-800 border border-blue-800 bg-white text-xs inline-block font-medium px-4 py-1" key={index}>
                     +{charity.tags.length - 1} more
                   </div>
                 );
               }
               else if(index < 2){
                 return(
-                  <div className="rounded-xl text-blue-800 border border-blue-800 bg-blue-200 text-xs inline-block font-medium px-4 py-1">
+                  <div className="rounded-xl text-blue-800 border border-blue-800 bg-blue-200 text-xs inline-block font-medium px-4 py-1" key={index}>
                     {capitalizeFirstLetter(tag)}
                   </div>
                 )

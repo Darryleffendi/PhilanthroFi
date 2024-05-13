@@ -103,16 +103,16 @@ const ExplorePage = () => {
   return (
     <ProtectedRoute>
       <MainLayout className='bg-slate-100'>
-        <div className="p-24 min-h-[80vh] justify-center flex gap-6 flex-col">
+        <div className="p-24 min-h-[80vh] justify-center flex gap-6 flex-col pt-36">
           <div className="text-4xl font-medium">Explore</div>
-          <form className="flex items-center gap-4 divide-x-2" onSubmit={handleSearchSubmit}>
+          <form className="flex items-center gap-4 divide-x-2 w-full" onSubmit={handleSearchSubmit}>
             <Input
               onChange={handleSearchChange}
-              className="basis-1/3 bg-white file:bg-white"
+              className="basis-1/4 bg-white file:bg-white"
               placeholder="Charity Event"
               value={search}
             />
-            <div className="pl-3 basis-2/3 items-center justify-between flex">
+            <div className="pl-3 basis-3/4 items-center justify-between flex">
               <Button className='rounded-full flex items-center gap-2'>
                 <FaSearch />
                 Search
@@ -132,15 +132,13 @@ const ExplorePage = () => {
             </div>
           </form>
           <div className="w-full gap-8 flex">
-            <div className="flex flex-col basis-1/3">
-              <div className="text-2xl font-medium">Filters</div>
-              <Separator className='bg-gray-300 my-5'/>
+            <div className="flex flex-col basis-1/4">
               <div className="flex flex-col gap-4">
                 <CustomCollapsible title="Category" status={true} count={categories.length}>
                   <div className="p-2 flex flex-col gap-2">
                     {categories.map((category, index) => {
                       return (
-                        <Toggle className={`font-medium ${activeCategories.includes(category) ? 'bg-blue-200' : ''}`} onClick={() => toggleCategory(category)} key={index} >{category}</Toggle>
+                        <Toggle className={`font-normal text-base ${activeCategories.includes(category) ? 'bg-blue-200' : ''}`} onClick={() => toggleCategory(category)} key={index} >{category}</Toggle>
                       );
                     })}
                   </div>
@@ -157,8 +155,8 @@ const ExplorePage = () => {
                 </CustomCollapsible>
               </div>
             </div>
-            <div className="flex flex-col basis-2/3">
-              <div className="w-full grid gap-4 grid-cols-3">
+            <div className="flex flex-col basis-3/4">
+              <div className="w-full grid gap-8 grid-cols-3">
                 {/* <CharityCard charity={dummyCharity}/>
                 <CharityCard charity={dummyCharity}/>
                 <CharityCard charity={dummyCharity}/>

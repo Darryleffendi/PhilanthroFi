@@ -32,7 +32,7 @@ const WalletButton = () => {
             // @ts-ignore
             window?.ic?.plug.agent ? (
                 <Button 
-                    className='h-9 rounded-full bg-white pr-7 pl-5 hover:bg-slate-200 transition-all duration-500 flex gap-3 hover:gap-5 hover:pl-3 items-center'
+                    className='h-9 rounded-full bg-gray-50 pr-7 pl-5 hover:bg-slate-200 transition-all duration-500 flex gap-3 hover:gap-5 hover:pl-3 items-center'
                     // @ts-ignore
                     // onClick={() => window?.ic?.plug.requestDisconnect()}
                 >
@@ -41,7 +41,7 @@ const WalletButton = () => {
                 </Button>
             ) : (
                 <Button 
-                    className='h-9 rounded-full bg-white pl-7 pr-5 hover:bg-slate-200 transition-all duration-500 flex gap-3 hover:gap-5 hover:pr-3 items-center'
+                    className='h-9 rounded-full bg-gray-50 pl-7 pr-5 hover:bg-slate-200 transition-all duration-500 flex gap-3 hover:gap-5 hover:pr-3 items-center'
                     // @ts-ignore
                     onClick={() => window?.ic?.plug.requestConnect()}
                 >
