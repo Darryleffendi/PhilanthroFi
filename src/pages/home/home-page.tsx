@@ -90,21 +90,12 @@ const HomePage = () => {
           Almost there—help us succeed!
           </div>
           <div className='flex justify-end'>
-<<<<<<< Updated upstream
-              <div className=' p-8 justify-end flex gap-6 max-w-[50%] min-h-[60vh] rounded-xl'>
-                {
-                   topCharity && 
-                   (
-                    <div className='flex flex-col relative'>
-                      <div className='font-medium text-7xl'>#1</div>
-=======
               <div className='bg-primary p-8 justify-end flex gap-6 max-w-[50%] min-h-[60vh] rounded-xl'>
                 {
                    topCharity && 
                    (
                     <div className='flex flex-col'>
                       <div className='font-medium text-5xl'>#1</div>
->>>>>>> Stashed changes
                       <CharityCard charity={topCharity}></CharityCard>
                     </div>
                    )
@@ -112,11 +103,7 @@ const HomePage = () => {
                 {
                    topCharity && 
                    <div className='flex flex-col'>
-<<<<<<< Updated upstream
-                      <div className='font-medium text-7xl'>#2</div>
-=======
                       <div className='font-medium text-5xl'>#2</div>
->>>>>>> Stashed changes
                      <CharityCard charity={topCharity}></CharityCard>
                    </div>
                 }
