@@ -4,7 +4,6 @@ import MainLayout from '@pages/layout/main-layout';
 import { useEffect, useMemo, useState } from 'react';
 import ProtectedRoute from 'src/middleware/protected-route';
 import FilterList from './filter-list';
-import LineSeparator from '@components/line-separator';
 import CustomCollapsible from '@components/collapsible/custom-collapsible';
 import { categories, dummyCharity } from '@lib/types/charity-types';
 import { Toggle } from '@components/ui/toggle';
@@ -16,6 +15,8 @@ import { Button } from '@components/ui/button';
 import { FaSearch } from 'react-icons/fa';
 import countryList from 'react-select-country-list';
 import { Separator } from '@components/ui/separator';
+import Magnify from '@components/icons/magnify';
+
 const ExplorePage = () => {
 
 
@@ -111,8 +112,8 @@ const ExplorePage = () => {
   return (
     <ProtectedRoute>
       <MainLayout className='bg-slate-100'>
-        <div className="p-24 min-h-[80vh] justify-center flex gap-6 flex-col pt-36">
-          <div className="text-4xl font-medium">Explore</div>
+        <div className="p-24 min-h-[80vh]  justify-center flex gap-8 flex-col pt-36">
+          <div className="text-3xl font-medium">Explore</div>
           <form className="flex items-center gap-4 divide-x-2 w-full" onSubmit={handleSearchSubmit}>
             <Input
               onChange={handleSearchChange}
@@ -120,9 +121,9 @@ const ExplorePage = () => {
               placeholder="Charity Event"
               value={search}
             />
-            <div className="pl-3 basis-3/4 items-center justify-between flex">
-              <Button className='rounded-full flex items-center gap-2'>
-                <FaSearch />
+            <div className="pl-3 basis-3/4 items-center justify-between flex ">
+              <Button  className=' rounded-full flex items-center gap-2 px-6'>
+                <Magnify/>
                 Search
               </Button>
               <div className='flex gap-2 flex-wrap flex-shrink-0'>
@@ -139,9 +140,9 @@ const ExplorePage = () => {
               </div>
             </div>
           </form>
-          <div className="w-full gap-8 flex">
+          <div className="w-full gap-8 flex ">
             <div className="flex flex-col basis-1/4">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-8">
                 <CustomCollapsible title="Category" status={true} count={categories.length}>
                   <div className="p-2 flex flex-col gap-2">
                     {categories.map((category, index) => {
@@ -156,7 +157,7 @@ const ExplorePage = () => {
                     {/* Diisi dari charity yang available ada di Location apa aja */}
                     {locationFilters.map((location, index) => {
                       return (
-                        <Toggle className={`font-medium ${activeLocation.includes(location) ? 'bg-blue-200' : ''}`} onClick={() => toggleLocation(location)} key={index} >{location}</Toggle>
+                        <Toggle className={`font-normal text-base ${activeLocation.includes(location) ? 'bg-blue-200' : ''}`} onClick={() => toggleLocation(location)} key={index} >{location}</Toggle>
                       );
                     })}
                   </div>
@@ -165,10 +166,6 @@ const ExplorePage = () => {
             </div>
             <div className="flex flex-col basis-3/4">
               <div className="w-full grid gap-8 grid-cols-3">
-                {/* <CharityCard charity={dummyCharity}/>
-                <CharityCard charity={dummyCharity}/>
-                <CharityCard charity={dummyCharity}/>
-                <CharityCard charity={dummyCharity}/> */}
                 {
                   (loading || !charities) && (
                     <>
@@ -180,7 +177,7 @@ const ExplorePage = () => {
                 }
 
                 {
-                 charities.length > 0 && charities.map((charity,index) => (
+                  charities.length > 0 && charities.map((charity,index) => (
                     <CharityCard charity={charity} key={index}/>
                   ))
                 }

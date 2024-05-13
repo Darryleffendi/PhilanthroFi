@@ -1,54 +1,79 @@
-# Vite + React + Motoko
 
-### Get started directly in your browser:
+<p align="center"><a href="https://identity.ic0.app" target="_blank" rel="noopener noreferrer"><img width="100" src="./src/assets/logo/logo-regular.png" alt="PhilanthroFi Logo"></a> </p>
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rvanasa/vite-react-motoko)
+## 📓 About PhilanthroFi
 
-This template gives you everything you need to build a full-stack Web3 application on the [Internet Computer](https://internetcomputer.org/).
+PhilanthroFi revolutionizes the way we support global causes by leveraging the power of the Internet Computer blockchain. Utilizing the Motoko language, this platform ensures that every donation contributes to a cause transparently and securely, providing a streamlined experience for both donors and charitable organizations.
 
-For an example of a real-world dapp built using this starter project, check out the [source code](https://github.com/dfinity/feedback) for DFINITY's [Developer Experience Feedback Board](https://dx.internetcomputer.org/).
+<p align="center"><a href="https://identity.ic0.app" target="_blank" rel="noopener noreferrer"><img width="800" src="assets/PhilanthroFiPreview.gif" alt="Explore PhilanthroFi"></a></p>
 
-## 📦 Create a New Project
+## 📝 Core Features
 
-Make sure that [Node.js](https://nodejs.org/en/) `>= 16` and [`dfx`](https://internetcomputer.org/docs/current/developer-docs/build/install-upgrade-remove) `>= 0.14` are installed on your system.
+- Transparent oversight of fundraising efforts.
+- Enhanced security protocols through blockchain.
+- Simplified creation and management of charity profiles.
+- Immediate updates on the utilization of funds.
 
-Run the following commands in a new, empty project directory:
+## 🖥️ System Requirements
 
-```sh
-npx degit rvanasa/vite-react-motoko # Download this starter project
-dfx start --clean --background # Run dfx in the background
-npm run setup # Install packages, deploy canisters, and generate type bindings
+- Node.js (version 20)
+- DFX (version 0.17.0)
+- NPM (version 7.24.0)
+- Windows Subsystem for Linux 2 (WSL2)
+- Ubuntu on WSL2
 
-npm start # Start the development server
-```
+## 📜 Installation Guide
 
-When ready, run `dfx deploy --network ic` to deploy your application to the Internet Computer.
+1. Obtain the source code:
+   ```
+   git clone https://github.com/Darryleffendi/PhilanthroFi.git
+   ```
+2. Enter the project folder:
+   ```
+   cd PhilanthroFi
+   ```
+3. Ensure WSL2 with Ubuntu-22.04 LTS is operational. Setup guide [here](https://docs.microsoft.com/en-us/windows/wsl/install).
+4. Within WSL, apply the specified DFX setup:
+   ```
+   DFX_VERSION=0.17.0 sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+   ```
+5. Confirm DFX setup success:
+   ```
+   dfx --version
+   ```
+6. Activate Node.js:
+   ```
+   nvm use 20
+   npm install
+   ```
+7. Initiate the Internet Computer locally:
+   ```
+   dfx start --clean --background
+   ```
+8. Prepare environment and deploy resources:
+   ```
+   npm run setup
+   ```
+9. Activate all components:
+   ```
+   npm start
+   ```
+10. Visit `http://localhost:3000` to explore the platform.
 
-## 🛠️ Technology Stack
+## ⭐ What makes PhilanthroFi unique?
 
-- [Vite](https://vitejs.dev/): high-performance tooling for front-end web development
-- [React](https://reactjs.org/): a component-based UI library
-- [TypeScript](https://www.typescriptlang.org/): JavaScript extended with syntax for types
-- [Sass](https://sass-lang.com/): an extended syntax for CSS stylesheets
-- [Prettier](https://prettier.io/): code formatting for a wide range of supported languages
-- [Motoko](https://github.com/dfinity/motoko#readme): a safe and simple programming language for the Internet Computer
-- [Mops](https://mops.one): an on-chain community package manager for Motoko
-- [mo-dev](https://github.com/dfinity/motoko-dev-server#readme): a live reload development server for Motoko
-- [@ic-reactor](https://github.com/B3Pay/ic-reactor): A suite of JavaScript libraries for seamless frontend development on the Internet Computer
+- **Transparency and Security**: Each donation is recorded on the blockchain, ensuring transparency and security.
+- **User-friendly**: The platform is designed to be accessible to everyone, making it easy to support worldwide causes.
 
-## 📚 Documentation
+## ⌛ Future Enhancements
 
-- [Vite developer docs](https://vitejs.dev/guide/)
-- [React quick start guide](https://react.dev/learn)
-- [Internet Computer docs](https://internetcomputer.org/docs/current/developer-docs/ic-overview)
-- [`dfx.json` reference schema](https://internetcomputer.org/docs/current/references/dfx-json-reference/)
-- [Motoko developer docs](https://internetcomputer.org/docs/current/developer-docs/build/cdks/motoko-dfinity/motoko/)
-- [Mops usage instructions](https://j4mwm-bqaaa-aaaam-qajbq-cai.ic0.app/#/docs/install)
-- [@ic-reactor/react](https://b3pay.github.io/ic-reactor/modules/react.html)
+- More blockchain integrations for enhanced functionality.
+- Partnerships with international charitable organizations to broaden scope.
+- Development of mobile apps for easier access.
 
-## 💡 Tips and Tricks
+## 📧 Contact Information
 
-- Customize your project's code style by editing the `.prettierrc` file and then running `npm run format`.
-- Reduce the latency of update calls by passing the `--emulator` flag to `dfx start`.
-- Install a Motoko package by running `npx ic-mops add <package-name>`. Here is a [list of available packages](https://mops.one/).
-- Split your frontend and backend console output by running `npm run frontend` and `npm run backend` in separate terminals.
+For more details or to discuss collaboration opportunities, please reach out at:
+
+- Email: darrylgate@gmail.com
+

@@ -56,7 +56,7 @@ export default function TransactionTableCell({transaction, currency} : params) {
                     <p className="text-sm text-slate-500">{trans.amount * 1.0 / 100000000.00} {currency}</p>
                 </div>
             </div>
-            <DialogContent className="font-nunito">
+            <DialogContent className="">
                 <DialogHeader>
                     <DialogTitle>Transaction Details</DialogTitle>
                     <DialogDescription className="text-slate-500">

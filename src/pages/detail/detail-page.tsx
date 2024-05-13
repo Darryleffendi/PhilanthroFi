@@ -18,6 +18,7 @@ import { useMutation } from "react-query"
 import { useService } from "@lib/hooks/useService"
 import { convertToDate } from "@lib/service/date-service"
 import { cleanseCharity } from "@lib/utils/charity-utils"
+import VhPuck from "@components/vh-puck"
 
 const CharityDetail = () => {
 
@@ -38,7 +39,7 @@ const CharityDetail = () => {
         fetchCharity()
     }, [])
 
-    const { mutate: fetchCharity, isLoading: createCharityLoading, error: createCharityError, isSuccess } = useMutation(
+    const { mutate: fetchCharity, isLoading: fetchCharityLoading, error: createCharityError, isSuccess } = useMutation(
         async () => {
             const charityService = await getCharityService();
             const response = await charityService.getCharity(id ? id : "")
@@ -125,7 +126,8 @@ const CharityDetail = () => {
                             <div className="flex w-full gap-2">
                             {
                                 charity?.tags.map((tag, idx) => (
-                                    <Chip key={idx} text={tag}/>
+                                    // <Chip key={idx} text={tag}/>
+                                    <VhPuck key={idx} tag={tag}/>
                                 ))
                             }
                             </div>
@@ -138,7 +140,7 @@ const CharityDetail = () => {
                                     className="h-12" 
                                     src={charity?.target_currency === "ICP" ? icpIcon : charity?.target_currency === "ckBTC" ? btcIcon : ethIcon}
                                 />
-                                <p className="text-3xl font-nunito font-black text-slate-700 ">{charity?.current_donation} {charity?.target_currency}</p>
+                                <p className="text-3xl  font-black text-slate-700 ">{charity?.current_donation} {charity?.target_currency}</p>
                             </div>
                             <p className="mb-4 -mt-1 font-nbinter text-slate-500">
                                 out of {charity?.target_donation} {charity?.target_currency} target funds
@@ -153,7 +155,7 @@ const CharityDetail = () => {
                 
                 <div className="w-full border-slate-300 border-t py-12 flex flex-col gap-4">
                     
-                    <div className="flex w-full gap-4 font-nunito text-lg items-center">
+                    <div className="flex w-full gap-4  text-lg items-center">
                         <div className="w-14 h-14 bg-slate-200 rounded-full text-white text-3xl flex items-center justify-center">
                             <FaUser />
                         </div>
@@ -163,9 +165,9 @@ const CharityDetail = () => {
                         </div>
                     </div>
 
-                    <p className="text-lg font-nunito text-slate-500">{charity?.description}</p>
+                    <p className="text-lg  text-slate-500">{charity?.description}</p>
 
-                    <div className="flex w-full gap-4 font-nunito">
+                    <div className="flex w-full gap-4 ">
                         <Button className="rounded-lg bg-slate-300 text-slate-600 px-10">Contact</Button>
                         <Button className="rounded-lg bg-slate-300 text-slate-600 px-10">More about fundraiser</Button>
                     </div>
@@ -176,20 +178,20 @@ const CharityDetail = () => {
                     <div className="flex items-center gap-6">
                         <IoEarthOutline className="w-16 h-16 text-primary opacity-80"/>
                         <div className="">
-                            <p className="text-sm font-nunito text-slate-400">Location</p>
-                            <p className="text-lg font-nunito text-slate-700">{charity?.location}</p>
+                            <p className="text-sm  text-slate-400">Location</p>
+                            <p className="text-lg  text-slate-700">{charity?.location}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-6 justify-end">
                         <div className="text-right">
-                            <p className="text-lg font-nunito text-slate-700">{charity?.end_date.toDateString()}</p>
-                            <p className="text-sm font-nunito text-slate-400">{charity ? timeLeftUntil(charity?.end_date) : ""}</p>
+                            <p className="text-lg  text-slate-700">{charity?.end_date.toDateString()}</p>
+                            <p className="text-sm  text-slate-400">{charity ? timeLeftUntil(charity?.end_date) : ""}</p>
                         </div>
                         <LuCalendarRange className="w-16 h-16 text-purple-200"/>
                     </div>
                 </div>
 
-                <div className="w-full font-nunito  border-slate-300 border-t py-12 flex flex-col">
+                <div className="w-full   border-slate-300 border-t py-12 flex flex-col">
                     <DetailPageTransaction charity={charity}/>
                 </div>
 

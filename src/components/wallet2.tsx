@@ -10,7 +10,7 @@ import {
   AlertDialogAction,
   AlertDialogFooter
 } from '@components/ui/alert-dialog'; 
-import { getPlugBalance } from '@lib/service/plug-service';
+
 
 export default function Wallet2() {
   const { isConnected, whitelist , getConnection, plugConnectOrCreateAgent} = useWallet();

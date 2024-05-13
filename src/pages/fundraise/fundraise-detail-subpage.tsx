@@ -15,6 +15,7 @@ const FundraiseDetailSubpage = ({changeTitle, changeData, data, changeStep} : Fu
                 <p className="bg-yellow-100">Fundraising</p>
                 <p>&nbsp;</p>
                 <p className="bg-fuchsia-100 ">Charity</p>
+                <p>&nbsp;</p>
                 <p>Project</p>
             </>,
             "Provide insights about your project title and purpose"

@@ -25,10 +25,10 @@ export default function AdminManage() {
         </div>
 
 
-        <div className='px-24 pt-28 pb-8 h-full w-full flex flex-col'>
+        <div className='px-24 pt-24 pb-8 h-full w-full flex flex-col'>
           <div className='mb-8'/>
           <div className='w-full h-28 py-4 flex flex-col gap-2'>
-              <h1 className='text-2xl font-medium '>{adminMenu.name}</h1>
+              <h1 className='text-3xl font-medium '>{adminMenu.name}</h1>
               <h1 className='text-base text-gray-400'>{adminMenu.description}</h1>
               <Separator className='bg-gray-300'/>
           </div>

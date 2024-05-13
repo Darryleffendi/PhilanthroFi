@@ -27,4 +27,6 @@ export interface FundraiseSubpage {
     data : FundraiseType,
     changeStep : (step : number) => void
     submitForm? : () => void
+    isLoading?: boolean
+    
 }

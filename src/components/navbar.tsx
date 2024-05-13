@@ -80,9 +80,9 @@ const Navbar = ({ className = 'bg-transparent' }: props) => {
 
       <div className="flex gap-4 h-20 mr-12 items-center">
 
-        <div className={`w-9 h-9 bg-gray-50 hover:bg-slate-200 rounded-full flex items-center justify-center transition-all duration-500 cursor-pointer ${showB ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(250%)" : ""}}>
-            <Link to='/profile'><UserIcon /></Link>
-        </div>
+        <Link  to={'/profile'} className={`w-9 h-9 bg-gray-50 hover:bg-slate-200 rounded-full flex items-center justify-center transition-all duration-500 cursor-pointer ${showB ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(250%)" : ""}}>
+            <UserIcon />
+        </Link>
 
           <div className={`transition-all duration-500 h-9 ${showC ? "opacity-0" : "opacity-100"}`} style={{transform: showC ? "translateX(50%)" : ""}}>
             <WalletButton />

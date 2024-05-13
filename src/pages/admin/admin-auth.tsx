@@ -55,15 +55,15 @@ export default function AdminAuth() {
             <img src={logoWhite} className="left-[-20vw] z-0 bottom-[-50vh] h-[140vh] fixed opacity-[13%] object-cover"/>
 
             {/* Auth Form */}
-            <div className="bg-white w-[40%] h-[45%] p-8 z-10 flex flex-col">
+            <div className="bg-white rounded-lg w-[40%] h-[45%] p-12 z-10 flex flex-col">
                 <div className="flex items-center gap-2 h-fit">
                     <img src={logoDark} className="object-cover h-10" alt="" />
                     <div className={`text-3xl font-[500] overflow-hidden duration-500 `}>
-                        PhilanthroFi
+                        PhilanthroFi Enterprise
                     </div>
                 </div> 
-                <div className="w-full flex justify-center items-center flex-col h-full gap-4 p-4">
-                    <div className="w-full h-[60%] flex flex-col gap-4">
+                <div className="w-full h-f flex justify-center items-center flex-col h-full gap-4 ">
+                    <div className="w-full h-fit flex flex-col gap-4 ">
                         <div className="w-full gap-1 flex flex-col">
                             <p className="font-medium">Email</p>
                             <Input 
@@ -80,11 +80,9 @@ export default function AdminAuth() {
                         </div>
                     </div>
 
-                    <div className="w-full">
-                        <Button disabled={adminIsLoading} onClick={()=>{handleAdminLogin()}} className="text-white w-full bg-blue-300 font-bold">
-                                {adminIsLoading ? "Loading" : "Login"}
-                        </Button>
-                    </div>
+                    <Button disabled={adminIsLoading} onClick={()=>{handleAdminLogin()}} className=" text-white w-full bg-blue-300 font-bold">
+                            {adminIsLoading ? "Loading" : "Login"}
+                    </Button>
                     <div className="w-full">
                         <p className="text-red-300 text-sm text-start">{adminError?.message}</p>
                     </div>
