@@ -166,7 +166,7 @@ const WithdrawPage = () => {
         // @ts-ignore
         changeData("to", window.ic.plug.principalId)
     }
-
+    
     return (
         <>
         {
