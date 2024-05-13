@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import logoWhite from "@assets/logo/logo-white.png"
 import { FaArrowLeft } from "react-icons/fa";
-import { CharityEvent, Transaction, TransactionRequest } from "@lib/types/charity-types";
+import { CharityEvent, PHILANTHROFI_WALLET_ID, Transaction, TransactionRequest } from "@lib/types/charity-types";
 import { useEffect, useState } from "react";
 import { useService } from "@lib/hooks/useService";
 import { useMutation } from "react-query";
@@ -59,7 +59,7 @@ const WithdrawPage = () => {
         types: "withdraw",
         notes: data.notes,
         charity_id: charity ? charity.id : "",
-        charity_wallet_id: charity ? charity.charity_owner_id : ""
+        charity_wallet_id: PHILANTHROFI_WALLET_ID
     }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,8 +113,10 @@ const WithdrawPage = () => {
             const charityService = await getCharityService();
 
             transactionRequest.amount = BigInt(Number(transactionRequest.amount) * 100000000)
+
             // @ts-ignore
             const response = await charityService.addTransaction(transactionRequest)
+            
 
             return response
         }, {

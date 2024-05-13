@@ -16,6 +16,8 @@ export interface CharityEvent {
   target_currency: string;
 }
 
+export const PHILANTHROFI_WALLET_ID = 'byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe'
+
 export interface Transaction {
   from: string;
   to: string;
