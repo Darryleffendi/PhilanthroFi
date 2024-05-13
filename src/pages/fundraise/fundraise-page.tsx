@@ -147,8 +147,8 @@ const FundraisePage = () => {
 
     return (
         <ProtectedRoute>
-            <MainLayout className="">
-                <div className="bg-primary bg-opacity-50 w-full md:h-screen flex flex-col md:flex-row md:flex items-center md:justify-between px-24 pt-20">
+            <MainLayout className="bg-primary bg-opacity-50">
+                <div className="w-full md:h-screen flex flex-col md:flex-row md:flex items-center md:justify-between px-24 pt-20">
 
                     <div className="md:w-[40%] w-[85vw] md:h-[70vh] mt-[10vh] md:mt-0 mb-[5vh] md:mb-0 flex flex-col justify-between z-10">
 

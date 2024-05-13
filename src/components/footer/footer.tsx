@@ -1,72 +1,98 @@
 // Footer.jsx
 
-import React from 'react';
-import style from '@lib/styles/footer.module.scss'
-import { Link } from 'react-router-dom';
-import FacebookImg from '@assets/footer/facebook-app-symbol.png'
-import InstagramImg from '@assets/footer/instagram.png'
-import LinkedInImg from '@assets/footer/linkedin.png'
-import TwitterImg from '@assets/footer/twitter.png'
-import YoutubeImg from '@assets/footer/youtube.png'
-export default function Footer() {
+import React, { useEffect, useState } from 'react';
+import logoDark from '@assets/logo/logo-dark.png';
+import { MdOutlineMail } from 'react-icons/md';
+import { FaInstagram, FaRegCopyright } from 'react-icons/fa';
+import FooterProfile from './footer-profile';
+
+type props = {
+    className? : string
+}
+
+export default function Footer({className = "bg-slate-100"} : props) {
+
+    const [footerMode, setfooterMode] = useState("default");
+    const [titleTransform, setTitleTransform] = useState(0);
+
+    const subtitles = ["Blockchain", "Transparency", "Security", "Trust", "Technology"]
+    const [activeSubtitle, setActiveSubtitle] = useState(subtitles[0])
+
+    const handleScroll = async () => {
+        // Current scroll position from the top
+        const scrollTop = window.pageYOffset;
+        // Total document height
+        const docHeight = document.documentElement.scrollHeight;
+        // Current window height
+        const winHeight = window.innerHeight;
+        // Distance to the bottom of the document
+        const scrollBottom = docHeight - winHeight - scrollTop;
+
+        if (scrollBottom < 100) {
+            setfooterMode("bottom");
+        } else {
+            setfooterMode("default");
+        }
+
+        if (scrollBottom < 800) {
+            setTitleTransform(-scrollBottom)
+            let index = Math.floor(scrollBottom / 100) % subtitles.length;
+            setActiveSubtitle(subtitles[index]);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
   return (
-    <footer className={style.footer}>
-      <div className={style.footerContainer}>
-        <div className={`${style.allFooterContent} ${style.footerPart}`}>
-          <div className={style.leftFooterContainer}>
-            <div className={style.leftFirstRow}>
-              <h6>PhilanthroFi</h6>
-              <ul>
-                <li>Jl. Jalur Sutera Barat No. 10, Alam Sutera, Tangerang</li>
-              </ul>
+    <footer className={`w-full h-[85vh] transition-all duration-300 z-100 relative ${className} ${footerMode === "default" ? "px-16 pb-16" : "p-0"}`}>
+        <div className={`w-full h-full bg-white transition-all duration-300 flex flex-col justify-between px-24 pt-24 pb-16 ${footerMode === "default" ? "rounded-3xl" : ""}`}>
+
+            <div className='flex justify-between'>
+                <div className='flex flex-col gap-8'>
+                    <div className='w-96 overflow-hidden text-nowrap'>
+                        <div className='text-7xl text-slate-700 font-medium flex gap-8' style={{transform: `translateX(${titleTransform}px)`}}>
+                            <p>PhilanthroFi</p> <p>PhilanthroFi</p> <p>PhilanthroFi</p>
+                        </div>
+                    </div>
+                    <div className='flex gap-1'>
+                        <p>Transforming</p>
+                        <p className='bg-purple-200'>Charity</p>
+                        <p>With</p>
+                        <p className='bg-primary'>
+                            {
+                                activeSubtitle
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                <div className='flex gap-5'>
+                    {/* <p className='text-2xl font-semibold'>Our Team</p> */}
+                    <div className='flex flex-col gap-6'>
+                        <FooterProfile name='Darryl Effendi' github='Darryleffendi' />
+                        <FooterProfile name='Victor Halim' github='victorhalimm' />
+                        <FooterProfile name='Christopher Alden' github='christopher-alden' />
+                        <FooterProfile name='Eldrian Giovanni' github='Deceive00' />
+                        <FooterProfile name='Davis Kelvin' github='Daviskelvin824' />
+                        
+                    </div>
+                </div>
             </div>
-            <div className={style.leftSecondRow}>
-              <h6 className={style.customerServiceText}>Customer Service</h6>
-              <h5 className={style.phoneNumberFooter}>0813173717317</h5>
-              <p className={style.emailContactFooter}>victor.halim@bintang.co.id</p>
+
+            <div className='border-t border-slate-300 pt-8 flex items-center justify-between'>
+                <img src={logoDark} className="w-8 opacity-50"/>
+                <div className='flex items-center gap-1 text-sm opacity-50'>
+                    <FaRegCopyright className='text-xs' />
+                    <p>Copyright</p>
+                    <p>Team LCAS</p>
+                </div>
             </div>
-          </div>
-          <div className={`${style.centerFooterContainer} ${style.footerPart}`}>
-            <h6>Information</h6>
-            <ul>
-              <li><Link to={'/'}>Home</Link></li>
-              <li><Link to={'/my-cards'}>My Cards</Link></li>
-              <li><Link to={'/check-location'}>Check Location</Link></li>
-              <li><Link to={'/personal-information'}>Profile</Link></li>
-              <li><Link to={'/game'}>Game</Link></li>
-            </ul>
-          </div>
-          <div className={`${style.rightFooterContainer} ${style.footerPart}`}>
-            <h6>Sign up for offer, news, and travel inspiration</h6>
-            <form action="">
-              <div className={style.footerInputContainer}>
-                <input type="email" className={style.footerInput} placeholder="email@example.com" />
-              </div>
-            </form>
-  
-            <div className={style.socialMediaContainer}>
-              <a href="https://facebook.com/" className={style.socialMedia}>
-                <img src={FacebookImg} alt="facebook" />
-              </a>
-              <a href="https://linkedin.com/" className={style.socialMedia}>
-                <img src={LinkedInImg} alt="linkedin" />
-              </a>
-              <a href="https://twitter.com/" className={style.socialMedia}>
-                <img src={TwitterImg} alt="twitter" />
-              </a>
-              <a href="https://instagram.com/" className={style.socialMedia}>
-                <img src={InstagramImg} alt="instagram.png" />
-              </a>
-              <a href="https://youtube.com/" className={style.socialMedia}>
-                <img src={YoutubeImg} alt="youtube" />
-              </a>
-            </div>
-          </div>
         </div>
-        <div className={style.copyRightFooter}>
-          <h4>@Copyright DuckCing</h4>
-        </div>
-      </div>
     </footer>
   );
 }

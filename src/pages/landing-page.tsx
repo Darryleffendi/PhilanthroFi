@@ -6,7 +6,8 @@ import ReactTypingEffect from 'react-typing-effect';
 import LandingNavbar from "@components/landing-navbar";
 import logoWhite from "@assets/logo/logo-pure-white.png"
 import Numbers from "@components/ui/numbers";
-import gnb from "@"
+import gnb from "@assets/images/gnb.png"
+import vh from "@assets/images/vh.png"
 
 import {
     motion,
@@ -16,6 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { queryClient } from "@lib/settings/query-settings";
 import TwitterCard from "@components/twitter-card";
+import Footer from "@components/footer/footer";
 
 
 export default function LandingPage() {
@@ -158,7 +160,7 @@ export default function LandingPage() {
             </motion.div>
 
             <div className="flex w-full justify-between p-24 -z-10">
-                <motion.div className="w-full h-screen flex-col " style={{y: y2, filter: `blur(${scrollIndex > 225 ? "2px" : "0px"})`}}>
+                <motion.div className="w-full h-[85vh] flex-col " style={{y: y2, filter: `blur(${scrollIndex > 230 ? "2px" : "0px"})`}}>
                     <div className="w-full flex mt-10">
 
                     </div>
@@ -182,27 +184,14 @@ export default function LandingPage() {
                 </motion.div>
                 
                 <motion.div className="flex flex-col gap-4 w-96 relative items-end" style={{y: y3}}>
-                    <div className="absolute w-[28rem] flex flex-col gap-3 transition-all duration-300" style={{filter: `blur(${scrollIndex < 225 ? "4px" : "0px"})`}}>
-                        <TwitterCard image={<></>} username={"John Silitonga"} tweet="Lorem ipsum dolor sit amet consectetur, officia natus harum molestiae quidem ab libero est ipsa. Magnam illo corrupti, consectetur quasi ipsum modi."/>
-                        <TwitterCard image={<></>} username={"Victor Hafidz"} tweet="Lorem ipsum dolor sit amet consectetur, dolor sit amet consectetur dolor sit amet consectetur dolor sit amet consectetur officia natus harum molestiae quidem ab libero est ipsa. Magnam illo corrupti, consectetur quasi ipsum modi."/>
+                    <div className="absolute w-[28rem] flex flex-col gap-3 transition-all duration-300" style={{filter: `blur(${scrollIndex < 230 ? "4px" : "0px"})`}}>
+                        <TwitterCard username={"@darrenmaverick"} tweet="Thanks to PhilanthroFi, every donation I made is transparent and impactful. Their commitment to genuine charity restores my trust in giving."/>
+                        <TwitterCard username={"@yoseftiann"} tweet="I've seen firsthand how PhilanthroFi transforms charitable giving into a transparent journey. Each contribution is traceable, making every penny count towards real change. Grateful for a platform that prioritizes integrity and impact."/>
                     </div>
                 </motion.div>
             </div>
 
-            <div className=' w-full h-screen flex flex-col gap-10'>
-                <div>
-                    User Data:
-                    <br/>
-                    {user?.email}
-                    <br/>
-
-                    <>{user?.timestamp}</>
-                    <>{user?.birth_date}</>
-                </div>
-                <Button onClick={()=>{logout(); queryClient.invalidateQueries(['userData'])}} className="text-8xl">LOGOUT PANTEK</Button>
-            
-            </div>
-
+            <Footer/>
         </div>
         
     );
