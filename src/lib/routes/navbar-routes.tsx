@@ -2,7 +2,7 @@
 export const navbarRoutes = [
     {
         name:"About Us",
-        link:"/about"
+        link:"/"
     },
     {
         name:"Explore",

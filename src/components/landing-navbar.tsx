@@ -50,7 +50,7 @@ const LandingNavbar = ({ className, navMode }: props) => {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Link className="" to={'/explores'}>
-              Explores
+              Explore
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
