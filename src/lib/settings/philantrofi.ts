@@ -1,0 +1,2 @@
+export const PHILANTROFI_WALLET_AL = "byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe"
+export const PHILANTROFI_WALLET_DC = "ucjau-tkzza-uey4m-qepzh-hhp2m-sjlcv-mlsqm-kuvxz-tz3mz-ivs6r-uqe"

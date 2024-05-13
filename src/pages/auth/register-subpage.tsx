@@ -62,14 +62,14 @@ export default function RegisterSubpage({register} : props) {
 
         <div className="flex flex-col gap-5">
             <div className="flex gap-5">
-                <div className="w-full">
+                <div className=" flex flex-col gap-1 w-full">
                     <p className="text-sm">First Name</p>
                     <Input 
                         className="bg-transparent" placeholder="John"
                         onChange={(e) => changeData("first_name", e.target.value)} value={regisData.first_name}
                     />
                 </div>
-                <div className="w-full">
+                <div className="flex flex-col gap-1 w-full">
                     <p className="text-sm">Last Name</p>
                     <Input 
                         className="bg-transparent" placeholder="Doe"
@@ -77,14 +77,14 @@ export default function RegisterSubpage({register} : props) {
                     />
                 </div>
             </div>
-            <div>
+            <div className="flex flex-col gap-1 w-full">
                 <p className="text-sm">Date of Birth</p>
                 <Input 
                     type={"date"} className="bg-transparent"
                     onChange={(e) => changeData("birth_date", e.target.value)} value={regisData.birth_date}
                 />
             </div>
-            <div>
+            <div className="flex flex-col gap-1 w-full">
                 <p className="text-sm">Email</p>
                 <Input 
                     className="bg-transparent" placeholder="youremail@mail.com"
@@ -96,18 +96,10 @@ export default function RegisterSubpage({register} : props) {
                 className="text-white bg-blue-300 font-bold"
                 onClick={() => regisAccount()}
             >
-                {regisAccountLoading ? "SABARRR" : "Register"}
+                {regisAccountLoading ? "Loading" : "Register"}
             </Button>
 
             <p className="text-sm text-red-700">{errorMsg}</p>
-            
-            {/* <div 
-                className="mt-5 text-sm flex cursor-pointer opacity-55 hover:opacity-100 transition"
-                onClick={() => changeAuthType()}
-            >
-                <p>Already have account?&nbsp;</p>
-                <p className="text-sky-500 font-bold">Login</p>
-            </div> */}
         </div>
         <div></div>
         </>

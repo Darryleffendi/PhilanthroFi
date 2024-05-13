@@ -112,7 +112,7 @@ const ExplorePage = () => {
   return (
     <ProtectedRoute>
       <MainLayout className='bg-slate-100'>
-        <div className="p-24 min-h-[80vh]  justify-center flex gap-6 flex-col pt-36">
+        <div className="p-24 min-h-[80vh]  justify-center flex gap-8 flex-col pt-36">
           <div className="text-3xl font-medium">Explore</div>
           <form className="flex items-center gap-4 divide-x-2 w-full" onSubmit={handleSearchSubmit}>
             <Input
@@ -140,7 +140,7 @@ const ExplorePage = () => {
               </div>
             </div>
           </form>
-          <div className="w-full gap-8 flex">
+          <div className="w-full gap-8 flex ">
             <div className="flex flex-col basis-1/4">
               <div className="flex flex-col gap-8">
                 <CustomCollapsible title="Category" status={true} count={categories.length}>

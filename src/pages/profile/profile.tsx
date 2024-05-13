@@ -18,7 +18,7 @@ export default function Profile() {
     return (
         <ProtectedRoute>
             <MainLayout className={"px-24 bg-slate-100 min-h-screen w-full flex justify-between items-start gap-4"}>
-                <div className='w-screen h-screen  pt-28 pb-8 flex flex-col'>
+                <div className='w-screen h-screen  pt-24 pb-8 flex flex-col'>
                     <div className='mb-8'></div>
                     <div className='w-full h-28 py-4 flex flex-col gap-2'>
                         <h1 className='text-3xl font-medium '>{profileMenu.name}</h1>
