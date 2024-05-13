@@ -55,7 +55,7 @@ const WithdrawPage = () => {
     const { user, authState, isLoading } = useAuth();
     
     let transactionRequest : TransactionRequest = {
-        amount: BigInt(data.amount),
+        amount: data.amount,
         types: "withdraw",
         notes: data.notes,
         charity_id: charity ? charity.id : "",
@@ -210,8 +210,7 @@ const WithdrawPage = () => {
                         <Input 
                             className="border-slate-300 border rounded-lg" placeholder="0" type={"number"}
                             value={data?.amount} onChange={(e) => {
-                                if(isNaN(parseFloat(e.target.value))) changeData("amount", 0)
-                                else changeData("amount", e.target.value)
+                                changeData("amount", e.target.value)
                             }}
                         />
                         <p className="absolute font-bold text-slate-400 mr-4">{charity?.target_currency}</p>
@@ -236,7 +235,7 @@ const WithdrawPage = () => {
                     <p className="text-sm text-slate-600 font-light">Description</p>
                     <Textarea 
                         placeholder="Describe the purpose of your withdrawal" className="max-h-32" 
-                        value={data?.notes} onChange={(e) => changeData("note", e.target.value)}
+                        value={data?.notes} onChange={(e) => changeData("notes", e.target.value)}
                     />
                 </div>
 
@@ -251,7 +250,7 @@ const WithdrawPage = () => {
                             ) : (
                                 uploadedPhotos.map((photo, i)=>{
                                     return(
-                                        <img key={i} src={photo} className="w-28 opacity-40 object-cover"/>
+                                        <img key={i} src={photo} className="w-36 object-cover"/>
                                     )
                                 })
                             )}

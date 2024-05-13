@@ -36,7 +36,13 @@ export default function TransactionTableCell({transaction, currency} : params) {
                         <p>From</p>
                         <p className="truncate text-sky-500">{trans.from}</p>
                     </div>
-                    <p className="text-sm text-slate-400 text-nowrap truncate">{trans.notes}</p>
+                    {
+                        trans?.notes === "" ?  (
+                            <p className="text-slate-700">&nbsp;</p>
+                        ) : (
+                            <p className="text-slate-700">{trans.notes}</p>
+                        )
+                    }
                 </div>
 
                 <div className="px-3 h-8 border-2 border-slate-300 rounded-lg flex items-center justify-center">
@@ -74,7 +80,13 @@ export default function TransactionTableCell({transaction, currency} : params) {
                     </div>
                     <div>
                         <p className="text-slate-500 text-sm mb-1">Notes</p>
-                        <p className="text-slate-700">{transaction.notes}</p>
+                        {
+                            transaction?.notes === "" ?  (
+                                <p className="text-slate-700">&nbsp;</p>
+                            ) : (
+                                <p className="text-slate-700">{transaction.notes}</p>
+                            )
+                        }
                     </div>
                 </div>
             </DialogContent>

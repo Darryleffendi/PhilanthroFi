@@ -12,6 +12,7 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>
     const [files, setFiles] = useState<File[]>([]);
     const [uploadedPhotos, setUploadedPhotos] = useState<string[]>([]);
     const { base64List, processImagesToBase64, errors: base64Errors, reset:resetBase64 } = useMultipleBase64();
+    const [loading, setLoading] = useState(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = event.target.files;
@@ -22,9 +23,11 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>
     };
 
     const finalize = async () => {
+        setLoading(true);
         await changeData("project_image", base64List);
         await submitForm();
         await resetBase64()
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -65,16 +68,21 @@ const FundraiseImageSubpage = ({changeTitle, changeData, data, submitForm = ()=>
                     ) : (
                         uploadedPhotos.map((photo, i)=>{
                             return(
-                                <img key={i} src={photo} className="w-28 opacity-40 object-cover"/>
+                                <img key={i} src={photo} className="w-36 object-cover"/>
                             )
                         })
                     )}
                 </div>
                 <div className="text-sm mt-2 opacity-60">Click to upload Image</div>
             </div>
-
-            <Button className="text-white" onClick={() => finalize()}>Create</Button> 
-            {/* Goofy ass button */}
+            
+            {
+                loading ? (
+                    <Button className="text-white" disabled onClick={() => finalize()}>Loading...</Button> 
+                ) : (
+                    <Button className="text-white" onClick={() => finalize()}>Create</Button> 
+                )
+            }
         </>
     )
 }

@@ -29,7 +29,7 @@ export interface Transaction {
 export interface TransactionRequest {
     charity_id: string;
     charity_wallet_id: string;
-    amount: bigint;
+    amount: bigint | number;
     notes: string;
     types: string;
 };

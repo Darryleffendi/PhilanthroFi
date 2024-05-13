@@ -24,27 +24,15 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         charity?.target_currency === "ICP" ? 50 : charity?.target_currency === "ckBTC" ? 0.01 : 0.25,
     ]
 
-    const [amount, setAmount] = useState<any>(0);
+    const [amount, setAmount] = useState<any>("");
     const [activeTier, setActiveTier] = useState(0);
     const [notes, setNotes] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(false);
     const {getCharityService} = useService()
-
-    const changeAmount = (number : string) => {
-        try {
-            if(!isNaN(parseInt(number))) {
-                setAmount(number);
-            } 
-            else {
-                setAmount(0)
-            }
-        } catch(e) { 
-            setAmount(0) 
-        }
-    }
     
-
     let transactionRequest : TransactionRequest = {
-        amount: BigInt((activeTier < 3) ? tiers[activeTier] * 100000000 : Math.floor(parseFloat(amount) * 100000000)), // Amount * 100000000
+        amount: BigInt((activeTier < 3) ? tiers[activeTier] * 100000000 : isNaN(parseFloat(amount)) ? BigInt(0) : Math.floor(parseFloat(amount) * 100000000)), // Amount * 100000000
         types: "donation",
         notes: notes,
         charity_id: charity ? charity.id : "",
@@ -69,14 +57,20 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
     });
 
     const donate = async () => {
-        let donateAmount = (activeTier < 3) ? tiers[activeTier] * 100000000 : Math.floor(parseFloat(amount) * 100000000);
-        
+        setLoading(true)
+        if(transactionRequest.amount <= BigInt(0)) {
+            setLoading(false)
+            return setErrorMsg("Please input a valid amount");
+        }
+
+        setErrorMsg("");
         try {
+            console.log(transactionRequest)
             // @ts-ignore
             const response = await window.ic?.plug?.requestTransfer({
-                // to: "byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe",// alden
-                to:"ucjau-tkzza-uey4m-qepzh-hhp2m-sjlcv-mlsqm-kuvxz-tz3mz-ivs6r-uqe",//darryl
-                amount: donateAmount,
+                to: "byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe",// alden
+                // to:"ucjau-tkzza-uey4m-qepzh-hhp2m-sjlcv-mlsqm-kuvxz-tz3mz-ivs6r-uqe",//darryl
+                amount: Number(transactionRequest.amount),
             })
             
             // If transaction succeeded, record donation
@@ -87,6 +81,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
         catch(e) {
             console.log(e);
         }
+        setLoading(false)
 
     }
 
@@ -109,7 +104,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                 <div className="w-full h-1 rounded bg-slate-500 bg-opacity-20 shadow-md">
                     <div className="h-full rounded bg-primary" style={{width: charity?.current_donation / charity?.target_donation * 100 + "%"}}></div>
                 </div>
-                <p className="text-sm text-slate-400">3.1k donations</p>
+                <p className="text-sm text-slate-400">{charity?.transactions?.length} donations</p>
                 
                 <p className="text-sm text-slate-400 mt-4">Quick Donate</p>
                 <div className="flex gap-2">
@@ -138,13 +133,24 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                     >
                         <p className="text-sm font-normal">Choose your own</p>
                         <div className="flex items-center gap-3 h-16">
-                            <Input placeholder="0" className="font-normal text-lg" type={"number"} value={amount} onChange={(e) => changeAmount(e.target.value)}/>
+                            <Input placeholder="0" className="font-normal text-lg" type={"number"} value={amount} onChange={(e) => setAmount(e.target.value)}/>
                             <p className="font-normal text-xl">{charity.target_currency}</p>
                         </div>
                     </div>
                 </div>
+                {
+                    errorMsg !== "" ? (
+                        <p className="text-red-500 text-sm font-nunito">{errorMsg}</p>
+                    ) : <></>
+                }
                 <div className="flex items-center gap-2 font-nunito">
-                    <button className="w-full bg-primary text-white rounded-lg py-2 mt-4" onClick={donate}>Donate</button>
+                    {
+                        loading ? (
+                            <button className="w-full bg-primary text-white rounded-lg py-2 mt-4" disabled onClick={donate}>Loading...</button>
+                        ) : (
+                            <button className="w-full bg-primary text-white rounded-lg py-2 mt-4" onClick={donate}>Donate</button>
+                        )
+                    }
                     <DialogTrigger className="w-[35%] bg-primary text-white rounded-lg py-2 mt-4 flex items-center gap-2 justify-center"><PiNoteBold />Note</DialogTrigger>
                 </div>
             </div>
