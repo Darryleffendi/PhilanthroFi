@@ -21,7 +21,7 @@ export default function Profile() {
                 <div className='w-screen h-screen  pt-28 pb-8 flex flex-col'>
                     <div className='mb-8'></div>
                     <div className='w-full h-28 py-4 flex flex-col gap-2'>
-                        <h1 className='text-2xl font-medium '>{profileMenu.name}</h1>
+                        <h1 className='text-3xl font-medium '>{profileMenu.name}</h1>
                         <h1 className='text-base text-gray-400'>{profileMenu.description}</h1>
                         <Separator className='bg-gray-300'/>
                     </div>

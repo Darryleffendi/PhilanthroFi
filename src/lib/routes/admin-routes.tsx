@@ -6,7 +6,7 @@ export const AdminRoutes:RouteTypes[] = [
     {
         name:"Withdrawal Requests",
         element: <AdminWithdrawalRequest/>,
-        description:"Approve Withdrawal Requests",
+        description:"Approve incoming withdrawal requests",
         altRoute:"ph1l4ntr0F1/admin/manage"
     },
 

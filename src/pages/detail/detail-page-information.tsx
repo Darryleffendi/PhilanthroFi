@@ -90,7 +90,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
     return (
         <Dialog>
             <div className={`w-[40vw] h-[65vh] z-10 bg-white rounded-xl shadow-lg p-10 flex-col gap-4 ${className}`} style={style}>
-                <div className="flex gap-2 font-nunito items-center font-black text-2xl text-slate-600 mb-2">
+                <div className="flex gap-2  items-center font-black text-2xl text-slate-600 mb-2">
                     <img
                         className="h-6 object-cover mr-2" 
                         src={charity?.target_currency === "ICP" ? icpIcon : charity?.target_currency === "ckBTC" ? btcIcon : ethIcon}
@@ -112,7 +112,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                         tiers.map((tier, index) => (
                         <div 
                             className={` bg-slate-200 rounded-xl border-2 opacity-70 bg-opacity-60 hover:opacity-100 cursor-pointer ${activeTier === index ? "border-blue-400 " : "border-slate-300 "}
-                                w-20 py-2 flex-col flex items-center justify-center transition-all duration-200 text-slate-500 font-bold text-2xl font-nunito`}
+                                w-20 py-2 flex-col flex items-center justify-center transition-all duration-200 text-slate-500 font-bold text-2xl `}
                             onClick={() => setActiveTier(index)}
                         >
                             <p className="text-sm font-normal">Tier {index + 1}</p>
@@ -128,7 +128,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                     }
                     <div 
                         className={` bg-slate-200 rounded-xl border-2 opacity-70 bg-opacity-60 hover:opacity-100 cursor-pointer ${activeTier === 3 ? "border-blue-400 " : "border-slate-300 "}
-                            w-40 py-2 flex-col flex items-start justify-center transition-all duration-200 text-slate-500 font-bold text-2xl font-nunito px-4`}
+                            w-40 py-2 flex-col flex items-start justify-center transition-all duration-200 text-slate-500 font-bold text-2xl  px-4`}
                         onClick={() => setActiveTier(3)}
                     >
                         <p className="text-sm font-normal">Choose your own</p>
@@ -140,10 +140,10 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                 </div>
                 {
                     errorMsg !== "" ? (
-                        <p className="text-red-500 text-sm font-nunito">{errorMsg}</p>
+                        <p className="text-red-500 text-sm ">{errorMsg}</p>
                     ) : <></>
                 }
-                <div className="flex items-center gap-2 font-nunito">
+                <div className="flex items-center gap-2 ">
                     {
                         loading ? (
                             <button className="w-full bg-primary text-white rounded-lg py-2 mt-4" disabled onClick={donate}>Loading...</button>
@@ -154,7 +154,7 @@ const DetailPageInformation = ({charity, className, style = {}} : props) => {
                     <DialogTrigger className="w-[35%] bg-primary text-white rounded-lg py-2 mt-4 flex items-center gap-2 justify-center"><PiNoteBold />Note</DialogTrigger>
                 </div>
             </div>
-            <DialogContent className="font-nunito">
+            <DialogContent className="">
                 <DialogHeader>
                     <DialogTitle>
                         Notes

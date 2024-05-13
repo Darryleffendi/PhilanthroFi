@@ -138,7 +138,7 @@ const FundraisePage = () => {
         <FundraiseDescriptionSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
         <FundraisePersonalSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
         <FundraiseTargetSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep}/>,
-        <FundraiseImageSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep} submitForm={submitForm}/>,
+        <FundraiseImageSubpage changeTitle={changeTitle} changeData={changeData} data={data} changeStep={changeStep} submitForm={submitForm} isLoading={createCharityLoading}/>,
     ]
 
     useEffect(() => {
@@ -153,7 +153,7 @@ const FundraisePage = () => {
                     <div className="md:w-[40%] w-[85vw] md:h-[70vh] mt-[10vh] md:mt-0 mb-[5vh] md:mb-0 flex flex-col justify-between z-10">
 
                         <div className="mb-8 md:mb-0">
-                            <p className="font-nunito text-sm mb-2 font-light text-late-800">Step {currStep+1} / {pages.length}</p>
+                            <p className="text-sm mb-2 font-light text-late-800">Step {currStep+1} / {pages.length}</p>
                             <div className="flex gap-1">
                             {
                                 Array.from(Array(pages.length)).map((i : number, idx : number) => {
@@ -179,7 +179,7 @@ const FundraisePage = () => {
                             </div>
                             <p 
                                 style={{opacity : subtitleOpacity, transform: `translateY(${subtitleOpacity > 0 ? 0 : 28}px)`}}
-                                className="font-nunito font-light transition-all duration-500"
+                                className=" font-light transition-all duration-500"
                             >
                                 {subtitle}
                             </p>
@@ -188,7 +188,7 @@ const FundraisePage = () => {
                     </div>
                     <div className="bg-background md:w-[50%] w-[85vw] h-[60vh] rounded-xl shadow-lg p-10 z-10 mb-16 md:mb-0">
                         <div
-                            className="w-full h-full transition-all duration-500 flex flex-col font-nunito justify-between" 
+                            className="w-full h-full transition-all duration-500 flex flex-col  justify-between" 
                             style={{opacity: subpageOpacity}}
                         >
                         {

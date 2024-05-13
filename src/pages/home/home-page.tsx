@@ -34,7 +34,7 @@ const HomePage = () => {
   const { error, isLoading, isSuccess } = useQuery(['getAllCharities'], getAllCharities, {
     retry: false,
     onSuccess: (charity:BackendCharityEvent[]) => {
-      // @ts-ignore emg asu ni motoko
+      // @ts-ignore 
       setFeaturesCharities([...charity.ok])
       // @ts-ignore
       setTopCharity(charity.ok[0])
@@ -61,25 +61,20 @@ const HomePage = () => {
                 exactly as intended, enhancing trust through unparalleled
                 transparency and technological innovation.
               </div>
-              
-              {/* <Button disabled={transferLoading} onClick={()=>{transferXtcTx()}}>
-                {transferLoading ? "Loading Cok" : `${transferError?.message || "Manta Button"}`}
-              </Button> */}
-              
             </div>
             <div className="flex flex-col gap-10">
               <NumberColumn
                 descStyle='text-end'
                 type="money"
                 metrics="M"
-                desc="funds raised"
+                desc="Funds Raised"
                 number={23}
               />
               <NumberColumn
                 descStyle='text-end'
                 type="number"
                 metrics="+"
-                desc="charities held"
+                desc="Charities Held"
                 number={421}
               />
             </div>

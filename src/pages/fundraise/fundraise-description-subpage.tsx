@@ -6,6 +6,7 @@ import { FundraiseSubpage } from "@lib/types/fundraise-subpage-types"
 import { useEffect, useMemo } from "react"
 import { CHARITY_TAGS } from "@lib/settings/tags-settings"
 import Chip from "@components/chip"
+import VhPuck from "@components/vh-puck"
 
 const FundraiseDescriptionSubpage = ({changeTitle, changeData, data, changeStep} : FundraiseSubpage) => {
 
@@ -17,6 +18,7 @@ const FundraiseDescriptionSubpage = ({changeTitle, changeData, data, changeStep}
                 <p className="bg-yellow-100">Describe</p>
                 <p>&nbsp;</p>
                 <p>Your</p>
+                <p>&nbsp;</p>
                 <p className="bg-fuchsia-100 ">Charity</p>
                 <p>&nbsp;</p>
                 <p>Project</p>
@@ -52,14 +54,10 @@ const FundraiseDescriptionSubpage = ({changeTitle, changeData, data, changeStep}
                         {
                             CHARITY_TAGS.map((tag, index) => {
                                 return data.tags.includes(tag) ? (
-                                    <Chip 
-                                        text={tag} key={index} onClick={() => setTag(tag)}
-                                    /> 
+                                    <VhPuck onClick={() => setTag(tag)} tag={tag}></VhPuck>
                                 ) : (
-                                    <Chip 
-                                        text={tag} key={index} onClick={() => setTag(tag)}
-                                        className="bg-slate-400 border-slate-700 opacity-30 text-black hover:opacity-50"
-                                    /> 
+                                    <VhPuck  onClick={() => setTag(tag)} tag={tag} className="bg-slate-400 border-slate-700 opacity-30 text-black hover:opacity-50"></VhPuck>
+                                    
                                 )
                             })
                         }

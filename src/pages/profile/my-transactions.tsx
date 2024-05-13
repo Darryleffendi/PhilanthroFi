@@ -57,9 +57,8 @@ export default function MyTransactions() {
                 <TableBody  >
                 {(isLoading||isFetching || !transactions) ? 
                     (
-                        <TableRow className=''>
-                            <TableCell  colSpan={5}>No Data</TableCell>
-                        </TableRow>
+                       <>
+                       </>
                     )
                     :
                     (

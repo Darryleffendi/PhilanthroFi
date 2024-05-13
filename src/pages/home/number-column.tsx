@@ -19,9 +19,9 @@ const descVariants =cva(
 
 const NumberColumn : React.FC<NumberColumnProps> = ({desc, number, metrics = "",descStyle, type}) => {
   return (
-    <div className="flex flex-col gap-10 justify-end ">
+    <div className="flex flex-col gap-8 justify-end ">
       <LineSeparator />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col ">
         <div className="flex text-8xl font-medium">
           {type === 'money' && '$'}
           <AnimatedNumbers

@@ -5,6 +5,7 @@ import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/ch
 import { useNavigate } from 'react-router-dom';
 import { capitalizeFirstLetter } from '@lib/utils/utils';
 import { Skeleton } from '@components/ui/skeleton';
+import VhPuck from '@components/vh-puck';
 
 interface CharityCardProps {
   charity: BackendCharityEvent;
@@ -43,9 +44,7 @@ const CharityCard: React.FC<CharityCardProps> = ({ charity }) => {
               }
               else if(index < 2){
                 return(
-                  <div className="rounded-xl text-blue-800 border border-blue-800 bg-blue-200 text-xs inline-block font-medium px-4 py-1" key={index}>
-                    {capitalizeFirstLetter(tag)}
-                  </div>
+                  <VhPuck key={index} tag={tag}/>
                 )
               }
             })}
