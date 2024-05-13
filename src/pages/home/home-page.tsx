@@ -85,12 +85,12 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className='w-full flex gap-4 flex-col p-24 min-h-[80vh]'>
+        <div className='w-full flex gap-4 flex-col p-24 min-h-[70vh]'>
           <div className='text-7xl font-medium'>
           Almost there—help us succeed!
           </div>
           <div className='flex justify-end'>
-              <div className='bg-primary p-8 justify-end flex gap-6 max-w-[50%] min-h-[60vh] rounded-xl'>
+              <div className='p-8 justify-end flex gap-6 max-w-[50%] min-h-[55vh] rounded-xl'>
                 {
                    topCharity && 
                    (
