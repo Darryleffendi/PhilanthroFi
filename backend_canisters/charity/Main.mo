@@ -344,6 +344,17 @@ actor Charity {
     return #ok(Vector.toArray(locations));
   };
 
+  // public shared query func getTopDonatedCharity(item_count : Nat) : async Result.Result<[CharityEvent], Text> {
+  //   let all_charities = Iter.toArray(charities.vals());
+  //   let sorted_charities = Array.sort<CharityEvent>(
+  //     all_charities,
+  //     func(a : CharityEvent, b : CharityEvent) : Bool {
+  //       return a.current_donation > b.current_donation;
+  //     },
+  //   );
+  //   return #ok(sorted_charities);
+  // };
+
   public shared func seedCharity() : async Result.Result<Text, ()> {
     var total_dummy_data = 10;
     var current_idx = 0;
