@@ -533,7 +533,7 @@ actor Charity {
               description = c.description;
               tags = c.tags;
               start_date = c.start_date;
-              current_donation = amount + c.current_donation;
+              current_donation =  c.current_donation;
               end_date = c.end_date;
               location = c.location;
               transactions = Iter.toArray(temp_transaction.vals());

@@ -73,7 +73,7 @@ export default function Footer({className = "bg-slate-100"} : props) {
 
                 <div className='flex gap-5'>
                     {/* <p className='text-2xl font-semibold'>Our Team</p> */}
-                    <div className='flex flex-col gap-6'>
+                    <div className='flex flex-col gap-6 '>
                         <FooterProfile name='Darryl Effendi' github='Darryleffendi' />
                         <FooterProfile name='Victor Halim' github='victorhalimm' />
                         <FooterProfile name='Christopher Alden' github='christopher-alden' />
