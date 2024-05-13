@@ -17,6 +17,13 @@ export default function TransactionTableCell({transaction, currency} : params) {
 
     const [dialogOpen, setDialogOpen] = useState(false)
     const [trans, setTrans] = useState<Transaction>(cleanseTransaction(transaction))
+    const [past, setPast] = useState<string>('');
+
+    useEffect(() => {
+        setPast(timeAgo(trans.time))
+    
+    }, [trans])
+    
 
     return (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -27,7 +34,7 @@ export default function TransactionTableCell({transaction, currency} : params) {
                     </div>
                     <div className="w-full overflow-hidden">
                         <p className=" text-sky-500 cursor-pointer truncate">{trans.id}</p>
-                        <p className="text-sm text-slate-400">{timeAgo(trans?.time)}</p>
+                        <p className="text-sm text-slate-400">{past}</p>
                     </div>
                 </div>
 

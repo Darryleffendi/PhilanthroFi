@@ -11,7 +11,7 @@ import { useAuth } from '@lib/hooks/useAuth';
 import { useWallet } from '@lib/hooks/useWallet';
 import { useQuery } from 'react-query';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
-import CharityCard from '@components/charity/charity-card';
+import {CharityCard} from '@components/charity/charity-card';
 import SeedCharity from '@lib/utils/seed-charity';
 
 const HomePage = () => {
@@ -19,7 +19,9 @@ const HomePage = () => {
 
   const {getCharityService} = useService();
   const {transfer,transferLoading, transferError} = useWallet();
+
   const [featuredCharities, setFeaturesCharities] = useState<BackendCharityEvent[]>([]);
+  const [topCharity, setTopCharity] = useState<BackendCharityEvent>();
 
 
   const { user } = useAuth();
@@ -34,6 +36,8 @@ const HomePage = () => {
     onSuccess: (charity:BackendCharityEvent[]) => {
       // @ts-ignore emg asu ni motoko
       setFeaturesCharities([...charity.ok])
+      // @ts-ignore
+      setTopCharity(charity.ok[0])
     },
     onError: (error:Error) => {
       console.error("Error while fetching charity", error)
@@ -51,16 +55,13 @@ const HomePage = () => {
               <div className="text-4xl font-medium text-black">
                 Trust Through Transparency
               </div>
-              <div className="text-lg font-normal text-black">
+              <div className="text-xl font-light text-black">
                 By harnessing blockchain technology, PhilanthroFi has built a
                 formidable reputation for ensuring that funds are allocated
                 exactly as intended, enhancing trust through unparalleled
                 transparency and technological innovation.
               </div>
               
-              <Button disabled={transferLoading} onClick={()=>{transfer({to:"byj7a-cglbt-z3aor-vuggh-7kayt-6ld7z-x4sla-evezh-gw4ka-jl4ta-iqe", amount:3000})}}>
-                {transferLoading ? "Loading Cok" : `${transferError?.message || "Manta Button"}`}
-              </Button>
               {/* <Button disabled={transferLoading} onClick={()=>{transferXtcTx()}}>
                 {transferLoading ? "Loading Cok" : `${transferError?.message || "Manta Button"}`}
               </Button> */}
@@ -84,10 +85,35 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+        <div className='w-full flex gap-4 flex-col p-24 min-h-[80vh]'>
+          <div className='text-7xl font-medium'>
+          Almost there—help us succeed!
+          </div>
+          <div className='flex justify-end'>
+              <div className='bg-primary p-8 justify-end flex gap-6 max-w-[50%] min-h-[60vh] rounded-xl'>
+                {
+                   topCharity && 
+                   (
+                    <div className='flex flex-col'>
+                      <div className='font-medium text-5xl'>#1</div>
+                      <CharityCard charity={topCharity}></CharityCard>
+                    </div>
+                   )
+                }
+                {
+                   topCharity && 
+                   <div className='flex flex-col'>
+                      <div className='font-medium text-5xl'>#2</div>
+                     <CharityCard charity={topCharity}></CharityCard>
+                   </div>
+                }
+              </div>
+          </div>
+        </div>
         <div className="w-full min-h-screen">
-          <div className="px-24 py-8 flex flex-col gap-8">
-            <div className="text-indigo-400 font-semibold text-xl">
-              Featured Charities
+          <div className="p-24 flex flex-col gap-8">
+            <div className="text-indigo-400 font-semibold tracking-wider text-2xl">
+              FEATURED CHARITIES
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
               {featuredCharities.map((charity, i)=>{

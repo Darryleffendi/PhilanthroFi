@@ -5,6 +5,8 @@ import { defaultOptions } from "@lib/settings/auth-settings";
 import { useService } from "@lib/hooks/useService";
 import { AuthState, User, UserBase } from "@lib/types/user-types";
 import { queryClient } from '@lib/settings/query-settings';
+import { emit } from "process";
+import { useCookies } from "react-cookie";
 
 interface AuthContextProviderProps {
     children: ReactNode;
@@ -16,6 +18,9 @@ export type AuthContextType = {
     login: () => Promise<void>;
     logout: () => Promise<void>;
     register: (userRegisData: UserBase) => Promise<any>;
+    adminLogin: (email:string, password:string)=> Promise<boolean>;
+    adminLogout: () => Promise<any>;
+    getAdmin: ()=>User|null;
     isLoading: boolean;
 };
 
@@ -25,6 +30,9 @@ export const AuthContext = createContext<AuthContextType>({
     login: async () => {},
     logout: async () => {},
     register: async () => {},
+    adminLogin: async () => false,
+    adminLogout: async ()=>{},
+    getAdmin: ()=>null,
     isLoading: false,
 });
 
@@ -33,6 +41,8 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     const [user, setUser] = useState<User | null>(null);
     const [authState, setAuthState] = useState<AuthState>(AuthState.Nope);
     const { getBackendService } = useService();
+    const [cookies, setCookie, removeCookie] = useCookies(['ph1l4ntr0F1']);
+    
 
 
     const authClient = async () => {
@@ -59,7 +69,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
         }
     };
 
-    const logout = () => {
+    const logout = async () => {
         return new Promise<void>((resolve, reject) => {
             authClient().then(client => {
                 client.logout().then(() => {
@@ -67,7 +77,6 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
                     setAuthState(AuthState.Nope);
                     queryClient.invalidateQueries(['userData']);
                     resolve(); 
-                    window.location.reload()
                 }).catch(logoutError => {
                     console.error("Error logging out:", logoutError);
                     reject(logoutError); 
@@ -99,48 +108,6 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
         }
     };
 
-    // const fetchUserData = async () => {
-    //     if(!authClient)return
-    //     console.log("user:", user)
-    //     console.log("authclient auth state", await authClient.isAuthenticated());
-    //     console.log("actual auth state", authState)
-        
-    //     const backend = await getBackendService();
-    //     const identity = authClient.getIdentity();
-    //     if (!await authClient.isAuthenticated() || identity.getPrincipal().isAnonymous()) {
-    //         throw new Error('User is not authenticated');
-    //     }
-    //     if (!backend) {
-    //         throw new Error('Backend service is not available');
-    //     }
-    //     const userData = await backend.getUser(identity.getPrincipal());
-    //     if (!userData.length) {
-    //         throw new Error('No user data found');
-    //     }
-
-    //     return userData[0]; 
-    // };
-
-
-
-    // const { error, isLoading, isSuccess } = useQuery(['userData', authClient?.getIdentity()], fetchUserData, {
-    //     retry: false,
-    //     staleTime:0,
-    //     onSuccess: (userData:User) => {
-    //         setUser(userData);
-    //         setAuthState(AuthState.Authenticated);
-    //     },
-    //     onError: (error:Error) => {
-    //         console.error("Error fetching user data:", error.message);
-    //         if (error.message === 'No user data found') {
-    //             setAuthState(AuthState.NotRegistered);
-    //         } 
-    //         else {
-    //             setAuthState(AuthState.Nope);
-    //         }
-    //     }
-    // });
-
     const { isLoading } = useQuery(['userData'], async () => {
         const client =  await authClient();
         if (!await client.isAuthenticated() || client.getIdentity().getPrincipal().isAnonymous()) {
@@ -171,6 +138,43 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
         }
     });
 
+    const adminLogin = async (email:string, password:string) =>{
+        const backend = await getBackendService();
+        if(!backend) throw new Error("Backend service is not availbale")
+
+        const MAXTTL = 86400;
+
+        try{
+            const valid = await backend.adminLogin(email, password)
+            //@ts-ignore
+            if(valid.err){
+                throw new Error("Not admin")
+            }
+            else{
+                const transformedData ={
+                    //@ts-ignore
+                    ...valid.ok,
+                    timestamp:0
+                }
+
+                setCookie('ph1l4ntr0F1',transformedData, {path:'/ph1l4ntr0F1', maxAge:MAXTTL})
+                //@ts-ignore
+                return valid.ok //user with no bigint
+            }
+            
+        }catch(error){
+            throw error
+        }
+    }
+
+    const adminLogout = async () =>{
+        removeCookie('ph1l4ntr0F1',{path:'/ph1l4ntr0F1'})
+    }
+
+    const getAdmin = () =>{
+        return cookies.ph1l4ntr0F1;
+    }
+
     return (
         <AuthContext.Provider value={{
             isLoading,
@@ -178,6 +182,9 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
             authState,
             login,
             logout,
+            adminLogin,
+            adminLogout,
+            getAdmin,
             register
         }}>
             {children}

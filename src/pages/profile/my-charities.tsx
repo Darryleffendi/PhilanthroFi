@@ -1,5 +1,5 @@
 import { useService } from '@lib/hooks/useService'
-import CharityCard from '@components/charity/charity-card';
+import {CharityCard} from '@components/charity/charity-card';
 import React, { useState } from 'react'
 import { useQuery } from 'react-query';
 import { CharityEvent as BackendCharityEvent } from 'src/declarations/charity/charity.did';
@@ -37,24 +37,6 @@ export default function MyCharities() {
                 {(isLoading||isFetching || !ownedCharities) ? 
                     (
                     <>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
-                        <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
                         <CharityTabSkeleton/>
